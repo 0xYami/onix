@@ -1,0 +1,7 @@
+# See https://github.com/actions/labeler
+
+core:
+  - packages/core/**/*
+
+'🚨 action':
+  - .github/workflows/**

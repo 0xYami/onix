@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💡 Ideas for New Features, Improvements and RFCs
+    url: https://github.com/0xYami/onix/discussions
+    about: Propose and discuss future improvements to fuels-react.
