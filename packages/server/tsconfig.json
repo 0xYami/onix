@@ -1,10 +1,7 @@
 {
   "compilerOptions": {
     "module": "ESNext",
-    "lib": [
-      "DOM",
-      "ESNext"
-    ],
+    "lib": ["DOM", "ESNext"],
     "target": "ESNext",
     "importHelpers": true,
     "declaration": true,
@@ -21,8 +18,5 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true
   },
-  "include": [
-    "src",
-    "types"
-  ]
+  "include": ["src"]
 }
