@@ -53,6 +53,7 @@ importers:
     specifiers:
       '@crxjs/vite-plugin': 2.0.0-beta.15
       '@solidjs/router': ^0.8.2
+      '@tanstack/solid-query': ^4.27.0
       autoprefixer: ^10.4.14
       postcss: ^8.4.21
       solid-js: ^1.6.15
@@ -62,6 +63,7 @@ importers:
       vite-plugin-solid: ^2.6.1
     dependencies:
       '@solidjs/router': 0.8.2_solid-js@1.6.15
+      '@tanstack/solid-query': 4.27.0_solid-js@1.6.15
       solid-js: 1.6.15
     devDependencies:
       '@crxjs/vite-plugin': 2.0.0-beta.15
@@ -1290,6 +1292,19 @@ packages:
     peerDependencies:
       solid-js: ^1.5.3
     dependencies:
+      solid-js: 1.6.15
+    dev: false
+
+  /@tanstack/query-core/4.27.0:
+    resolution: {integrity: sha512-sm+QncWaPmM73IPwFlmWSKPqjdTXZeFf/7aEmWh00z7yl2FjqophPt0dE1EHW9P1giMC5rMviv7OUbSDmWzXXA==}
+    dev: false
+
+  /@tanstack/solid-query/4.27.0_solid-js@1.6.15:
+    resolution: {integrity: sha512-4Cfxt1T01QawjBx0dpGeNcFd3E+pvW8Ror3xHMX+YDSjiC/ADuwhbELNiNP8O0DLxxY1SW4vZxC2Ifd8yDEC2g==}
+    peerDependencies:
+      solid-js: ^1.5.7
+    dependencies:
+      '@tanstack/query-core': 4.27.0
       solid-js: 1.6.15
     dev: false
 
