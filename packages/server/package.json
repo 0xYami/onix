@@ -1,0 +1,36 @@
+{
+  "name": "server",
+  "version": "0.0.0",
+  "author": "0xYami",
+  "license": "MIT",
+  "private": true,
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "start": "pnpm build && node -r 'dotenv/config' ./dist/app.js",
+    "build": "tsup",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@koa/router": "^12.0.0",
+    "alchemy-sdk": "^2.6.2",
+    "koa": "^2.14.1"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.13.5",
+    "@types/koa__router": "^12.0.0",
+    "@types/node": "^18.15.10",
+    "dotenv": "^16.0.3",
+    "tslib": "^2.5.0",
+    "tsup": "^6.7.0",
+    "typescript": "^5.0.2"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "type": "module"
+}
