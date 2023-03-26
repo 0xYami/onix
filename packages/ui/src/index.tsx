@@ -3,6 +3,7 @@ import { render } from 'solid-js/web';
 import { Router } from '@solidjs/router';
 import './index.css';
 import App from './app';
+import { QueryClient, QueryClientProvider } from '@tanstack/solid-query';
 
 const root = document.getElementById('root');
 
@@ -12,11 +13,21 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
   );
 }
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
 render(
   () => (
-    <Router>
-      <App />
-    </Router>
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <App />
+      </Router>
+    </QueryClientProvider>
   ),
   root!,
 );
