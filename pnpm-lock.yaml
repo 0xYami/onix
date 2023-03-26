@@ -35,6 +35,7 @@ importers:
   packages/app:
     specifiers:
       '@crxjs/vite-plugin': 2.0.0-beta.15
+      '@solidjs/router': ^0.8.2
       autoprefixer: ^10.4.14
       postcss: ^8.4.21
       solid-js: ^1.6.10
@@ -43,6 +44,7 @@ importers:
       vite: ^4.1.1
       vite-plugin-solid: ^2.5.0
     dependencies:
+      '@solidjs/router': 0.8.2_solid-js@1.6.15
       solid-js: 1.6.15
     devDependencies:
       '@crxjs/vite-plugin': 2.0.0-beta.15
@@ -945,6 +947,14 @@ packages:
       estree-walker: 2.0.2
       picomatch: 2.3.1
     dev: true
+
+  /@solidjs/router/0.8.2_solid-js@1.6.15:
+    resolution: {integrity: sha512-gUKW+LZqxtX6y/Aw6JKyy4gQ9E7dLqp513oB9pSYJR1HM5c56Pf7eijzyXX+b3WuXig18Cxqah4tMtF0YGu80w==}
+    peerDependencies:
+      solid-js: ^1.5.3
+    dependencies:
+      solid-js: 1.6.15
+    dev: false
 
   /@types/babel__core/7.20.0:
     resolution: {integrity: sha512-+n8dL/9GWblDO0iU6eZAwEIJVr5DWigtle+Q6HLOrh/pdbXOhOtqzq8VPPE2zvNJzSKY4vH/z3iT3tn0A3ypiQ==}
