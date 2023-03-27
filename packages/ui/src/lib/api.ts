@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { z, type ZodSchema } from '@onix/schemas';
-import { asyncFaillable } from './utils';
+import { asyncFaillable } from '@onix/utils';
 
 const client = axios.create({ baseURL: 'http://localhost:4000' });
 
