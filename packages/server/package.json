@@ -17,6 +17,7 @@
     "typecheck": "tsc -p ./tsconfig.json --noEmit"
   },
   "dependencies": {
+    "@fastify/cors": "^8.2.1",
     "alchemy-sdk": "^2.6.2",
     "fastify": "^4.15.0"
   },
