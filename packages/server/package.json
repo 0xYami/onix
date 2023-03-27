@@ -11,22 +11,20 @@
     "src"
   ],
   "scripts": {
-    "start": "pnpm build && node -r 'dotenv/config' ./dist/app.js",
-    "build": "tsup",
-    "typecheck": "tsc --noEmit"
+    "start": "pnpm build && node -r 'dotenv/config' ./build/app.js",
+    "dev": "nodemon",
+    "build": "tsc -p ./tsconfig.json --importHelpers",
+    "typecheck": "tsc -p ./tsconfig.json --importHelpers --noEmit"
   },
   "dependencies": {
-    "@koa/router": "^12.0.0",
     "alchemy-sdk": "^2.6.2",
-    "koa": "^2.14.1"
+    "fastify": "^4.15.0"
   },
   "devDependencies": {
-    "@types/koa": "^2.13.5",
-    "@types/koa__router": "^12.0.0",
     "@types/node": "^18.15.10",
     "dotenv": "^16.0.3",
+    "nodemon": "^2.0.22",
     "tslib": "^2.5.0",
-    "tsup": "^6.7.0",
     "typescript": "^5.0.2"
   },
   "engines": {
