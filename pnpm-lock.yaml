@@ -32,6 +32,7 @@ importers:
 
   packages/server:
     specifiers:
+      '@onix/types': workspace:*
       '@types/node': ^18.15.10
       alchemy-sdk: ^2.6.2
       dotenv: ^16.0.3
@@ -43,10 +44,17 @@ importers:
       alchemy-sdk: 2.6.2
       fastify: 4.15.0
     devDependencies:
+      '@onix/types': link:../types
       '@types/node': 18.15.10
       dotenv: 16.0.3
       nodemon: 2.0.22
       tslib: 2.5.0
+      typescript: 5.0.2
+
+  packages/types:
+    specifiers:
+      typescript: ^5.0.2
+    devDependencies:
       typescript: 5.0.2
 
   packages/ui:

@@ -1,0 +1,23 @@
+{
+  "name": "@onix/types",
+  "version": "0.0.0",
+  "author": "0xYami",
+  "license": "MIT",
+  "private": true,
+  "main": "src/index.ts",
+  "typings": "src/index.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.2"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "type": "module"
+}
