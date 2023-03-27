@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "start": "pnpm build && node -r 'dotenv/config' ./build/app.js",
-    "dev": "nodemon",
+    "dev": "nodemon --watch ./src --ext ts --exec pnpm start",
     "build": "tsc -p ./tsconfig.json --importHelpers",
     "typecheck": "tsc -p ./tsconfig.json --importHelpers --noEmit"
   },
