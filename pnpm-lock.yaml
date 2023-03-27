@@ -38,7 +38,6 @@ importers:
       dotenv: ^16.0.3
       fastify: ^4.15.0
       nodemon: ^2.0.22
-      tslib: ^2.5.0
       tsup: ^6.7.0
       typescript: ^5.0.2
     dependencies:
@@ -49,7 +48,6 @@ importers:
       '@types/node': 18.15.10
       dotenv: 16.0.3
       nodemon: 2.0.22
-      tslib: 2.5.0
       tsup: 6.7.0_typescript@5.0.2
       typescript: 5.0.2
 
