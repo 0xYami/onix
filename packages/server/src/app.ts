@@ -22,7 +22,9 @@ router
   });
 
 try {
-  await router.listen({ port: 4000 });
+  // TODO: validate environment variables
+  const port = Number(process.env.PORT) || 4000;
+  await router.listen({ port });
 } catch (err) {
   router.log.error(err);
   process.exit(1);
