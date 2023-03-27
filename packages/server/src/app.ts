@@ -2,7 +2,7 @@ import Fastify from 'fastify';
 import { Network, Alchemy } from 'alchemy-sdk';
 
 const router = Fastify({
-  logger: true,
+  logger: process.env.NODE_ENV === 'dev'
 });
 
 const settings = {
