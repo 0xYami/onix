@@ -1,8 +1,8 @@
-import Fastify from 'fastify'
+import Fastify from 'fastify';
 import { Network, Alchemy } from 'alchemy-sdk';
 
 const router = Fastify({
-  logger: true
+  logger: true,
 });
 
 const settings = {
@@ -14,7 +14,7 @@ const alchemy = new Alchemy(settings);
 
 router
   .get('/_health', () => {
-    return 'healthy'
+    return 'healthy';
   })
   .get('/', async () => {
     const latestBlock = await alchemy.core.getBlockNumber();
