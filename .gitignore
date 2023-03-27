@@ -7,5 +7,6 @@
 cache
 coverage
 dist
+build
 node_modules
 vite.config.ts.timestamp*
