@@ -1,9 +1,9 @@
-import Koa from 'koa';
-import Router from '@koa/router';
+import Fastify from 'fastify';
 import { Network, Alchemy } from 'alchemy-sdk';
 
-const app = new Koa();
-const router = new Router();
+const router = Fastify({
+  logger: process.env.NODE_ENV === 'dev',
+});
 
 const settings = {
   apiKey: process.env.ALCHEMY_API_KEY,
@@ -13,14 +13,19 @@ const settings = {
 const alchemy = new Alchemy(settings);
 
 router
-  .get('/_health', async (ctx) => {
-    ctx.body = 'healthy';
+  .get('/_health', () => {
+    return 'healthy';
   })
-  .get('/', async (ctx) => {
+  .get('/', async () => {
     const latestBlock = await alchemy.core.getBlockNumber();
-    ctx.body = latestBlock;
+    return { result: latestBlock };
   });
 
-app.use(router.routes()).use(router.allowedMethods());
-
-app.listen(4000);
+try {
+  // TODO: validate environment variables
+  const port = Number(process.env.PORT) || 4000;
+  await router.listen({ port });
+} catch (err) {
+  router.log.error(err);
+  process.exit(1);
+}
