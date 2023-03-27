@@ -53,11 +53,15 @@ router
     }
   });
 
-try {
-  // TODO: validate environment variables
-  const port = Number(process.env.PORT) || 4000;
-  await router.listen({ port });
-} catch (err) {
-  router.log.error(err);
-  process.exit(1);
+const start = async () => {
+  try {
+    // TODO: validate environment variables
+    const port = Number(process.env.PORT) || 4000;
+    await router.listen({ port });
+  } catch (err) {
+    router.log.error(err);
+    process.exit(1);
+  }
 }
+
+start();

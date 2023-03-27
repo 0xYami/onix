@@ -4,17 +4,17 @@
   "author": "0xYami",
   "license": "MIT",
   "private": true,
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "main": "build/app.js",
+  "typings": "build/app.d.ts",
   "files": [
-    "dist",
+    "build",
     "src"
   ],
   "scripts": {
     "start": "pnpm build && node -r 'dotenv/config' ./build/app.js",
     "dev": "nodemon --watch ./src --ext ts --exec pnpm start",
-    "build": "tsc -p ./tsconfig.json --importHelpers",
-    "typecheck": "tsc -p ./tsconfig.json --importHelpers --noEmit"
+    "build": "tsup",
+    "typecheck": "tsc -p ./tsconfig.json --noEmit"
   },
   "dependencies": {
     "alchemy-sdk": "^2.6.2",
@@ -26,6 +26,7 @@
     "dotenv": "^16.0.3",
     "nodemon": "^2.0.22",
     "tslib": "^2.5.0",
+    "tsup": "^6.7.0",
     "typescript": "^5.0.2"
   },
   "engines": {
