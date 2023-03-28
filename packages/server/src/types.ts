@@ -5,17 +5,17 @@ export type TokenQuote = {
   slug: string;
   num_market_pairs: number;
   date_added: string;
-  tag: {
+  tags: {
     slug: string;
     name: string;
     category: 'ALGORITHM' | 'PLATFORM' | 'CATEGORY';
   }[];
   max_supply: number | null;
-  circulating_supply: number;
-  total_supply: number;
-  is_active: number;
+  circulating_supply: number | null;
+  total_supply: number | null;
+  is_active: 0 | 1;
   cmc_rank: number;
-  is_fiat: number;
+  is_fiat: 0 | 1;
   last_updated: string;
   quote: {
     USD: {
@@ -31,19 +31,19 @@ export type TokenQuote = {
       market_cap: number;
       market_cap_dominance: number;
       fully_diluted_market_cap: number;
-      tvl: null;
       last_updated: string;
     };
   };
 };
 
-export type QuoteResponse = {
+export type GetTokenQuoteResponse = {
   status: {
     timestamp: string;
     error_code: number;
     error_message: string | null;
     elapsed: number;
     credit_count: number;
+    notice: null;
   };
   data: Record<string, TokenQuote[]>;
 };
