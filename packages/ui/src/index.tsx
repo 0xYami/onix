@@ -16,6 +16,7 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
+      retry: false,
       refetchOnWindowFocus: false,
     },
   },
