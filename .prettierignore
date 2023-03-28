@@ -2,5 +2,6 @@
 node_modules
 cache
 dist
+build
 CHANGELOG.md
 pnpm-lock.yaml

@@ -4,27 +4,31 @@
   "author": "0xYami",
   "license": "MIT",
   "private": true,
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "main": "build/app.js",
   "files": [
-    "dist",
+    "build",
     "src"
   ],
   "scripts": {
-    "start": "pnpm build && node -r 'dotenv/config' ./build/app.js",
+    "start": "pnpm build && node -r 'dotenv/config' --loader 'ts-node/esm' ./build/app.js",
     "dev": "nodemon --watch ./src --ext ts --exec pnpm start",
-    "build": "tsc -p ./tsconfig.json --importHelpers",
-    "typecheck": "tsc -p ./tsconfig.json --importHelpers --noEmit"
+    "build": "tsup",
+    "typecheck": "tsc -p ./tsconfig.json --noEmit"
   },
   "dependencies": {
-    "alchemy-sdk": "^2.6.2",
+    "@fastify/cors": "^8.2.1",
+    "@onix/utils": "workspace:*",
+    "axios": "^1.3.4",
+    "bignumber.js": "^9.1.1",
     "fastify": "^4.15.0"
   },
   "devDependencies": {
+    "@onix/schemas": "workspace:*",
     "@types/node": "^18.15.10",
     "dotenv": "^16.0.3",
     "nodemon": "^2.0.22",
-    "tslib": "^2.5.0",
+    "ts-node": "^10.9.1",
+    "tsup": "^6.7.0",
     "typescript": "^5.0.2"
   },
   "engines": {

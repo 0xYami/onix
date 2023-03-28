@@ -1,31 +1,38 @@
 import Fastify from 'fastify';
-import { Network, Alchemy } from 'alchemy-sdk';
+import cors from '@fastify/cors';
+import { Client } from './client';
+import { addressDetailsParams } from './schemas';
 
 const router = Fastify({
-  logger: process.env.NODE_ENV === 'dev',
+  logger: process.env.NODE_ENV === 'development',
 });
 
-const settings = {
-  apiKey: process.env.ALCHEMY_API_KEY,
-  network: Network.ETH_MAINNET,
-};
+router.register(cors, { origin: true });
 
-const alchemy = new Alchemy(settings);
+const client = new Client({
+  apiKeys: {
+    etherscan: process.env.ETHERSCAN_API_KEY,
+    coinmarketcap: process.env.COINMARKETCAP_API_KEY,
+  },
+});
 
 router
   .get('/_health', () => {
     return 'healthy';
   })
-  .get('/', async () => {
-    const latestBlock = await alchemy.core.getBlockNumber();
-    return { result: latestBlock };
+  .get('/address/:address', async (req) => {
+    const { address } = addressDetailsParams.parse(req.params);
+    return client.getAddressDetails(address);
   });
 
-try {
-  // TODO: validate environment variables
-  const port = Number(process.env.PORT) || 4000;
-  await router.listen({ port });
-} catch (err) {
-  router.log.error(err);
-  process.exit(1);
-}
+const start = async () => {
+  try {
+    const port = Number(process.env.PORT) || 4000;
+    await router.listen({ port });
+  } catch (err) {
+    router.log.error(err);
+    process.exit(1);
+  }
+};
+
+start();
