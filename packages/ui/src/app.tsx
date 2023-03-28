@@ -12,14 +12,14 @@ const App: Component = () => {
   const address = '0xd8da6bf26964af9d7eed9e03e53415d37aa96045';
   return (
     <ErrorBoundary fallback={<div>Something went wrong :(</div>}>
-      <div class="w-[360px] h-[540px] relative text-white bg-black border-[0.3px] border-zinc-700">
+      <div class="w-[360px] h-[540px] max-h-[540px] relative text-white bg-black border-[0.3px] border-zinc-700">
         <Header address={address} />
         <Routes>
           <Route path="/" element={<Navigate href="/index.html" />} />
           <Route path="/index.html" element={<Home address={address} />} />
           <Route path="/index.html/onboarding" component={Onboarding} />
         </Routes>
-        <nav class="absolute w-full h-[48px] px-2 bottom-0 flex items-center border-t-[0.3px] border-zinc-700">
+        <nav class="absolute w-full h-[48px] px-2 bottom-0 flex items-center bg-black border-t-[0.3px] border-zinc-700 z-10">
           <Link
             path="/"
             class="w-full h-full flex items-center justify-center"

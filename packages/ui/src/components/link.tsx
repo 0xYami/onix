@@ -10,11 +10,9 @@ type LinkProps = {
 export const Link: ParentComponent<LinkProps> = (props) => {
   let href = '/index.html';
   // To correctly match active class
-  if (props.path !== '/') {
-    href += props.path;
-  }
+  if (props.path !== '/') href += props.path;
   return (
-    <A href={href} class={props.class} activeClass={props.activeClass}>
+    <A href={href} end class={props.class} activeClass={props.activeClass}>
       {props.children}
     </A>
   );
