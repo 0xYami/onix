@@ -2,6 +2,7 @@ import { Component, createMemo, For, Suspense } from 'solid-js';
 import { createQuery } from '@tanstack/solid-query';
 import { addressDetailsSchema, type AddressDetails } from '@onix/schemas';
 import { request } from '../lib/api';
+import { assetSymbolToLogoURL } from '../lib/utils';
 
 export const Home: Component<{ address: string }> = (props) => {
   const userQuery = createQuery({
@@ -56,9 +57,13 @@ export const Home: Component<{ address: string }> = (props) => {
         <ul class="flex flex-col space-y-6">
           <For each={assets()}>
             {(asset) => (
-              <li class="flex items-center justify-between">
+              <li class="flex items-start justify-between">
                 <div class="flex items-center space-x-3">
-                  <img src="/logos/eth.svg" alt={`${asset.name} Icon`} class="w-[40px] h-[40px]" />
+                  <img
+                    src={`${assetSymbolToLogoURL[asset.symbol]}`}
+                    alt={`${asset.name} Icon`}
+                    class="w-[40px] h-[40px]"
+                  />
                   <div class="flex flex-col">
                     <span class="font-bold">
                       {asset.balance.token} {asset.symbol}

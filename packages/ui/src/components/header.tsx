@@ -1,14 +1,14 @@
 import type { Component } from 'solid-js';
-import { asyncFaillable } from '@onix/utils'
+import { asyncFaillable } from '@onix/utils';
 import { truncateMiddle } from '../lib/utils';
 
 export const Header: Component<{ address: string }> = (props) => {
   const copyAddress = async () => {
-    const result = await asyncFaillable(navigator.clipboard.writeText(props.address))
+    const result = await asyncFaillable(navigator.clipboard.writeText(props.address));
     if (result.failed) {
-      console.error('Failed to copy address', result.reason)
+      console.error('Failed to copy address', result.reason);
     }
-  }
+  };
 
   return (
     <header class="relative h-[48px] flex items-center px-4 space-x-2 border-b-[0.3px] border-zinc-700 text-xs">
@@ -27,5 +27,5 @@ export const Header: Component<{ address: string }> = (props) => {
         <span>{truncateMiddle(props.address, 11)}</span>
       </div>
     </header>
-  )
+  );
 };

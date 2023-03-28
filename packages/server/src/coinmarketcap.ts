@@ -37,7 +37,7 @@ type TokenQuote = {
       last_updated: string;
     };
   };
-}
+};
 
 type GetTokenQuoteResponse = {
   status: {
@@ -48,7 +48,7 @@ type GetTokenQuoteResponse = {
     credit_count: number;
     notice: null;
   };
-  data: Record<string, TokenQuote[]>
+  data: Record<string, TokenQuote[]>;
 };
 
 export class CoinMarketCap {
@@ -79,6 +79,6 @@ export class CoinMarketCap {
       throw new Error('Failed to get token price');
     }
 
-    return symbols.map(symbol => response.result.data.data[symbol][0]);
+    return symbols.map((symbol) => response.result.data.data[symbol][0]);
   }
 }

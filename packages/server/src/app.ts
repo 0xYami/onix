@@ -1,14 +1,12 @@
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
 import type { AddressDetails } from '@onix/schemas';
+import { assets } from '@onix/utils';
 import BigNumber from 'bignumber.js';
 import { Etherscan } from './etherscan';
 import { CoinMarketCap } from './coinmarketcap';
-import { tokens } from './tokens';
 import { addressDetailsParams } from './schemas';
 import { take, toBaseUnit } from './utils';
-
-// TODO: validate environment variables
 
 const router = Fastify({
   logger: process.env.NODE_ENV === 'dev',
@@ -28,9 +26,10 @@ router
     const etherBalance = await etherscan.getEtherBalance(address);
     const etherPrice = await etherscan.getEtherPrice();
 
-    const tokens_ = take(tokens, 3);
-    const assets = await Promise.all(
-      tokens_.map(async (token) => {
+    // Limit to 3 assets for now due to rate limits
+    const tokens = take(assets, 3);
+    const tokensWithBalances = await Promise.all(
+      tokens.map(async (token) => {
         const balance = await etherscan.getERC20Balance(address, token.address);
         return {
           ...token,
@@ -43,14 +42,16 @@ router
       }),
     );
 
-    const tokenSymbols = tokens_.map(token => token.symbol);
-    const tokenPrices = await coinmarketcap.getTokenPrices(tokenSymbols)
+    const tokenSymbols = tokens.map((token) => token.symbol);
+    const tokenPrices = await coinmarketcap.getTokenPrices(tokenSymbols);
 
-    assets.forEach((asset, index) => {
-      asset.balance.usd = new BigNumber(asset.balance.token).times(tokenPrices[index].quote.USD.price).toFixed(4);
-    })
+    tokensWithBalances.forEach((asset, index) => {
+      asset.balance.usd = new BigNumber(asset.balance.token)
+        .times(tokenPrices[index].quote.USD.price)
+        .toFixed(4);
+    });
 
-    const totalBalance = assets.reduce(
+    const totalBalance = tokensWithBalances.reduce(
       (acc, asset) => acc.plus(new BigNumber(asset.balance.usd)),
       new BigNumber(0),
     );
@@ -62,7 +63,7 @@ router
         usd: toBaseUnit(etherBalance, 18).times(etherPrice).toFixed(4),
       },
       totalBalance: totalBalance.toFixed(4),
-      assets,
+      assets: tokensWithBalances,
     };
 
     return result;
