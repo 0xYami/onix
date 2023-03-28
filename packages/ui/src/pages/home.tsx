@@ -39,26 +39,26 @@ export const Home: Component<{ address: string }> = (props) => {
             type="button"
             class="w-[156px] h-[38px] flex items-center justify-center space-x-2 border-[0.3px] border-zinc-700 rounded-sm"
           >
-            <img src="/icons/receive.svg" alt="Receive Icon" />
+            <img src="/icons/receive.svg" alt="Receive Icon" class="w-[12px] h-[12px]" />
             <span class="uppercase">receive</span>
           </button>
           <button
             type="button"
             class="w-[156px] h-[38px] flex items-center justify-center space-x-2 border-[0.3px] border-zinc-700 rounded-sm"
           >
-            <img src="/icons/send.svg" alt="Send Icon" />
+            <img src="/icons/send.svg" alt="Send Icon" class="w-[12px] h-[12px]" />
             <span class="uppercase">send</span>
           </button>
         </div>
       </div>
       <div class="px-3">
-        <div class="pb-2 uppercase">tokens</div>
+        <div class="pb-3 uppercase">tokens</div>
         <ul class="flex flex-col space-y-6">
           <For each={assets()}>
             {(asset) => (
               <li class="flex items-center justify-between">
                 <div class="flex items-center space-x-3">
-                  <img src="/logos/eth.svg" alt="logo" class="w-[40px] h-[40px]" />
+                  <img src="/logos/eth.svg" alt={`${asset.name} Icon`} class="w-[40px] h-[40px]" />
                   <div class="flex flex-col">
                     <span class="font-bold">
                       {asset.balance.token} {asset.symbol}

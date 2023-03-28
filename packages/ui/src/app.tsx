@@ -15,7 +15,7 @@ const App: Component = () => {
           <Route path="/index.html" element={<Home address={address} />} />
           <Route path="/index.html/onboarding" component={Onboarding} />
         </Routes>
-        <div class="absolute w-full h-[48px] bottom-0 flex items-center px-2 justify-items-stretch border-t-[0.3px] border-zinc-700">
+        <nav class="absolute w-full h-[48px] bottom-0 flex items-center px-2 justify-items-stretch border-t-[0.3px] border-zinc-700">
           <button type="button" class="w-full h-full flex items-center justify-center">
             <img src="/icons/home.svg" alt="Home Icon" />
           </button>
@@ -25,7 +25,7 @@ const App: Component = () => {
           <button type="button" class="w-full h-full flex items-center justify-center">
             <img src="/icons/bolt.svg" alt="Bolt Icon" />
           </button>
-        </div>
+        </nav>
       </div>
     </ErrorBoundary>
   );
