@@ -55,7 +55,7 @@ export const Home: Component<{ address: string }> = (props) => {
       </div>
       <div class="px-3">
         <div class="pb-2 uppercase">tokens</div>
-        <ul class="flex flex-col space-y-2">
+        <ul class="flex flex-col space-y-6">
           <For each={assets()}>
             {(asset) => (
               <li class="flex items-center justify-between">
