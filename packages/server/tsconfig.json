@@ -2,7 +2,6 @@
   "compilerOptions": {
     "module": "ESNext",
     "target": "ESNext",
-    "emitDeclarationOnly": true,
     "importHelpers": true,
     "declaration": true,
     "sourceMap": true,
