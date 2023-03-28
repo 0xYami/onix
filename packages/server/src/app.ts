@@ -27,8 +27,9 @@ router
 
 const start = async () => {
   try {
+    const host = process.env.HOST || '127.0.0.1';
     const port = Number(process.env.PORT) || 4000;
-    await router.listen({ port });
+    await router.listen({ host, port });
   } catch (err) {
     router.log.error(err);
     process.exit(1);
