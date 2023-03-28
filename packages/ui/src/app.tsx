@@ -17,13 +17,13 @@ const App: Component = () => {
         </Routes>
         <div class="absolute w-full h-[48px] bottom-0 flex items-center px-2 justify-items-stretch border-t-[0.3px] border-zinc-700">
           <button type="button" class="w-full h-full flex items-center justify-center">
-            <img src="/home.svg" alt="Home Icon" />
+            <img src="/icons/home.svg" alt="Home Icon" />
           </button>
           <button type="button" class="w-full h-full flex items-center justify-center">
-            <img src="/gem.svg" alt="Gem Icon" />
+            <img src="/icons/gem.svg" alt="Gem Icon" />
           </button>
           <button type="button" class="w-full h-full flex items-center justify-center">
-            <img src="/bolt.svg" alt="Bolt Icon" />
+            <img src="/icons/bolt.svg" alt="Bolt Icon" />
           </button>
         </div>
       </div>
