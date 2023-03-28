@@ -26,7 +26,9 @@ router
   })
   .get('/address/:address', async (req) => {
     const { address } = addressDetailsParams.parse(req.params);
-    return alchemy.getAddressDetails(address);
+    const res = await alchemy.getAddressDetails(address);
+    // console.log(res);
+    return res;
   });
 
 const start = async () => {

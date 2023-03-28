@@ -1,9 +1,7 @@
 import axios, { Axios } from 'axios';
 import { asyncFaillable } from '@onix/utils';
 
-type TokenName = 'ethereum';
-
-type GetPricesResult = Record<TokenName, { usd: string }>;
+type GetPricesResult = Record<string, { usd: string }>;
 
 class CoinGecko {
   #httpClient: Axios;
@@ -14,14 +12,23 @@ class CoinGecko {
     });
   }
 
-  async getPrices(tokenName: TokenName, currency = 'usd'): Promise<string> {
-    const response = await asyncFaillable<{ data: GetPricesResult }>(
-      this.#httpClient.get(`/simple/price?ids=${tokenName}&vs_currencies=${currency}`),
-    );
+  async getPriceById(id: string): Promise<GetPricesResult> {
+    const url = `/simple/price?ids=${id}&vs_currencies=usd`;
+    const response = await asyncFaillable<{ data: GetPricesResult }>(this.#httpClient.get(url));
     if (response.failed) {
-      throw new Error(`Failed to price for ${tokenName}`);
+      throw new Error(`Failed to retrieve price for token ${id}`);
     }
-    return response.result.data.ethereum.usd.toString();
+    return response.result.data;
+  }
+
+  async getPricesByAddresses(addresses: string[], currency = 'usd'): Promise<GetPricesResult> {
+    const addressesString = addresses.join(',');
+    const url = `/simple/token_price/ethereum?contract_addresses=${addressesString}&vs_currencies=${currency}`;
+    const response = await asyncFaillable<{ data: GetPricesResult }>(this.#httpClient.get(url));
+    if (response.failed) {
+      throw new Error('Failed to retrieve token prices');
+    }
+    return response.result.data;
   }
 }
 

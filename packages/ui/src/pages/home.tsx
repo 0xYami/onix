@@ -23,7 +23,7 @@ export const Home: Component<{ address: string }> = (props) => {
     <Suspense fallback={<div>Loading...</div>}>
       <div class="h-[150px] flex flex-col items-center justify-center">
         <div class="text-lg uppercase">total balance</div>
-        <div class="text-2xl font-bold">${userQuery.data?.balance.price}</div>
+        <div class="text-2xl font-bold">${userQuery.data?.balance}</div>
         <div class="w-full flex items-center justify-around my-4">
           <button
             type="button"
@@ -41,8 +41,26 @@ export const Home: Component<{ address: string }> = (props) => {
           </button>
         </div>
       </div>
-      <div>
-        <For each={userQuery.data?.assets}>{(asset) => asset.name}</For>
+      <div class="px-3">
+        <div class="pb-2 uppercase">tokens</div>
+        <ul class="flex flex-col space-y-2">
+          <For each={userQuery.data?.assets}>
+            {(asset) => (
+              <li class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                  <img src="/eth.svg" alt="logo" class="w-[40px] h-[40px]" />
+                  <div class="flex flex-col">
+                    <span class="font-bold">
+                      {asset.balance.token} {asset.symbol}
+                    </span>
+                    <span class="text-xs text-zinc-400">{asset.name}</span>
+                  </div>
+                </div>
+                <span>${asset.balance.value}</span>
+              </li>
+            )}
+          </For>
+        </ul>
       </div>
     </Suspense>
   );

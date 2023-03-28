@@ -1,15 +1,18 @@
 import { z, type ZodSchema } from 'zod';
 
+const balanceSchema = z.object({
+  token: z.string(),
+  price: z.string(),
+  value: z.string(),
+});
+
 export const addressDetailsSchema = z.object({
   address: z.string(),
-  balance: z.object({
-    token: z.string(),
-    price: z.string(),
-  }),
+  balance: z.string(),
   assets: z.array(
     z.object({
       name: z.string(),
-      balance: z.string(),
+      balance: balanceSchema,
       symbol: z.string(),
     }),
   ),
