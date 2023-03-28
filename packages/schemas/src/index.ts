@@ -1,19 +1,20 @@
 import { z, type ZodSchema } from 'zod';
 
-const balanceSchema = z.object({
+const assetBalanceSchema = z.object({
   token: z.string(),
-  price: z.string(),
-  value: z.string(),
+  usd: z.string(),
 });
 
 export const addressDetailsSchema = z.object({
   address: z.string(),
-  balance: z.string(),
+  etherBalance: assetBalanceSchema,
+  totalBalance: z.string(),
   assets: z.array(
     z.object({
       name: z.string(),
-      balance: balanceSchema,
       symbol: z.string(),
+      address: z.string(),
+      balance: assetBalanceSchema,
     }),
   ),
 });

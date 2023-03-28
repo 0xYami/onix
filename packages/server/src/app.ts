@@ -1,7 +1,12 @@
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
-import { Alchemy } from './alchemy';
+import type { AddressDetails } from '@onix/schemas';
+import BigNumber from 'bignumber.js';
+import { Etherscan } from './etherscan';
+import { CoinMarketCap } from './coinmarketcap';
+import { tokens } from './tokens';
 import { addressDetailsParams } from './schemas';
+import { take, toBaseUnit } from './utils';
 
 // TODO: validate environment variables
 
@@ -11,24 +16,56 @@ const router = Fastify({
 
 router.register(cors, { origin: true });
 
-const alchemy = new Alchemy({
-  apiKey: process.env.ALCHEMY_API_KEY,
-  network: 'mainnet',
-});
+const etherscan = new Etherscan();
+const coinmarketcap = new CoinMarketCap();
 
 router
   .get('/_health', () => {
     return 'healthy';
   })
-  .get('/', async () => {
-    const latestBlock = await alchemy.getBlockNumber();
-    return { result: latestBlock };
-  })
   .get('/address/:address', async (req) => {
     const { address } = addressDetailsParams.parse(req.params);
-    const res = await alchemy.getAddressDetails(address);
-    // console.log(res);
-    return res;
+    const etherBalance = await etherscan.getEtherBalance(address);
+    const etherPrice = await etherscan.getEtherPrice();
+
+    const tokens_ = take(tokens, 3);
+    const assets = await Promise.all(
+      tokens_.map(async (token) => {
+        const balance = await etherscan.getERC20Balance(address, token.address);
+        return {
+          ...token,
+          balance: {
+            token: new BigNumber(balance).div(new BigNumber(10).pow(token.decimals)).toFixed(4),
+            // To be set once token prices have been fetched
+            usd: '0',
+          },
+        };
+      }),
+    );
+
+    const tokenSymbols = tokens_.map(token => token.symbol);
+    const tokenPrices = await coinmarketcap.getTokenPrices(tokenSymbols)
+
+    assets.forEach((asset, index) => {
+      asset.balance.usd = new BigNumber(asset.balance.token).times(tokenPrices[index].quote.USD.price).toFixed(4);
+    })
+
+    const totalBalance = assets.reduce(
+      (acc, asset) => acc.plus(new BigNumber(asset.balance.usd)),
+      new BigNumber(0),
+    );
+
+    const result: AddressDetails = {
+      address,
+      etherBalance: {
+        token: toBaseUnit(etherBalance, 18).toFixed(4),
+        usd: toBaseUnit(etherBalance, 18).times(etherPrice).toFixed(4),
+      },
+      totalBalance: totalBalance.toFixed(4),
+      assets,
+    };
+
+    return result;
   });
 
 const start = async () => {

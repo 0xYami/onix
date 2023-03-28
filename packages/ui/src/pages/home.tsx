@@ -1,6 +1,6 @@
-import { Component, For, Suspense } from 'solid-js';
+import { Component, createMemo, For, Suspense } from 'solid-js';
 import { createQuery } from '@tanstack/solid-query';
-import { addressDetailsSchema } from '@onix/schemas';
+import { addressDetailsSchema, type AddressDetails } from '@onix/schemas';
 import { request } from '../lib/api';
 import { ReceiveIcon } from '../icons/receive';
 import { SendIcon } from '../icons/send';
@@ -9,21 +9,33 @@ export const Home: Component<{ address: string }> = (props) => {
   const userQuery = createQuery({
     queryKey: () => ['address'],
     queryFn: async () => {
-      const res = await request({
+      return request({
         url: `/address/${props.address}`,
         schema: addressDetailsSchema,
       });
-      console.log(res);
-      return res;
     },
     enabled: !!props.address,
+  });
+
+  const assets = createMemo(() => {
+    if (!userQuery.data) return [];
+    const result: AddressDetails['assets'] = [
+      {
+        name: 'Ethereum',
+        symbol: 'ETH',
+        address: '',
+        balance: userQuery.data.etherBalance,
+      },
+      ...userQuery.data.assets,
+    ];
+    return result;
   });
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <div class="h-[150px] flex flex-col items-center justify-center">
         <div class="text-lg uppercase">total balance</div>
-        <div class="text-2xl font-bold">${userQuery.data?.balance}</div>
+        <div class="text-2xl font-bold">${userQuery.data?.totalBalance}</div>
         <div class="w-full flex items-center justify-around my-4">
           <button
             type="button"
@@ -44,7 +56,7 @@ export const Home: Component<{ address: string }> = (props) => {
       <div class="px-3">
         <div class="pb-2 uppercase">tokens</div>
         <ul class="flex flex-col space-y-2">
-          <For each={userQuery.data?.assets}>
+          <For each={assets()}>
             {(asset) => (
               <li class="flex items-center justify-between">
                 <div class="flex items-center space-x-3">
@@ -56,7 +68,7 @@ export const Home: Component<{ address: string }> = (props) => {
                     <span class="text-xs text-zinc-400">{asset.name}</span>
                   </div>
                 </div>
-                <span>${asset.balance.value}</span>
+                <span>${asset.balance.usd}</span>
               </li>
             )}
           </For>
