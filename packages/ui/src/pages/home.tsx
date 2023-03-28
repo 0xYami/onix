@@ -3,6 +3,8 @@ import { createQuery } from '@tanstack/solid-query';
 import { addressDetailsSchema, type AddressDetails } from '@onix/schemas';
 import { request } from '../lib/api';
 import { assetSymbolToLogoURL } from '../lib/utils';
+import { SendIcon } from '../components/icons/send';
+import { ReceiveIcon } from '../components/icons/receive';
 
 export const Home: Component<{ address: string }> = (props) => {
   const userQuery = createQuery({
@@ -40,14 +42,14 @@ export const Home: Component<{ address: string }> = (props) => {
             type="button"
             class="w-[156px] h-[38px] flex items-center justify-center space-x-2 border-[0.3px] border-zinc-700 rounded-sm"
           >
-            <img src="/icons/receive.svg" alt="Receive Icon" class="w-[12px] h-[12px]" />
+            <ReceiveIcon class="w-[12px] h-[12px]" />
             <span class="uppercase">receive</span>
           </button>
           <button
             type="button"
             class="w-[156px] h-[38px] flex items-center justify-center space-x-2 border-[0.3px] border-zinc-700 rounded-sm"
           >
-            <img src="/icons/send.svg" alt="Send Icon" class="w-[12px] h-[12px]" />
+            <SendIcon class="w-[12px] h-[12px]" />
             <span class="uppercase">send</span>
           </button>
         </div>

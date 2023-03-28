@@ -1,6 +1,8 @@
 import type { Component } from 'solid-js';
 import { asyncFaillable } from '@onix/utils';
 import { truncateMiddle } from '../lib/utils';
+import { GasPumpIcon } from './icons/gas-pump';
+import { CopyIcon } from './icons/copy';
 
 export const Header: Component<{ address: string }> = (props) => {
   const copyAddress = async () => {
@@ -17,12 +19,12 @@ export const Header: Component<{ address: string }> = (props) => {
         <span class="font-bold uppercase">mainnet</span>
       </div>
       <div class="flex items-center space-x-1">
-        <img src="/icons/gas-pump.svg" alt="Gas Pump Icon" class="w-[14px] h-[14px]" />
+        <GasPumpIcon class="w-[14px] h-[14px]" />
         <span>$2.01</span>
       </div>
       <div class="absolute right-0 pr-4 flex items-center space-x-1">
         <button type="button" onClick={copyAddress}>
-          <img src="/icons/copy.svg" alt="Copy Icon" class="w-[14px] h-[14px]" />
+          <CopyIcon class="w-[14px] h-[14px]" />
         </button>
         <span>{truncateMiddle(props.address, 11)}</span>
       </div>
