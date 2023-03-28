@@ -1,4 +1,4 @@
-import { Component, ErrorBoundary } from 'solid-js';
+import { ErrorBoundary, type Component } from 'solid-js';
 import { Routes, Route, Navigate } from '@solidjs/router';
 import { Home } from './pages/home';
 import { Onboarding } from './pages/onboarding';
@@ -20,13 +20,25 @@ const App: Component = () => {
           <Route path="/index.html/onboarding" component={Onboarding} />
         </Routes>
         <nav class="absolute w-full h-[48px] px-2 bottom-0 flex items-center border-t-[0.3px] border-zinc-700">
-          <Link path="/" class="w-full h-full flex items-center justify-center" activeClass="text-teal-500">
+          <Link
+            path="/"
+            class="w-full h-full flex items-center justify-center"
+            activeClass="text-teal-500"
+          >
             <HomeIcon />
           </Link>
-          <Link path="/assets" class="w-full h-full flex items-center justify-center" activeClass="text-teal-500">
+          <Link
+            path="/assets"
+            class="w-full h-full flex items-center justify-center"
+            activeClass="text-teal-500"
+          >
             <GemIcon />
           </Link>
-          <Link path="/activity" class="w-full h-full flex items-center justify-center" activeClass="text-teal-500">
+          <Link
+            path="/activity"
+            class="w-full h-full flex items-center justify-center"
+            activeClass="text-teal-500"
+          >
             <BoltIcon />
           </Link>
         </nav>

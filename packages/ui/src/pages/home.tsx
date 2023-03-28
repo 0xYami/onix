@@ -1,4 +1,4 @@
-import { Component, createMemo, For, Suspense } from 'solid-js';
+import { createMemo, For, Suspense, type Component } from 'solid-js';
 import { createQuery } from '@tanstack/solid-query';
 import { addressDetailsSchema, type AddressDetails } from '@onix/schemas';
 import { request } from '../lib/api';

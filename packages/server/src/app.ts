@@ -2,7 +2,7 @@ import Fastify from 'fastify';
 import cors from '@fastify/cors';
 import type { AddressDetails } from '@onix/schemas';
 import { assets } from '@onix/utils';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import { Etherscan } from './etherscan';
 import { CoinMarketCap } from './coinmarketcap';
 import { addressDetailsParams } from './schemas';

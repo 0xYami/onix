@@ -43,5 +43,12 @@ module.exports = defineConfig({
       },
     ],
   },
-  ignorePatterns: ['CHANGELOG.md', 'playgrounds', 'dist', 'node_modules', '**/*.config.cjs'],
+  ignorePatterns: [
+    'CHANGELOG.md',
+    'playgrounds',
+    'dist',
+    'build',
+    'node_modules',
+    '**/*.config.cjs',
+  ],
 });

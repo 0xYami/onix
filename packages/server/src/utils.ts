@@ -1,4 +1,4 @@
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 
 export function take<T>(arr: Array<T>, size: number): T[] {
   if (!arr.length) return [];

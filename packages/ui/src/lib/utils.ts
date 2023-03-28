@@ -1,4 +1,4 @@
-import { Asset } from '@onix/utils';
+import type { Asset } from '@onix/utils';
 
 export function truncateMiddle(str: string, maxLength: number): string {
   if (str.length <= maxLength) return str;
