@@ -57,11 +57,14 @@ export const Home: Component<{ address: string }> = (props) => {
       </div>
       <div class="px-3">
         <div class="pb-3 uppercase">tokens</div>
-        <ul class="h-[300px] flex flex-col space-y-6 overflow-y-scroll">
+        <ul class="h-[250px] flex flex-col space-y-6 overflow-y-scroll">
           <For each={assets()}>
             {(asset) => (
               <li>
-                <Link path={`/assets/${asset.address}`} class="flex items-start justify-between">
+                <Link
+                  path={`/assets/${asset.address}`}
+                  class="flex items-start justify-between px-1 py-2 rounded-lg hover:bg-zinc-700/20 hover:duration-100"
+                >
                   <div class="flex items-center space-x-3">
                     <img
                       src={`${assetSymbolToLogoURL[asset.symbol]}`}
