@@ -1,16 +1,30 @@
-import Fastify from 'fastify';
+import Fastify, { type FastifyServerOptions } from 'fastify';
 import cors from '@fastify/cors';
 import { Client } from './client';
-import { getConfig } from './config';
+import { getConfig, type Config } from './config';
 import { addressDetailsParams } from './schemas';
 
+const envToLoggerOptions: Record<Config['env'], FastifyServerOptions['logger']> = {
+  production: true,
+  development: {
+    transport: {
+      target: 'pino-pretty',
+      options: {
+        translateTime: 'HH:MM:ss Z',
+        ignore: 'pid,hostname',
+      },
+    },
+  },
+  test: false,
+};
+
+const config = getConfig();
 const router = Fastify({
-  logger: process.env.NODE_ENV === 'development',
+  logger: envToLoggerOptions[config.env],
 });
 
 router.register(cors, { origin: true });
 
-const config = getConfig();
 const client = new Client({ apiKeys: config.apiKeys });
 
 router
