@@ -1,10 +1,9 @@
 import axios from 'axios';
 import type { z, ZodSchema } from '@onix/schemas';
 import { asyncFaillable } from '@onix/utils';
+import { config } from './config';
 
-const client = axios.create({
-  baseURL: import.meta.env.VITE_SERVER_HOST_URL,
-});
+const client = axios.create({ baseURL: config.baseURL });
 
 type RequestConfig<T extends ZodSchema> = {
   url: string;
