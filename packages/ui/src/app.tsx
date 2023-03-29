@@ -1,7 +1,6 @@
 import { ErrorBoundary, type Component } from 'solid-js';
 import { Routes, Route, Navigate } from '@solidjs/router';
 import { Home } from './pages/home';
-import { Onboarding } from './pages/onboarding';
 import { Header } from './components/header';
 import { Link } from './components/link';
 import { BoltIcon } from './components/icons/bolt';
@@ -17,7 +16,6 @@ const App: Component = () => {
         <Routes>
           <Route path="/" element={<Navigate href="/index.html" />} />
           <Route path="/index.html" element={<Home address={address} />} />
-          <Route path="/index.html/onboarding" component={Onboarding} />
         </Routes>
         <nav class="absolute w-full h-[48px] px-2 bottom-0 flex items-center bg-black border-t-[0.3px] border-zinc-700 z-10">
           <Link
