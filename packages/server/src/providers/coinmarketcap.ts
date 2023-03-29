@@ -3,7 +3,7 @@ import axios, { type Axios } from 'axios';
 import type { TokenQuote, GetTokenQuoteResponse } from '../types';
 
 type CoinMarketCapConfig = {
-  apiKey: string | undefined;
+  apiKey: string;
 };
 
 export class CoinMarketCap {

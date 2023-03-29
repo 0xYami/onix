@@ -7,8 +7,8 @@ import { CoinMarketCap } from './providers/coinmarketcap';
 
 type ClientConfig = {
   apiKeys: {
-    etherscan: string | undefined;
-    coinmarketcap: string | undefined;
+    etherscan: string;
+    coinmarketcap: string;
   };
 };
 

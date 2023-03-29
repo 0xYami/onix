@@ -31,7 +31,7 @@ router
   .get('/_health', () => {
     return 'healthy';
   })
-  .get('/address/:address', async (req) => {
+  .get('/users/:address', async (req) => {
     const { address } = addressDetailsParams.parse(req.params);
     return client.getAddressDetails(address);
   });

@@ -1,26 +1,23 @@
 import { asyncFaillable } from '@onix/utils';
 import axios, { type Axios } from 'axios';
 
-type BaseResponse = {
+type BaseResponse<TResult> = {
   status: '1';
   message: 'OK';
+  result: TResult;
 };
 
-type GetBalanceResponse = BaseResponse & {
-  result: string;
-};
+type GetBalanceResponse = BaseResponse<string>;
 
-type GetEtherPriceResponse = BaseResponse & {
-  result: {
-    ethbtc: string;
-    ethbtc_timestamp: string;
-    ethusd: string;
-    ethusd_timestamp: string;
-  };
-};
+type GetEtherPriceResponse = BaseResponse<{
+  ethbtc: string;
+  ethbtc_timestamp: string;
+  ethusd: string;
+  ethusd_timestamp: string;
+}>;
 
 type EtherscanConfig = {
-  apiKey: string | undefined;
+  apiKey: string;
 };
 
 export class Etherscan {
@@ -28,7 +25,7 @@ export class Etherscan {
   #httpClient: Axios;
 
   constructor(config: EtherscanConfig) {
-    this.#apiKey = config.apiKey!;
+    this.#apiKey = config.apiKey;
     this.#httpClient = axios.create({
       baseURL: 'https://api.etherscan.io/api',
       headers: {

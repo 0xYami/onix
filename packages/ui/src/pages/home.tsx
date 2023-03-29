@@ -11,7 +11,7 @@ export const Home: Component<{ address: string }> = (props) => {
     queryKey: () => ['address'],
     queryFn: async () => {
       return request({
-        url: `/address/${props.address}`,
+        url: `/users/${props.address}`,
         schema: addressDetailsSchema,
       });
     },
