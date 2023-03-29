@@ -1,6 +1,7 @@
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
 import { Client } from './client';
+import { getConfig } from './config';
 import { addressDetailsParams } from './schemas';
 
 const router = Fastify({
@@ -9,12 +10,8 @@ const router = Fastify({
 
 router.register(cors, { origin: true });
 
-const client = new Client({
-  apiKeys: {
-    etherscan: process.env.ETHERSCAN_API_KEY,
-    coinmarketcap: process.env.COINMARKETCAP_API_KEY,
-  },
-});
+const config = getConfig();
+const client = new Client({ apiKeys: config.apiKeys });
 
 router
   .get('/_health', () => {
@@ -27,9 +24,10 @@ router
 
 const start = async () => {
   try {
-    const host = process.env.HOST || '127.0.0.1';
-    const port = Number(process.env.PORT) || 4000;
-    await router.listen({ host, port });
+    await router.listen({
+      host: config.host,
+      port: config.port,
+    });
   } catch (err) {
     router.log.error(err);
     process.exit(1);
