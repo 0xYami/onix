@@ -35,9 +35,9 @@ export const Home: Component<{ address: string }> = (props) => {
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <div class="h-[150px] flex flex-col items-center justify-center">
-        <div class="text-lg uppercase">total balance</div>
-        <div class="text-2xl font-bold">${userQuery.data?.totalBalance}</div>
+      <div class="h-[180px] flex flex-col items-center justify-center">
+        <div class="uppercase">total balance</div>
+        <div class="text-2xl">${userQuery.data?.totalBalance}</div>
         <div class="w-full flex items-center justify-around my-4">
           <button
             type="button"

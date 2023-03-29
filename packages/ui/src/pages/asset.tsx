@@ -24,8 +24,8 @@ export const Asset: Component<{ address: string }> = (props) => {
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <div class="h-[150px] flex flex-col items-center p-3 mb-4">
-        <Link path="/" class="w-full flex items-center space-x-1">
+      <div class="relative h-[180px] flex flex-col items-center justify-center">
+        <Link path="/" class="absolute w-full top-0 left-0 m-3 flex items-center space-x-1">
           <ChevronLeftIcon />
           <span>{assetQuery.data?.name}</span>
         </Link>
