@@ -75,8 +75,8 @@ export const Asset: Component<{ address: string }> = (props) => {
                   <Switch>
                     <Match when={isSender}>
                       <div class="flex items-center space-x-2">
-                        <ReceiveIcon class="w-[21px] h-[21px] p-1 rounded-full bg-zinc-700/60 border-[0.6px] border-zinc-700" />
-                        <span class="capitalize">received</span>
+                        <SendIcon class="w-[21px] h-[21px] p-1 rounded-full bg-zinc-700/60 border-[0.6px] border-zinc-700" />
+                        <span class="capitalize">sent</span>
                       </div>
                       <div class="flex items-center space-x-1 text-sm text-zinc-500">
                         <span>{formattedDate}</span>
@@ -86,8 +86,8 @@ export const Asset: Component<{ address: string }> = (props) => {
                     </Match>
                     <Match when={!isSender}>
                       <div class="flex items-center space-x-2">
-                        <SendIcon class="w-[21px] h-[21px] p-1 rounded-full bg-zinc-700/60 border-[0.6px] border-zinc-700" />
-                        <span class="capitalize">sent</span>
+                        <ReceiveIcon class="w-[21px] h-[21px] p-1 rounded-full bg-zinc-700/60 border-[0.6px] border-zinc-700" />
+                        <span class="capitalize">received</span>
                       </div>
                       <div class="flex items-center space-x-1 text-sm text-zinc-500">
                         <span>{formattedDate}</span>
