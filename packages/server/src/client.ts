@@ -1,9 +1,14 @@
-import type { AddressDetails } from '@onix/schemas';
+import type { AddressDetails, GetAssetResult } from '@onix/schemas';
 import { assets } from '@onix/utils';
 import { BigNumber } from 'bignumber.js';
 import { take, toBaseUnit } from './utils';
 import { Etherscan } from './providers/etherscan';
 import { CoinMarketCap } from './providers/coinmarketcap';
+
+type GetAssetParams = {
+  userAddress: string;
+  contractAddress: string;
+};
 
 type ClientConfig = {
   apiKeys: {
@@ -23,6 +28,37 @@ export class Client {
     this.coinmarketcap = new CoinMarketCap({
       apiKey: config.apiKeys.coinmarketcap,
     });
+  }
+
+  async getAsset(params: GetAssetParams): Promise<GetAssetResult> {
+    const asset = assets.find((asset) => {
+      return asset.address.toLowerCase() === params.contractAddress.toLowerCase();
+    });
+
+    if (!asset) {
+      throw new Error('Asset not found');
+    }
+
+    const [balance, [price]] = await Promise.all([
+      this.etherscan.getERC20Balance(params.userAddress, params.contractAddress),
+      this.coinmarketcap.getTokenPrices([asset.symbol]),
+    ]);
+
+    const transfers = await this.etherscan.getERC20Transfers(
+      params.userAddress,
+      params.contractAddress,
+    );
+
+    return {
+      name: asset.name,
+      symbol: asset.symbol,
+      address: asset.address,
+      balance: {
+        token: toBaseUnit(balance, asset.decimals).toFixed(4),
+        usd: toBaseUnit(balance, asset.decimals).times(price.quote.USD.price).toFixed(4),
+      },
+      transfers,
+    };
   }
 
   async getAddressDetails(address: string): Promise<AddressDetails> {

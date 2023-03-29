@@ -5,6 +5,7 @@ import { request } from '../lib/api';
 import { assetSymbolToLogoURL } from '../lib/utils';
 import { SendIcon } from '../components/icons/send';
 import { ReceiveIcon } from '../components/icons/receive';
+import { Link } from '../components/link';
 
 export const Home: Component<{ address: string }> = (props) => {
   const userQuery = createQuery({
@@ -59,21 +60,23 @@ export const Home: Component<{ address: string }> = (props) => {
         <ul class="h-[300px] flex flex-col space-y-6 overflow-y-scroll">
           <For each={assets()}>
             {(asset) => (
-              <li class="flex items-start justify-between">
-                <div class="flex items-center space-x-3">
-                  <img
-                    src={`${assetSymbolToLogoURL[asset.symbol]}`}
-                    alt={`${asset.name} Icon`}
-                    class="w-[40px] h-[40px]"
-                  />
-                  <div class="flex flex-col">
-                    <span class="font-bold">
-                      {asset.balance.token} {asset.symbol}
-                    </span>
-                    <span class="text-xs text-zinc-400">{asset.name}</span>
+              <li>
+                <Link path={`/assets/${asset.address}`} class="flex items-start justify-between">
+                  <div class="flex items-center space-x-3">
+                    <img
+                      src={`${assetSymbolToLogoURL[asset.symbol]}`}
+                      alt={`${asset.name} Icon`}
+                      class="w-[40px] h-[40px]"
+                    />
+                    <div class="flex flex-col">
+                      <span class="font-bold">
+                        {asset.balance.token} {asset.symbol}
+                      </span>
+                      <span class="text-xs text-zinc-400">{asset.name}</span>
+                    </div>
                   </div>
-                </div>
-                <span>${asset.balance.usd}</span>
+                  <span>${asset.balance.usd}</span>
+                </Link>
               </li>
             )}
           </For>

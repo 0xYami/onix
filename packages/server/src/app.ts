@@ -2,7 +2,7 @@ import Fastify, { type FastifyServerOptions } from 'fastify';
 import cors from '@fastify/cors';
 import { Client } from './client';
 import { getConfig, type Config } from './config';
-import { addressDetailsParams } from './schemas';
+import { addressParamsSchema, userAssetParamsSchema } from './schemas';
 
 const envToLoggerOptions: Record<Config['env'], FastifyServerOptions['logger']> = {
   production: true,
@@ -32,8 +32,15 @@ router
     return 'healthy';
   })
   .get('/users/:address', async (req) => {
-    const { address } = addressDetailsParams.parse(req.params);
+    const { address } = addressParamsSchema.parse(req.params);
     return client.getAddressDetails(address);
+  })
+  .get('/users/:address/asset/:contractAddress', async (req) => {
+    const params = userAssetParamsSchema.parse(req.params);
+    return client.getAsset({
+      userAddress: params.address,
+      contractAddress: params.contractAddress,
+    });
   });
 
 const start = async () => {

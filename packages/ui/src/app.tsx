@@ -1,5 +1,6 @@
 import { ErrorBoundary, type Component } from 'solid-js';
 import { Routes, Route, Navigate } from '@solidjs/router';
+import { Asset } from './pages/asset';
 import { Home } from './pages/home';
 import { Header } from './components/header';
 import { Link } from './components/link';
@@ -15,6 +16,7 @@ const App: Component = () => {
         <Header address={address} />
         <Routes>
           <Route path="/" element={<Navigate href="/index.html" />} />
+          <Route path="/index.html/assets/:contractAddress" element={<Asset address={address} />} />
           <Route path="/index.html" element={<Home address={address} />} />
         </Routes>
         <nav class="absolute w-full h-[48px] px-2 bottom-0 flex items-center bg-black border-t-[0.3px] border-zinc-700 z-10">
