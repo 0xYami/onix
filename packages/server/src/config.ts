@@ -2,6 +2,7 @@ import { z } from '@onix/schemas';
 
 const configSchema = z
   .object({
+    env: z.union([z.literal('development'), z.literal('production'), z.literal('test')]),
     host: z.string().nonempty(),
     port: z.coerce.number(),
     apiKeys: z.object({
@@ -11,8 +12,11 @@ const configSchema = z
   })
   .strict();
 
-export function getConfig(): z.infer<typeof configSchema> {
+export type Config = z.infer<typeof configSchema>;
+
+export function getConfig(): Config {
   const config = configSchema.parse({
+    env: process.env.NODE_ENV,
     host: process.env.HOST,
     port: process.env.PORT,
     apiKeys: {
