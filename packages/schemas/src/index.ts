@@ -33,39 +33,39 @@ export const addressDetailsSchema = z.object({
   ),
 });
 
-export const transfersSchema = z.array(
-  z.object({
-    blockNumber: z.string(),
-    timeStamp: z.string(),
-    hash: z.string(),
-    nonce: z.string(),
-    blockHash: z.string(),
-    from: z.string(),
-    contractAddress: z.string(),
-    to: z.string(),
-    value: z.string(),
-    tokenName: z.string(),
-    tokenSymbol: z.string(),
-    tokenDecimal: z.string(),
-    transactionIndex: z.string(),
-    gas: z.string(),
-    gasPrice: z.string(),
-    gasUsed: z.string(),
-    cumulativeGasUsed: z.string(),
-    confirmations: z.string(),
-  }),
-);
+const transferSchema = z.object({
+  blockNumber: z.string(),
+  timeStamp: z.string(),
+  hash: z.string(),
+  nonce: z.string(),
+  blockHash: z.string(),
+  from: z.string(),
+  contractAddress: z.string(),
+  to: z.string(),
+  value: z.string(),
+  tokenName: z.string(),
+  tokenSymbol: z.string(),
+  tokenDecimal: z.string(),
+  transactionIndex: z.string(),
+  gas: z.string(),
+  gasPrice: z.string(),
+  gasUsed: z.string(),
+  cumulativeGasUsed: z.string(),
+  confirmations: z.string(),
+});
+
+const transfers = z.array(transferSchema);
 
 export const getAssetResultSchema = z.object({
   name: z.string(),
   symbol: assetSymbolSchema,
   address: z.string(),
   balance: assetBalanceSchema,
-  transfers: transfersSchema,
+  transfers: z.array(transferSchema),
 });
 
 export type GetAssetResult = z.infer<typeof getAssetResultSchema>;
-export type Transfers = z.infer<typeof transfersSchema>;
+export type Transfers = z.infer<typeof transfers>;
 export type AddressDetails = z.infer<typeof addressDetailsSchema>;
 
 export { z };
