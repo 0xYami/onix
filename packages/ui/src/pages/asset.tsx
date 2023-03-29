@@ -1,4 +1,4 @@
-import { Component, For, Match, Suspense, Switch } from 'solid-js';
+import { type Component, For, Match, Suspense, Switch } from 'solid-js';
 import { useParams } from '@solidjs/router';
 import { createQuery } from '@tanstack/solid-query';
 import { getAssetResultSchema } from '@onix/schemas';
