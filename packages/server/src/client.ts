@@ -49,6 +49,10 @@ export class Client {
       params.contractAddress,
     );
 
+    transfers.forEach((transfer) => {
+      transfer.value = toBaseUnit(transfer.value, asset.decimals).toFixed(2);
+    });
+
     return {
       name: asset.name,
       symbol: asset.symbol,

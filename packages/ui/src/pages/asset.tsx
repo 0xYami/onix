@@ -63,9 +63,15 @@ export const Asset: Component<{ address: string }> = (props) => {
                 year: 'numeric',
               },
             );
+            const linkToEtherscan = `https://etherscan.io/tx/${transfer.hash}`;
             return (
-              <li class="flex justify-between">
-                <div class="flex flex-col space-y-1">
+              <li class="flex justify-between px-1 py-2 rounded-lg hover:bg-zinc-700/20">
+                <a
+                  href={linkToEtherscan}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex flex-col space-y-1"
+                >
                   <Switch>
                     <Match when={isSender}>
                       <div class="flex items-center space-x-2">
@@ -90,7 +96,7 @@ export const Asset: Component<{ address: string }> = (props) => {
                       </div>
                     </Match>
                   </Switch>
-                </div>
+                </a>
                 <div class="flex flex-col">
                   <span>{transfer.value}</span>
                 </div>
