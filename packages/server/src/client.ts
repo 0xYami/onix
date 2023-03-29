@@ -5,7 +5,7 @@ import { take, toBaseUnit } from './utils';
 import { Etherscan } from './providers/etherscan';
 import { CoinMarketCap } from './providers/coinmarketcap';
 
-export type ClientConfig = {
+type ClientConfig = {
   apiKeys: {
     etherscan: string | undefined;
     coinmarketcap: string | undefined;

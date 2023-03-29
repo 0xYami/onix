@@ -1,24 +1,24 @@
 import { z } from '@onix/schemas';
-import type { ClientConfig } from './client';
 
-type Config = ClientConfig & {
-  host: string;
-  port: number;
-};
+const configSchema = z
+  .object({
+    host: z.string().nonempty(),
+    port: z.coerce.number(),
+    apiKeys: z.object({
+      etherscan: z.string().nonempty(),
+      coinmarketcap: z.string().nonempty(),
+    }),
+  })
+  .strict();
 
-const schema = z.string().nonempty();
-
-export function getConfig(): Config {
-  const host = schema.parse(process.env.HOST);
-  const port = z.coerce.number().parse(process.env.PORT);
-  const etherscanApiKey = schema.parse(process.env.ETHERSCAN_API_KEY);
-  const coinmarketcapApikey = schema.parse(process.env.COINMARKETCAP_API_KEY);
-  return {
-    host,
-    port,
+export function getConfig(): z.infer<typeof configSchema> {
+  const config = configSchema.parse({
+    host: process.env.HOST,
+    port: process.env.PORT,
     apiKeys: {
-      etherscan: etherscanApiKey,
-      coinmarketcap: coinmarketcapApikey,
+      etherscan: process.env.ETHERSCAN_API_KEY,
+      coinmarketcap: process.env.COINMARKETCAP_API_KEY,
     },
-  };
+  });
+  return config;
 }
