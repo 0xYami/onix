@@ -35,7 +35,7 @@ router
     const { address } = addressParamsSchema.parse(req.params);
     return client.getAddressDetails(address);
   })
-  .get('/users/:address/asset/:contractAddress', async (req) => {
+  .get('/users/:address/asset/erc20/:contractAddress', async (req) => {
     const params = userAssetParamsSchema.parse(req.params);
     return client.getAsset({
       userAddress: params.address,

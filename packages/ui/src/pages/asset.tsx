@@ -16,7 +16,7 @@ export const Asset: Component<{ address: string }> = (props) => {
     queryKey: () => ['asset', props.address, params.contractAddress],
     queryFn: async () => {
       return request({
-        url: `/users/${props.address}/asset/${params.contractAddress}`,
+        url: `/users/${props.address}/asset/erc20/${params.contractAddress}`,
         schema: getAssetResultSchema,
       });
     },
