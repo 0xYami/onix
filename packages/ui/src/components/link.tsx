@@ -1,11 +1,8 @@
 import type { ParentComponent } from 'solid-js';
-import { A } from '@solidjs/router';
+import { A, type AnchorProps } from '@solidjs/router';
 
-type LinkProps = {
+type LinkProps = Omit<AnchorProps, 'href'> & {
   path: `/${string}`;
-  end?: boolean;
-  class?: string;
-  activeClass?: string;
 };
 
 export const Link: ParentComponent<LinkProps> = (props) => {

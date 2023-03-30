@@ -1,6 +1,7 @@
 import { type Component, Suspense } from 'solid-js';
 import { createQuery } from '@tanstack/solid-query';
 import { getNFTCollectionsResponseSchema } from '@onix/schemas';
+import { Link } from '../components/link';
 import { request } from '../lib/api';
 
 export const Collections: Component<{ address: string }> = (props) => {
@@ -29,7 +30,7 @@ export const Collections: Component<{ address: string }> = (props) => {
         <ul class="h-[360px] overflow-y-scroll pt-2 space-y-4">
           {collectionsQuery.data?.contracts?.map((collection) => (
             <li class="p-1 cursor-pointer rounded hover:bg-zinc-700/40">
-              <div class="flex space-x-4">
+              <Link path={`/collections/${collection.address}`} class="flex space-x-4">
                 <img
                   src={collection.opensea?.imageUrl}
                   alt={`image-${collection.name}`}
@@ -41,7 +42,7 @@ export const Collections: Component<{ address: string }> = (props) => {
                     {collection.totalBalance} {collection.totalBalance > 1 ? 'NFTs' : 'NFT'}
                   </span>
                 </div>
-              </div>
+              </Link>
             </li>
           ))}
         </ul>

@@ -39,6 +39,10 @@ router
     const { address } = addressParamsSchema.parse(req.params);
     return client.getNFTCollections(address);
   })
+  .get('/users/:address/collections/:contractAddress', async (req) => {
+    const { address, contractAddress } = userAssetParamsSchema.parse(req.params);
+    return client.alchemy.getNFTCollection(address, contractAddress);
+  })
   .get('/users/:address/asset/erc20/:contractAddress', async (req) => {
     const params = userAssetParamsSchema.parse(req.params);
     return client.getAsset({

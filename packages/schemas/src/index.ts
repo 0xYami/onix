@@ -64,8 +64,54 @@ export const getAssetResultSchema = z.object({
   transfers: z.array(transferSchema),
 });
 
+const NFTMedia = z.object({
+  raw: z.string(),
+  gateway: z.string(),
+  thumbnail: z.string().optional(),
+  format: z.string().optional(),
+  bytes: z.number().optional(),
+});
+
+export const getNFTCollectionResponseSchema = z.object({
+  pageKey: z.string().optional(),
+  totalCount: z.number(),
+  blockHash: z.string(),
+  ownedNfts: z.array(
+    z.object({
+      contract: z.object({
+        address: z.string(),
+      }),
+      id: z.object({
+        tokenId: z.string(),
+        tokenMetadata: z.object({
+          tokenType: z.union([
+            z.literal('ERC721'),
+            z.literal('ERC1155'),
+            z.literal('NO_SUPPORTED_NFT_STANDARD'),
+            z.literal('NOT_A_CONTRACT'),
+          ]),
+        }),
+      }),
+      balance: z.string(),
+      title: z.string(),
+      description: z.string(),
+      tokenUri: z.object({
+        raw: z.string(),
+        gateway: z.string(),
+      }),
+      media: z.array(NFTMedia),
+      timeLastUpdated: z.string(),
+      error: z.string().optional(),
+      spamInfo: z.object({
+        isSpam: z.union([z.literal('true'), z.literal('false')]),
+        classifications: z.array(z.string()),
+      }),
+    }),
+  ),
+});
+
 export const getNFTCollectionsResponseSchema = z.object({
-  pageKey: z.string(),
+  pageKey: z.string().optional(),
   totalCount: z.number(),
   contracts: z.array(
     z.object({
@@ -79,17 +125,7 @@ export const getNFTCollectionsResponseSchema = z.object({
       tokenType: z.union([z.literal('ERC721'), z.literal('ERC1155')]),
       contractDeployer: z.string(),
       deployedBlockNumber: z.number(),
-      media: z
-        .array(
-          z.object({
-            raw: z.string(),
-            gateway: z.string(),
-            thumbnail: z.string().optional(),
-            format: z.string().optional(),
-            bytes: z.number().optional(),
-          }),
-        )
-        .optional(),
+      media: z.array(NFTMedia).optional(),
       opensea: z
         .object({
           floorPrice: z.number().optional(),
@@ -110,6 +146,7 @@ export const getNFTCollectionsResponseSchema = z.object({
 export type GetAssetResult = z.infer<typeof getAssetResultSchema>;
 export type Transfers = z.infer<typeof transfers>;
 export type AddressDetails = z.infer<typeof addressDetailsSchema>;
+export type GetNFTCollectionResponse = z.infer<typeof getNFTCollectionResponseSchema>;
 export type GetNFTCollectionsResponse = z.infer<typeof getNFTCollectionsResponseSchema>;
 
 export { z };
