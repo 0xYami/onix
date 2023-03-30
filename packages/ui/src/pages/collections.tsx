@@ -28,7 +28,7 @@ export const Collections: Component<{ address: string }> = (props) => {
         </span>
         <ul class="h-[360px] overflow-y-scroll pt-2 space-y-4">
           {collectionsQuery.data?.contracts?.map((collection) => (
-            <li>
+            <li class="p-1 cursor-pointer rounded hover:bg-zinc-700/40">
               <div class="flex space-x-4">
                 <img
                   src={collection.opensea?.imageUrl}
