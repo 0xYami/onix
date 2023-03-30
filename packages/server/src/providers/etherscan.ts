@@ -1,5 +1,6 @@
-import { asyncFaillable } from '@onix/utils';
 import axios, { type Axios } from 'axios';
+import type { Transfers } from '@onix/schemas';
+import { asyncFaillable } from '@onix/utils';
 
 type BaseResponse<TResult> = {
   status: '1';
@@ -15,6 +16,8 @@ type GetEtherPriceResponse = BaseResponse<{
   ethusd: string;
   ethusd_timestamp: string;
 }>;
+
+type GetERC20TransfersResponse = BaseResponse<Transfers>;
 
 type EtherscanConfig = {
   apiKey: string;
@@ -85,6 +88,32 @@ export class Etherscan {
           address,
           contractaddress: contractAddress.toLowerCase(),
           tag: 'latest',
+          apiKey: this.#apiKey,
+        },
+      }),
+    );
+
+    if (response.failed) {
+      throw new Error('Failed to get ERC20 balance');
+    }
+
+    return response.result.data.result;
+  }
+
+  async getERC20Transfers(
+    address: string,
+    contractAddress: string,
+  ): Promise<GetERC20TransfersResponse['result']> {
+    const response = await asyncFaillable<{ data: GetERC20TransfersResponse }>(
+      this.#httpClient.get('/', {
+        params: {
+          module: 'account',
+          action: 'tokentx',
+          address,
+          contractaddress: contractAddress,
+          page: 1,
+          offset: 20,
+          sort: 'desc',
           apiKey: this.#apiKey,
         },
       }),
