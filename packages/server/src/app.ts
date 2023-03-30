@@ -35,6 +35,10 @@ router
     const { address } = addressParamsSchema.parse(req.params);
     return client.getAddressDetails(address);
   })
+  .get('/users/:address/nfts/collections', async (req) => {
+    const { address } = addressParamsSchema.parse(req.params);
+    return client.getNFTCollections(address);
+  })
   .get('/users/:address/asset/erc20/:contractAddress', async (req) => {
     const params = userAssetParamsSchema.parse(req.params);
     return client.getAsset({

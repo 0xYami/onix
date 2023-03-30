@@ -64,9 +64,53 @@ export const getAssetResultSchema = z.object({
   transfers: z.array(transferSchema),
 });
 
+export const getNFTCollectionsResponseSchema = z.object({
+  pageKey: z.string(),
+  totalCount: z.number(),
+  contracts: z.array(
+    z.object({
+      address: z.string(),
+      totalBalance: z.number(),
+      numDistinctTokensOwned: z.number(),
+      isSpam: z.boolean(),
+      name: z.string(),
+      title: z.string(),
+      symbol: z.string(),
+      tokenType: z.union([z.literal('ERC721'), z.literal('ERC1155')]),
+      contractDeployer: z.string(),
+      deployedBlockNumber: z.number(),
+      media: z
+        .array(
+          z.object({
+            raw: z.string(),
+            gateway: z.string(),
+            thumbnail: z.string().optional(),
+            format: z.string().optional(),
+            bytes: z.number().optional(),
+          }),
+        )
+        .optional(),
+      opensea: z
+        .object({
+          floorPrice: z.number().optional(),
+          collectionName: z.string(),
+          safelistRequestStatus: z.string(),
+          imageUrl: z.string().optional(),
+          description: z.string().optional(),
+          externalLink: z.string().optional(),
+          twitterUsername: z.string().optional(),
+          discordUrl: z.string().optional(),
+          lastIngestedAt: z.string(),
+        })
+        .optional(),
+    }),
+  ),
+});
+
 export type GetAssetResult = z.infer<typeof getAssetResultSchema>;
 export type Transfers = z.infer<typeof transfers>;
 export type AddressDetails = z.infer<typeof addressDetailsSchema>;
+export type GetNFTCollectionsResponse = z.infer<typeof getNFTCollectionsResponseSchema>;
 
 export { z };
 export type { ZodSchema };
