@@ -1,4 +1,4 @@
-import type { AddressDetails, GetAssetResult, GetNFTCollectionsResponse } from '@onix/schemas';
+import type { AddressDetails, GetAssetResult } from '@onix/schemas';
 import { assets } from '@onix/utils';
 import { BigNumber } from 'bignumber.js';
 import { take, toBaseUnit } from './utils';
@@ -63,10 +63,6 @@ export class Client {
       },
       transfers,
     };
-  }
-
-  async getNFTCollections(userAddress: string): Promise<GetNFTCollectionsResponse> {
-    return this.alchemy.getNFTCollections(userAddress);
   }
 
   async getAddressDetails(address: string): Promise<AddressDetails> {

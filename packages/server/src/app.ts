@@ -37,7 +37,7 @@ router
   })
   .get('/users/:address/nfts/collections', async (req) => {
     const { address } = addressParamsSchema.parse(req.params);
-    return client.getNFTCollections(address);
+    return client.alchemy.getNFTCollections(address);
   })
   .get('/users/:address/collections/:contractAddress', async (req) => {
     const { address, contractAddress } = userAssetParamsSchema.parse(req.params);
