@@ -6,6 +6,7 @@ const configSchema = z
     host: z.string().nonempty(),
     port: z.coerce.number(),
     apiKeys: z.object({
+      alchemy: z.string().nonempty(),
       etherscan: z.string().nonempty(),
       coinmarketcap: z.string().nonempty(),
     }),
@@ -20,6 +21,7 @@ export function getConfig(): Config {
     host: process.env.HOST,
     port: process.env.PORT,
     apiKeys: {
+      alchemy: process.env.ALCHEMY_API_KEY,
       etherscan: process.env.ETHERSCAN_API_KEY,
       coinmarketcap: process.env.COINMARKETCAP_API_KEY,
     },

@@ -2,6 +2,7 @@ import type { AddressDetails, GetAssetResult } from '@onix/schemas';
 import { assets } from '@onix/utils';
 import { BigNumber } from 'bignumber.js';
 import { take, toBaseUnit } from './utils';
+import { Alchemy } from './providers/alchemy';
 import { Etherscan } from './providers/etherscan';
 import { CoinMarketCap } from './providers/coinmarketcap';
 
@@ -12,22 +13,21 @@ type GetAssetParams = {
 
 type ClientConfig = {
   apiKeys: {
+    alchemy: string;
     etherscan: string;
     coinmarketcap: string;
   };
 };
 
 export class Client {
+  alchemy: Alchemy;
   etherscan: Etherscan;
   coinmarketcap: CoinMarketCap;
 
   constructor(config: ClientConfig) {
-    this.etherscan = new Etherscan({
-      apiKey: config.apiKeys.etherscan,
-    });
-    this.coinmarketcap = new CoinMarketCap({
-      apiKey: config.apiKeys.coinmarketcap,
-    });
+    this.alchemy = new Alchemy({ apiKey: config.apiKeys.alchemy });
+    this.etherscan = new Etherscan({ apiKey: config.apiKeys.etherscan });
+    this.coinmarketcap = new CoinMarketCap({ apiKey: config.apiKeys.coinmarketcap });
   }
 
   async getAsset(params: GetAssetParams): Promise<GetAssetResult> {
