@@ -1,7 +1,7 @@
 import { type Component, Suspense } from 'solid-js';
 import { useParams } from '@solidjs/router';
 import { createQuery } from '@tanstack/solid-query';
-import { getNFTCollectionResponseSchema } from '@onix/schemas';
+import { nftCollectionSchema } from '@onix/schemas';
 import { Link } from '../components/link';
 import { ChevronLeftIcon } from '../components/icons/chevron-left';
 import { TwitterIcon } from '../components/icons/twitter';
@@ -17,7 +17,7 @@ export const Collection: Component<{ address: string }> = (props) => {
     queryFn: async () => {
       return request({
         url: `/users/${props.address}/collections/${params.contractAddress}`,
-        schema: getNFTCollectionResponseSchema,
+        schema: nftCollectionSchema,
       });
     },
   });
@@ -34,7 +34,7 @@ export const Collection: Component<{ address: string }> = (props) => {
           class="flex items-center space-x-1"
         >
           <ChevronLeftIcon />
-          <span>{'Foo'}</span>
+          <span>{'foo'}</span>
         </Link>
         <ul class="flex space-x-4">
           <li>
@@ -48,9 +48,12 @@ export const Collection: Component<{ address: string }> = (props) => {
           </li>
         </ul>
       </div>
-      <ul class="grid grid-cols-2">
-        {collectionQuery.data?.ownedNfts.map((nft) => (
-          <img src={`${nft.tokenUri}`} alt={`NFT ${nft.title}`} />
+      <ul class="grid grid-cols-2 p-3">
+        {collectionQuery.data?.nfts.map((nft) => (
+          <li>
+            <img src={nft.metadata.image} alt={`Image ${nft.title}`} class="w-[140px] h-[140px]" />
+            <span class="text-sm">{nft.title}</span>
+          </li>
         ))}
       </ul>
     </Suspense>
