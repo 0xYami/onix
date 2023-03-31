@@ -39,8 +39,6 @@ export class Alchemy {
       throw new Error('Failed to get NFT');
     }
 
-    console.log(response.result.data);
-
     return alchemyNFTSchema.parse(response.result.data);
   }
 

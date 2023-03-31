@@ -22,8 +22,6 @@ export const Collection: Component<{ address: string }> = (props) => {
     },
   });
 
-  console.log(collectionQuery.data);
-
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <div class="flex items-center justify-between p-3">
