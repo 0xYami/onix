@@ -90,43 +90,43 @@ const NFTMedia = z.object({
   bytes: z.number().optional(),
 });
 
+export const alchemyNFTSchema = z.object({
+  contract: z.object({
+    address: z.string(),
+  }),
+  id: z.object({
+    tokenId: z.string(),
+    tokenMetadata: z.object({
+      tokenType: z.union([
+        NFTTypeSchema,
+        z.literal('NO_SUPPORTED_NFT_STANDARD'),
+        z.literal('NOT_A_CONTRACT'),
+      ]),
+    }),
+  }),
+  balance: z.string().optional(),
+  title: z.string(),
+  description: z.string(),
+  tokenUri: z.object({
+    raw: z.string(),
+    gateway: z.string(),
+  }),
+  media: z.array(NFTMedia),
+  metadata: NFTMetadataSchema,
+  contractMetadata: z.object({
+    name: z.string().optional(),
+    symbol: z.string().optional(),
+    totalSupply: z.string().optional(),
+  }),
+  timeLastUpdated: z.string(),
+  error: z.string().optional(),
+})
+
 export const getNFTCollectionResponseSchema = z.object({
   pageKey: z.string().optional(),
   totalCount: z.number(),
   blockHash: z.string(),
-  ownedNfts: z.array(
-    z.object({
-      contract: z.object({
-        address: z.string(),
-      }),
-      id: z.object({
-        tokenId: z.string(),
-        tokenMetadata: z.object({
-          tokenType: z.union([
-            NFTTypeSchema,
-            z.literal('NO_SUPPORTED_NFT_STANDARD'),
-            z.literal('NOT_A_CONTRACT'),
-          ]),
-        }),
-      }),
-      balance: z.string(),
-      title: z.string(),
-      description: z.string(),
-      tokenUri: z.object({
-        raw: z.string(),
-        gateway: z.string(),
-      }),
-      media: z.array(NFTMedia),
-      metadata: NFTMetadataSchema,
-      contractMetadata: z.object({
-        name: z.string().optional(),
-        symbol: z.string().optional(),
-        totalSupply: z.string().optional(),
-      }),
-      timeLastUpdated: z.string(),
-      error: z.string().optional(),
-    }),
-  ),
+  ownedNfts: z.array(alchemyNFTSchema),
 });
 
 export const nftCollectionSchema = z.object({
@@ -141,7 +141,7 @@ export const nftCollectionSchema = z.object({
     z.object({
       title: z.string(),
       description: z.string(),
-      balance: z.string(),
+      balance: z.string().optional(),
       id: z.string(),
       type: z.union([
         NFTTypeSchema,
@@ -192,6 +192,7 @@ export type AddressDetails = z.infer<typeof addressDetailsSchema>;
 export type GetNFTCollectionResponse = z.infer<typeof getNFTCollectionResponseSchema>;
 export type GetNFTCollectionsResponse = z.infer<typeof getNFTCollectionsResponseSchema>;
 export type NFTCollection = z.infer<typeof nftCollectionSchema>;
+export type AlchemyNFT = z.infer<typeof alchemyNFTSchema>;
 
 export { z };
 export type { ZodSchema };

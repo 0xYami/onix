@@ -1,9 +1,11 @@
 import axios, { type Axios } from 'axios';
 import { asyncFaillable } from '@onix/utils';
 import {
+  alchemyNFTSchema,
   getNFTCollectionResponseSchema,
   getNFTCollectionsResponseSchema,
   type GetNFTCollectionsResponse,
+  type AlchemyNFT,
   type NFTCollection,
 } from '@onix/schemas';
 
@@ -20,6 +22,26 @@ export class Alchemy {
     this.#httpClient = axios.create({
       baseURL: `https://eth-mainnet.g.alchemy.com`,
     });
+  }
+
+  async getNFT(owner: string, contractAddress: string, tokenId: string): Promise<AlchemyNFT> {
+    const response = await asyncFaillable(
+      this.#httpClient.get(`/nft/v2/${this.#apiKey}/getNFTMetadata`, {
+        params: {
+          owner,
+          contractAddress,
+          tokenId,
+        },
+      }),
+    );
+
+    if (response.failed) {
+      throw new Error('Failed to get NFT');
+    }
+
+    console.log(response.result.data)
+
+    return alchemyNFTSchema.parse(response.result.data);
   }
 
   async getNFTCollection(ownerAddress: string, contractAddress: string): Promise<NFTCollection> {
