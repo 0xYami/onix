@@ -41,7 +41,7 @@ export const NFT: Component<{ address: string }> = (props) => {
         ) : (
           <span>No attribute</span>
         )}
-        <ul class="px-3 grid grid-cols-2">
+        <ul class="px-3 grid grid-cols-2 gap-2">
           {nftQuery.data?.metadata.attributes?.map((attribute) => (
             <li class="flex flex-col p-2 space-y-1 border border-zinc-700 rounded">
               <span class="text-sm text-zinc-300">{attribute.trait_type}</span>
