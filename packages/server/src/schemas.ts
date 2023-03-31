@@ -10,4 +10,4 @@ export const userAssetParamsSchema = addressParamsSchema.extend({
 
 export const nftQueryParamsSchema = userAssetParamsSchema.extend({
   tokenId: z.string(),
-})
+});

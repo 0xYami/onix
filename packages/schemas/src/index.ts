@@ -120,7 +120,7 @@ export const alchemyNFTSchema = z.object({
   }),
   timeLastUpdated: z.string(),
   error: z.string().optional(),
-})
+});
 
 export const getNFTCollectionResponseSchema = z.object({
   pageKey: z.string().optional(),
