@@ -13,16 +13,16 @@ export const Collection: Component<{ address: string }> = (props) => {
   const params = useParams<{ contractAddress: string }>();
 
   const collectionQuery = createQuery({
-    queryKey: () => ["collection", props.address, params.contractAddress],
+    queryKey: () => ['collection', props.address, params.contractAddress],
     queryFn: async () => {
       return request({
         url: `/users/${props.address}/collections/${params.contractAddress}`,
-        schema: getNFTCollectionResponseSchema
-      })
+        schema: getNFTCollectionResponseSchema,
+      });
     },
   });
 
-  console.log(collectionQuery.data)
+  console.log(collectionQuery.data);
 
   return (
     <Suspense fallback={<div>Loading...</div>}>

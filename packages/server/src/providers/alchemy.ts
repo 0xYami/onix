@@ -34,13 +34,12 @@ export class Alchemy {
           pageSize: 50,
           withMetadata: true,
           excludeFilters: ['AIRDROPS', 'SPAM'],
-          spamConfidenceLevel: 'MEDIUM'
+          spamConfidenceLevel: 'MEDIUM',
         },
       }),
     );
 
     if (response.failed) {
-      console.log(response.reason)
       throw new Error('Failed to get NFTs');
     }
 
@@ -49,9 +48,14 @@ export class Alchemy {
 
   async getNFTCollections(ownerAddress: string): Promise<GetNFTCollectionsResponse> {
     const response = await asyncFaillable<{ data: GetNFTCollectionsResponse }>(
-      this.#httpClient.get(
-        `/nft/v2/${this.#apiKey}/getContractsForOwner?owner=${ownerAddress}&pageSize=50`,
-      ),
+      this.#httpClient.get(`/nft/v2/${this.#apiKey}/getContractsForOwner`, {
+        params: {
+          owner: ownerAddress,
+          pageSize: 50,
+          excludeFilters: ['AIRDROPS', 'SPAM'],
+          spamConfidenceLevel: 'MEDIUM',
+        },
+      }),
     );
 
     if (response.failed) {

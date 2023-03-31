@@ -102,10 +102,6 @@ export const getNFTCollectionResponseSchema = z.object({
       media: z.array(NFTMedia),
       timeLastUpdated: z.string(),
       error: z.string().optional(),
-      spamInfo: z.object({
-        isSpam: z.union([z.literal('true'), z.literal('false')]),
-        classifications: z.array(z.string()),
-      }),
     }),
   ),
 });
@@ -119,9 +115,9 @@ export const getNFTCollectionsResponseSchema = z.object({
       totalBalance: z.number(),
       numDistinctTokensOwned: z.number(),
       isSpam: z.boolean(),
-      name: z.string(),
+      name: z.string().optional(),
       title: z.string(),
-      symbol: z.string(),
+      symbol: z.string().optional(),
       tokenType: z.union([z.literal('ERC721'), z.literal('ERC1155')]),
       contractDeployer: z.string(),
       deployedBlockNumber: z.number(),
@@ -129,14 +125,14 @@ export const getNFTCollectionsResponseSchema = z.object({
       opensea: z
         .object({
           floorPrice: z.number().optional(),
-          collectionName: z.string(),
-          safelistRequestStatus: z.string(),
+          collectionName: z.string().optional(),
+          safelistRequestStatus: z.string().optional(),
           imageUrl: z.string().optional(),
           description: z.string().optional(),
           externalLink: z.string().optional(),
           twitterUsername: z.string().optional(),
           discordUrl: z.string().optional(),
-          lastIngestedAt: z.string(),
+          lastIngestedAt: z.string().optional(),
         })
         .optional(),
     }),

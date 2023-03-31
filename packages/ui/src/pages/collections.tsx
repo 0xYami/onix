@@ -15,8 +15,6 @@ export const Collections: Component<{ address: string }> = (props) => {
     },
   });
 
-  console.log(collectionsQuery.data);
-
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <div class="flex flex-col p-3 space-y-2">
