@@ -51,8 +51,10 @@ export const Collection: Component<{ address: string }> = (props) => {
       <ul class="h-[400px] overflow-y-scroll grid grid-cols-2 p-3">
         {collectionQuery.data?.nfts.map((nft) => (
           <li>
-            <img src={nft.metadata.image} alt={`Image ${nft.title}`} class="w-[140px] h-[140px]" />
-            <span class="text-sm">{nft.title}</span>
+            <Link path={`/collections/${collectionQuery.data.contract.address}/${nft.id}`}>
+              <img src={nft.metadata.image} alt={`Image ${nft.title}`} class="w-[140px] h-[140px]" />
+              <span class="text-sm">{nft.title}</span>
+            </Link>
           </li>
         ))}
       </ul>

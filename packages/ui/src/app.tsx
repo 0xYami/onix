@@ -4,6 +4,7 @@ import { Asset } from './pages/asset';
 import { Collection } from './pages/collection';
 import { Collections } from './pages/collections';
 import { Home } from './pages/home';
+import { NFT } from './pages/nft';
 import { Header } from './components/header';
 import { Link } from './components/link';
 import { BoltIcon } from './components/icons/bolt';
@@ -23,6 +24,10 @@ const App: Component = () => {
           <Route
             path="/index.html/collections/:contractAddress"
             element={<Collection address={address} />}
+          />
+          <Route
+            path="/index.html/collections/:contractAddress/:tokenId"
+            element={<NFT address={address} />}
           />
           <Route path="/index.html" element={<Home address={address} />} />
         </Routes>
