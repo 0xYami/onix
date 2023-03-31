@@ -55,7 +55,7 @@ export class Alchemy {
             description: nft.description,
             balance: nft.balance,
             address: nft.contract.address,
-            id: nft.id.tokenId,
+            id: Number(nft.id.tokenId).toString(),
             type: nft.id.tokenMetadata.tokenType,
             metadata: nft.metadata,
           })),
