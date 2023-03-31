@@ -64,6 +64,24 @@ export const getAssetResultSchema = z.object({
   transfers: z.array(transferSchema),
 });
 
+const NFTTypeSchema = z.union([z.literal('ERC721'), z.literal('ERC1155')]);
+
+const NFTMetadataSchema = z.object({
+  image: z.string().optional(),
+  external_url: z.string().optional(),
+  background_color: z.string().optional(),
+  name: z.string().optional(),
+  description: z.string().optional(),
+  attributes: z
+    .array(
+      z.object({
+        value: z.string(),
+        trait_type: z.string(),
+      }),
+    )
+    .optional(),
+});
+
 const NFTMedia = z.object({
   raw: z.string(),
   gateway: z.string(),
@@ -85,8 +103,7 @@ export const getNFTCollectionResponseSchema = z.object({
         tokenId: z.string(),
         tokenMetadata: z.object({
           tokenType: z.union([
-            z.literal('ERC721'),
-            z.literal('ERC1155'),
+            NFTTypeSchema,
             z.literal('NO_SUPPORTED_NFT_STANDARD'),
             z.literal('NOT_A_CONTRACT'),
           ]),
@@ -100,21 +117,7 @@ export const getNFTCollectionResponseSchema = z.object({
         gateway: z.string(),
       }),
       media: z.array(NFTMedia),
-      metadata: z.object({
-        image: z.string().optional(),
-        external_url: z.string().optional(),
-        background_color: z.string().optional(),
-        name: z.string().optional(),
-        description: z.string().optional(),
-        attributes: z
-          .array(
-            z.object({
-              value: z.string(),
-              trait_type: z.string(),
-            }),
-          )
-          .optional(),
-      }),
+      metadata: NFTMetadataSchema,
       contractMetadata: z.object({
         name: z.string().optional(),
         symbol: z.string().optional(),
@@ -141,26 +144,11 @@ export const nftCollectionSchema = z.object({
       balance: z.string(),
       id: z.string(),
       type: z.union([
-        z.literal('ERC721'),
-        z.literal('ERC1155'),
+        NFTTypeSchema,
         z.literal('NO_SUPPORTED_NFT_STANDARD'),
         z.literal('NOT_A_CONTRACT'),
       ]),
-      metadata: z.object({
-        image: z.string().optional(),
-        external_url: z.string().optional(),
-        background_color: z.string().optional(),
-        name: z.string().optional(),
-        description: z.string().optional(),
-        attributes: z
-          .array(
-            z.object({
-              value: z.string(),
-              trait_type: z.string(),
-            }),
-          )
-          .optional(),
-      }),
+      metadata: NFTMetadataSchema,
     }),
   ),
 });
@@ -177,7 +165,7 @@ export const getNFTCollectionsResponseSchema = z.object({
       name: z.string().optional(),
       title: z.string(),
       symbol: z.string().optional(),
-      tokenType: z.union([z.literal('ERC721'), z.literal('ERC1155')]),
+      tokenType: NFTTypeSchema,
       contractDeployer: z.string().optional(),
       deployedBlockNumber: z.number().optional(),
       media: z.array(NFTMedia).optional(),
