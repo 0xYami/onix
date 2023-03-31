@@ -8,6 +8,7 @@ import {
   type AlchemyNFT,
   type NFTCollection,
 } from '@onix/schemas';
+import { formatNFTImageUrl } from '../utils';
 
 type AlchemyConfig = {
   apiKey: string;
@@ -39,7 +40,13 @@ export class Alchemy {
       throw new Error('Failed to get NFT');
     }
 
-    return alchemyNFTSchema.parse(response.result.data);
+    return alchemyNFTSchema
+      .transform((nft) => {
+        const imageURL = nft.metadata.image;
+        if (imageURL) nft.metadata.image = formatNFTImageUrl(imageURL);
+        return nft;
+      })
+      .parse(response.result.data);
   }
 
   async getNFTCollection(ownerAddress: string, contractAddress: string): Promise<NFTCollection> {
@@ -70,15 +77,19 @@ export class Alchemy {
             name: data.ownedNfts[0].contractMetadata.name,
             address: data.ownedNfts[0].contract.address,
           },
-          nfts: data.ownedNfts.map((nft) => ({
-            title: nft.title,
-            description: nft.description,
-            balance: nft.balance,
-            address: nft.contract.address,
-            id: Number(nft.id.tokenId).toString(),
-            type: nft.id.tokenMetadata.tokenType,
-            metadata: nft.metadata,
-          })),
+          nfts: data.ownedNfts.map((nft) => {
+            const imageURL = nft.metadata.image;
+            if (imageURL) nft.metadata.image = formatNFTImageUrl(imageURL);
+            return {
+              title: nft.title,
+              description: nft.description,
+              balance: nft.balance,
+              address: nft.contract.address,
+              id: Number(nft.id.tokenId).toString(),
+              type: nft.id.tokenMetadata.tokenType,
+              metadata: nft.metadata,
+            };
+          }),
         };
       })
       .parse(response.result.data);
