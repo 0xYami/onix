@@ -4,7 +4,6 @@ import {
   getNFTCollectionResponseSchema,
   getNFTCollectionsResponseSchema,
   type GetNFTCollectionsResponse,
-  type GetNFTCollectionResponse,
   type NFTCollection,
 } from '@onix/schemas';
 
@@ -24,7 +23,7 @@ export class Alchemy {
   }
 
   async getNFTCollection(ownerAddress: string, contractAddress: string): Promise<NFTCollection> {
-    const response = await asyncFaillable<{ data: GetNFTCollectionResponse }>(
+    const response = await asyncFaillable(
       this.#httpClient.get(`/nft/v2/${this.#apiKey}/getNFTs`, {
         params: {
           owner: ownerAddress,
@@ -43,11 +42,14 @@ export class Alchemy {
 
     return getNFTCollectionResponseSchema
       .transform((data) => {
-        console.log(JSON.stringify(data.ownedNfts, null, 2));
         return {
           pageKey: data.pageKey,
           totalCount: data.totalCount,
           blockHash: data.blockHash,
+          contract: {
+            name: data.ownedNfts[0].contractMetadata.name,
+            address: data.ownedNfts[0].contract.address,
+          },
           nfts: data.ownedNfts.map((nft) => ({
             title: nft.title,
             description: nft.description,

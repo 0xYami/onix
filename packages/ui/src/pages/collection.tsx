@@ -34,7 +34,7 @@ export const Collection: Component<{ address: string }> = (props) => {
           class="flex items-center space-x-1"
         >
           <ChevronLeftIcon />
-          <span>{'foo'}</span>
+          <span>{collectionQuery.data?.contract.name}</span>
         </Link>
         <ul class="flex space-x-4">
           <li>
@@ -48,7 +48,7 @@ export const Collection: Component<{ address: string }> = (props) => {
           </li>
         </ul>
       </div>
-      <ul class="grid grid-cols-2 p-3">
+      <ul class="h-[400px] overflow-y-scroll grid grid-cols-2 p-3">
         {collectionQuery.data?.nfts.map((nft) => (
           <li>
             <img src={nft.metadata.image} alt={`Image ${nft.title}`} class="w-[140px] h-[140px]" />

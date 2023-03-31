@@ -115,6 +115,11 @@ export const getNFTCollectionResponseSchema = z.object({
           )
           .optional(),
       }),
+      contractMetadata: z.object({
+        name: z.string().optional(),
+        symbol: z.string().optional(),
+        totalSupply: z.string().optional(),
+      }),
       timeLastUpdated: z.string(),
       error: z.string().optional(),
     }),
@@ -125,12 +130,15 @@ export const nftCollectionSchema = z.object({
   pageKey: z.string().optional(),
   totalCount: z.number(),
   blockHash: z.string(),
+  contract: z.object({
+    name: z.string().optional(),
+    address: z.string(),
+  }),
   nfts: z.array(
     z.object({
       title: z.string(),
       description: z.string(),
       balance: z.string(),
-      address: z.string(),
       id: z.string(),
       type: z.union([
         z.literal('ERC721'),
