@@ -18,7 +18,7 @@ export const Collections: Component<{ address: string }> = (props) => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <div class="flex flex-col p-3 space-y-2">
-        <span class="flex items-center justify-center h-[60px] text-xl">NFT Portfolio</span>
+        <span class="flex items-center justify-start h-[60px] text-xl">NFT Portfolio</span>
         <span class="text-zinc-100">
           {collectionsQuery.data?.totalCount}{' '}
           {collectionsQuery.data && collectionsQuery.data.totalCount > 1
