@@ -6,6 +6,7 @@ import { Collections } from './pages/collections';
 import { Home } from './pages/home';
 import { NFT } from './pages/nft';
 import { Onboarding } from './pages/onboarding';
+import { Welcome } from './pages/welcome';
 
 const App: Component = () => {
   const address = '0xd8da6bf26964af9d7eed9e03e53415d37aa96045';
@@ -14,6 +15,8 @@ const App: Component = () => {
       <div class="w-[360px] h-[540px] max-h-[540px] relative text-white bg-black border-[0.3px] border-zinc-700">
         <Routes>
           <Route path="/" element={<Navigate href="/index.html" />} />
+          <Route path="/index.html" component={Welcome} />
+          <Route path="/index.html/home" element={<Home address={address} />} />
           <Route path="/index.html/onboarding" component={Onboarding} />
           <Route path="/index.html/assets/:contractAddress" element={<Asset address={address} />} />
           <Route path="/index.html/collections" element={<Collections address={address} />} />
@@ -25,7 +28,6 @@ const App: Component = () => {
             path="/index.html/collections/:contractAddress/:tokenId"
             element={<NFT address={address} />}
           />
-          <Route path="/index.html" element={<Home address={address} />} />
         </Routes>
       </div>
     </ErrorBoundary>

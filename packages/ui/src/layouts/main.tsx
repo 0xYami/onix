@@ -13,7 +13,7 @@ export const MainLayout: ParentComponent = (props) => {
       {props.children}
       <nav class="absolute w-full h-[48px] px-2 bottom-0 flex items-center bg-black border-t-[0.3px] border-zinc-700 z-10">
         <Link
-          path="/"
+          path="/home"
           end
           class="w-full h-full flex items-center justify-center"
           activeClass="text-teal-500"
