@@ -2,13 +2,13 @@ import { type Component, Suspense } from 'solid-js';
 import { createQuery } from '@tanstack/solid-query';
 import { getNFTCollectionsResponseSchema } from '@onix/schemas';
 import { Link } from '../components/link';
-import { request } from '../lib/api';
+import { httpClient } from '../lib/api';
 
 export const Collections: Component<{ address: string }> = (props) => {
   const collectionsQuery = createQuery({
     queryKey: () => ['collections', props.address],
     queryFn: async () => {
-      return request({
+      return httpClient.request({
         url: `/users/${props.address}/nfts/collections`,
         schema: getNFTCollectionsResponseSchema,
       });

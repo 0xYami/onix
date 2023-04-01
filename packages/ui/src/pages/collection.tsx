@@ -7,7 +7,7 @@ import { ChevronLeftIcon } from '../components/icons/chevron-left';
 import { TwitterIcon } from '../components/icons/twitter';
 import { DiscordIcon } from '../components/icons/discord';
 import { GlobeIcon } from '../components/icons/globe';
-import { request } from '../lib/api';
+import { httpClient } from '../lib/api';
 
 export const Collection: Component<{ address: string }> = (props) => {
   const params = useParams<{ contractAddress: string }>();
@@ -15,7 +15,7 @@ export const Collection: Component<{ address: string }> = (props) => {
   const collectionQuery = createQuery({
     queryKey: () => ['collection', props.address, params.contractAddress],
     queryFn: async () => {
-      return request({
+      return httpClient.request({
         url: `/users/${props.address}/collections/${params.contractAddress}`,
         schema: nftCollectionSchema,
       });

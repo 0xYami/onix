@@ -1,7 +1,7 @@
 import { createMemo, For, Suspense, type Component } from 'solid-js';
 import { createQuery } from '@tanstack/solid-query';
 import { addressDetailsSchema, type AddressDetails } from '@onix/schemas';
-import { request } from '../lib/api';
+import { httpClient } from '../lib/api';
 import { assetSymbolToLogoURL } from '../lib/utils';
 import { SendIcon } from '../components/icons/send';
 import { ReceiveIcon } from '../components/icons/receive';
@@ -11,7 +11,7 @@ export const Home: Component<{ address: string }> = (props) => {
   const userQuery = createQuery({
     queryKey: () => ['address'],
     queryFn: async () => {
-      return request({
+      return httpClient.request({
         url: `/users/${props.address}`,
         schema: addressDetailsSchema,
       });
