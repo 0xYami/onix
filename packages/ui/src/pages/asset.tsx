@@ -17,7 +17,9 @@ export const Asset: Component<{ address: string }> = (props) => {
     queryFn: async () => {
       return httpClient.get({
         url: `/users/${props.address}/asset/erc20/${params.contractAddress}`,
-        schema: getAssetResultSchema,
+        validation: {
+          response: getAssetResultSchema,
+        },
       });
     },
   });

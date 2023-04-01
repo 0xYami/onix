@@ -13,7 +13,9 @@ export const Home: Component<{ address: string }> = (props) => {
     queryFn: async () => {
       return httpClient.get({
         url: `/users/${props.address}`,
-        schema: addressDetailsSchema,
+        validation: {
+          response: addressDetailsSchema,
+        },
       });
     },
     enabled: !!props.address,

@@ -14,7 +14,9 @@ export const NFT: Component<{ address: string }> = (props) => {
     queryFn: async () => {
       return httpClient.get({
         url: `/users/${props.address}/collections/${params.contractAddress}/${params.tokenId}`,
-        schema: alchemyNFTSchema,
+        validation: {
+          response: alchemyNFTSchema,
+        },
       });
     },
   });

@@ -17,7 +17,9 @@ export const Collection: Component<{ address: string }> = (props) => {
     queryFn: async () => {
       return httpClient.get({
         url: `/users/${props.address}/collections/${params.contractAddress}`,
-        schema: nftCollectionSchema,
+        validation: {
+          response: nftCollectionSchema,
+        },
       });
     },
   });
