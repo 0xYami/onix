@@ -1,21 +1,19 @@
-import axios, { type Axios } from 'axios';
+import axios from 'axios';
+import type { Axios, AxiosRequestConfig, CreateAxiosDefaults } from 'axios';
 import type { z, ZodSchema } from 'zod';
 import { asyncFaillable } from './helpers';
 
-type HttpClientConfig = {
-  baseURL: string;
-};
-
 type RequestConfig<T extends ZodSchema> = {
   url: string;
+  options?: AxiosRequestConfig;
   schema: T;
 };
 
 export class HttpClient {
   #http: Axios;
 
-  constructor(config: HttpClientConfig) {
-    this.#http = axios.create({ baseURL: config.baseURL });
+  constructor(config: CreateAxiosDefaults) {
+    this.#http = axios.create(config);
   }
 
   async request<T extends ZodSchema>(config: RequestConfig<T>): Promise<z.infer<T>> {
