@@ -21,7 +21,10 @@ export const NFT: Component<{ address: string }> = (props) => {
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <Link path={`/collections`} class="flex items-center p-3 mb-2 space-x-1">
+      <Link
+        path={`/collections/${params.contractAddress}`}
+        class="flex items-center p-3 mb-2 space-x-1"
+      >
         <ChevronLeftIcon />
         <span>
           {nftQuery.data?.contractMetadata.name} / #{nftQuery.data?.id.tokenId}
