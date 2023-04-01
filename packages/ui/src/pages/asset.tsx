@@ -6,7 +6,7 @@ import { ChevronLeftIcon } from '../components/icons/chevron-left';
 import { ReceiveIcon } from '../components/icons/receive';
 import { SendIcon } from '../components/icons/send';
 import { Link } from '../components/link';
-import { request } from '../lib/api';
+import { httpClient } from '../lib/http';
 import { truncateMiddle } from '../lib/utils';
 
 export const Asset: Component<{ address: string }> = (props) => {
@@ -15,9 +15,11 @@ export const Asset: Component<{ address: string }> = (props) => {
   const assetQuery = createQuery({
     queryKey: () => ['asset', props.address, params.contractAddress],
     queryFn: async () => {
-      return request({
+      return httpClient.get({
         url: `/users/${props.address}/asset/erc20/${params.contractAddress}`,
-        schema: getAssetResultSchema,
+        validation: {
+          response: getAssetResultSchema,
+        },
       });
     },
   });
