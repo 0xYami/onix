@@ -16,7 +16,7 @@ export class HttpClient {
     this.#http = axios.create(config);
   }
 
-  async request<T extends ZodSchema>(config: RequestConfig<T>): Promise<z.infer<T>> {
+  async get<T extends ZodSchema>(config: RequestConfig<T>): Promise<z.infer<T>> {
     const call = await asyncFaillable(this.#http.get(config.url));
     if (call.failed) {
       throw new Error(`Request to ${config.url} failed`);

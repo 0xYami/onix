@@ -15,7 +15,7 @@ export const Collection: Component<{ address: string }> = (props) => {
   const collectionQuery = createQuery({
     queryKey: () => ['collection', props.address, params.contractAddress],
     queryFn: async () => {
-      return httpClient.request({
+      return httpClient.get({
         url: `/users/${props.address}/collections/${params.contractAddress}`,
         schema: nftCollectionSchema,
       });

@@ -12,7 +12,7 @@ export const NFT: Component<{ address: string }> = (props) => {
   const nftQuery = createQuery({
     queryKey: () => ['nft', props.address, params.contractAddress, params.tokenId],
     queryFn: async () => {
-      return httpClient.request({
+      return httpClient.get({
         url: `/users/${props.address}/collections/${params.contractAddress}/${params.tokenId}`,
         schema: alchemyNFTSchema,
       });

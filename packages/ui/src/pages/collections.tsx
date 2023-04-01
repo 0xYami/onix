@@ -8,7 +8,7 @@ export const Collections: Component<{ address: string }> = (props) => {
   const collectionsQuery = createQuery({
     queryKey: () => ['collections', props.address],
     queryFn: async () => {
-      return httpClient.request({
+      return httpClient.get({
         url: `/users/${props.address}/nfts/collections`,
         schema: getNFTCollectionsResponseSchema,
       });

@@ -11,7 +11,7 @@ export const Home: Component<{ address: string }> = (props) => {
   const userQuery = createQuery({
     queryKey: () => ['address'],
     queryFn: async () => {
-      return httpClient.request({
+      return httpClient.get({
         url: `/users/${props.address}`,
         schema: addressDetailsSchema,
       });
