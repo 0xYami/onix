@@ -5,6 +5,7 @@ import { Collection } from './pages/collection';
 import { Collections } from './pages/collections';
 import { Home } from './pages/home';
 import { NFT } from './pages/nft';
+import { Onboarding } from './pages/onboarding';
 import { Header } from './components/header';
 import { Link } from './components/link';
 import { BoltIcon } from './components/icons/bolt';
@@ -19,6 +20,7 @@ const App: Component = () => {
         <Header address={address} />
         <Routes>
           <Route path="/" element={<Navigate href="/index.html" />} />
+          <Route path="/index.html/onboarding" component={Onboarding} />
           <Route path="/index.html/assets/:contractAddress" element={<Asset address={address} />} />
           <Route path="/index.html/collections" element={<Collections address={address} />} />
           <Route
