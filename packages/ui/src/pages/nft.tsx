@@ -4,7 +4,7 @@ import { createQuery } from '@tanstack/solid-query';
 import { alchemyNFTSchema } from '@onix/schemas';
 import { Link } from '../components/link';
 import { ChevronLeftIcon } from '../components/icons/chevron-left';
-import { httpClient } from '../lib/api';
+import { httpClient } from '../lib/http';
 
 export const NFT: Component<{ address: string }> = (props) => {
   const params = useParams<{ contractAddress: string; tokenId: string }>();

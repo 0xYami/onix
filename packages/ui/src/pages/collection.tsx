@@ -7,7 +7,7 @@ import { ChevronLeftIcon } from '../components/icons/chevron-left';
 import { TwitterIcon } from '../components/icons/twitter';
 import { DiscordIcon } from '../components/icons/discord';
 import { GlobeIcon } from '../components/icons/globe';
-import { httpClient } from '../lib/api';
+import { httpClient } from '../lib/http';
 
 export const Collection: Component<{ address: string }> = (props) => {
   const params = useParams<{ contractAddress: string }>();

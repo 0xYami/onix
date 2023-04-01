@@ -6,7 +6,7 @@ import { ChevronLeftIcon } from '../components/icons/chevron-left';
 import { ReceiveIcon } from '../components/icons/receive';
 import { SendIcon } from '../components/icons/send';
 import { Link } from '../components/link';
-import { httpClient } from '../lib/api';
+import { httpClient } from '../lib/http';
 import { truncateMiddle } from '../lib/utils';
 
 export const Asset: Component<{ address: string }> = (props) => {

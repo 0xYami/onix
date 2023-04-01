@@ -2,7 +2,7 @@ import { type Component, Suspense } from 'solid-js';
 import { createQuery } from '@tanstack/solid-query';
 import { getNFTCollectionsResponseSchema } from '@onix/schemas';
 import { Link } from '../components/link';
-import { httpClient } from '../lib/api';
+import { httpClient } from '../lib/http';
 
 export const Collections: Component<{ address: string }> = (props) => {
   const collectionsQuery = createQuery({
