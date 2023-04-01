@@ -68,12 +68,12 @@ export const Onboarding: Component = () => {
         <div class="relative h-[430px] p-3">
           <div class="font-bold mb-2">Save your recovery phrase</div>
           <p class="text-xs text-zinc-400">
-            You will use this to recover your account in case you lose your device or password.
-            {' '}<span class="font-bold">Never share it with anyone!</span>
+            You will use this to recover your account in case you lose your device or password.{' '}
+            <span class="font-bold">Never share it with anyone!</span>
           </p>
           <div class="my-4 uppercase">recovery phrase</div>
           <p class="p-2 text-sm border border-zinc-700/80 rounded">
-            {"vault below speed impose cinnamon agree basic husband festival beach federal supreme"}
+            {'vault below speed impose cinnamon agree basic husband festival beach federal supreme'}
           </p>
           <button
             type="button"
