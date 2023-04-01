@@ -1,4 +1,5 @@
 import { createSignal, Match, Switch, type Component } from 'solid-js';
+import { ChevronLeftIcon } from '../components/icons/chevron-left';
 
 type StepName = 'home' | 'password' | 'mnemonic' | 'success';
 
@@ -7,7 +8,7 @@ export const Onboarding: Component = () => {
   return (
     <Switch>
       <Match when={currentStep() === 'home'}>
-        <div class="relative h-[430px] flex flex-col items-center justify-center space-y-1">
+        <div class="relative h-[520px] flex flex-col items-center justify-center space-y-1">
           <span class="w-[70%] text-sm uppercase">welcome to</span>
           <span class="text-7xl font-bold">Onix</span>
           <span class="w-[70%] text-xs uppercase text-right text-zinc-400">
@@ -23,8 +24,15 @@ export const Onboarding: Component = () => {
         </div>
       </Match>
       <Match when={currentStep() === 'password'}>
-        <div class="relative h-[430px] p-3">
-          <div class="font-bold mb-2">Set your password</div>
+        <div class="relative h-[520px] p-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center py-4 space-x-2">
+              <ChevronLeftIcon />
+              <span>back</span>
+            </div>
+            <span class="text-sm">1/2</span>
+          </div>
+          <div class="text-xl font-bold mb-2">Set your password</div>
           <p class="text-xs text-zinc-400">
             You will use this password to unlock your wallet extension.
           </p>
@@ -65,7 +73,14 @@ export const Onboarding: Component = () => {
         </div>
       </Match>
       <Match when={currentStep() === 'mnemonic'}>
-        <div class="relative h-[430px] p-3">
+        <div class="relative h-[520px] p-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center py-4 space-x-2">
+              <ChevronLeftIcon />
+              <span>back</span>
+            </div>
+            <span class="text-sm">2/2</span>
+          </div>
           <div class="font-bold mb-2">Save your recovery phrase</div>
           <p class="text-xs text-zinc-400">
             You will use this to recover your account in case you lose your device or password.{' '}
