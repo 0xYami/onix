@@ -1,5 +1,4 @@
-import axios, { type Axios } from 'axios';
-import { asyncFaillable } from '@onix/utils';
+import { HttpClient } from '@onix/utils';
 import {
   alchemyNFTSchema,
   getNFTCollectionResponseSchema,
@@ -16,42 +15,41 @@ type AlchemyConfig = {
 
 export class Alchemy {
   #apiKey: string;
-  #httpClient: Axios;
+  #httpClient: HttpClient;
 
   constructor(config: AlchemyConfig) {
     this.#apiKey = config.apiKey;
-    this.#httpClient = axios.create({
+    this.#httpClient = new HttpClient({
       baseURL: `https://eth-mainnet.g.alchemy.com`,
     });
   }
 
   async getNFT(owner: string, contractAddress: string, tokenId: string): Promise<AlchemyNFT> {
-    const response = await asyncFaillable(
-      this.#httpClient.get(`/nft/v2/${this.#apiKey}/getNFTMetadata`, {
+    const nft = await this.#httpClient.get({
+      url: `/nft/v2/${this.#apiKey}/getNFTMetadata`,
+      options: {
         params: {
           owner,
           contractAddress,
           tokenId,
         },
-      }),
-    );
+      },
+      validation: {
+        response: alchemyNFTSchema,
+      },
+    });
 
-    if (response.failed) {
-      throw new Error('Failed to get NFT');
+    if (nft.metadata.image) {
+      nft.metadata.image = formatNFTImageUrl(nft.metadata.image);
     }
 
-    return alchemyNFTSchema
-      .transform((nft) => {
-        const imageURL = nft.metadata.image;
-        if (imageURL) nft.metadata.image = formatNFTImageUrl(imageURL);
-        return nft;
-      })
-      .parse(response.result.data);
+    return nft;
   }
 
   async getNFTCollection(ownerAddress: string, contractAddress: string): Promise<NFTCollection> {
-    const response = await asyncFaillable(
-      this.#httpClient.get(`/nft/v2/${this.#apiKey}/getNFTs`, {
+    const collection = await this.#httpClient.get({
+      url: `/nft/v2/${this.#apiKey}/getNFTs`,
+      options: {
         params: {
           owner: ownerAddress,
           contractAddresses: [contractAddress],
@@ -60,57 +58,49 @@ export class Alchemy {
           excludeFilters: ['AIRDROPS', 'SPAM'],
           spamConfidenceLevel: 'MEDIUM',
         },
-      }),
-    );
-
-    if (response.failed) {
-      throw new Error('Failed to get NFTs');
-    }
-
-    return getNFTCollectionResponseSchema
-      .transform((data) => {
+      },
+      validation: {
+        response: getNFTCollectionResponseSchema,
+      },
+    });
+    return {
+      pageKey: collection.pageKey,
+      totalCount: collection.totalCount,
+      blockHash: collection.blockHash,
+      contract: {
+        name: collection.ownedNfts[0].contractMetadata.name,
+        address: collection.ownedNfts[0].contract.address,
+      },
+      nfts: collection.ownedNfts.map((nft) => {
+        const imageURL = nft.metadata.image;
+        if (imageURL) nft.metadata.image = formatNFTImageUrl(imageURL);
         return {
-          pageKey: data.pageKey,
-          totalCount: data.totalCount,
-          blockHash: data.blockHash,
-          contract: {
-            name: data.ownedNfts[0].contractMetadata.name,
-            address: data.ownedNfts[0].contract.address,
-          },
-          nfts: data.ownedNfts.map((nft) => {
-            const imageURL = nft.metadata.image;
-            if (imageURL) nft.metadata.image = formatNFTImageUrl(imageURL);
-            return {
-              title: nft.title,
-              description: nft.description,
-              balance: nft.balance,
-              address: nft.contract.address,
-              id: Number(nft.id.tokenId).toString(),
-              type: nft.id.tokenMetadata.tokenType,
-              metadata: nft.metadata,
-            };
-          }),
+          title: nft.title,
+          description: nft.description,
+          balance: nft.balance,
+          address: nft.contract.address,
+          id: Number(nft.id.tokenId).toString(),
+          type: nft.id.tokenMetadata.tokenType,
+          metadata: nft.metadata,
         };
-      })
-      .parse(response.result.data);
+      }),
+    };
   }
 
   async getNFTCollections(ownerAddress: string): Promise<GetNFTCollectionsResponse> {
-    const response = await asyncFaillable<{ data: GetNFTCollectionsResponse }>(
-      this.#httpClient.get(`/nft/v2/${this.#apiKey}/getContractsForOwner`, {
+    return this.#httpClient.get({
+      url: `/nft/v2/${this.#apiKey}/getContractsForOwner`,
+      options: {
         params: {
           owner: ownerAddress,
           pageSize: 50,
           excludeFilters: ['AIRDROPS', 'SPAM'],
           spamConfidenceLevel: 'MEDIUM',
         },
-      }),
-    );
-
-    if (response.failed) {
-      throw new Error('Failed to get NFT collections');
-    }
-
-    return getNFTCollectionsResponseSchema.parse(response.result.data);
+      },
+      validation: {
+        response: getNFTCollectionsResponseSchema,
+      },
+    });
   }
 }
