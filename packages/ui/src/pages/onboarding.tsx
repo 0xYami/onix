@@ -132,6 +132,7 @@ const PasswordStep: Component<StepProps> = (props) => {
 };
 
 const MnemonicStep: Component<StepProps> = (props) => {
+  const [blurredOut, setBlurredOut] = createSignal(true);
   const wallet = Wallet.createRandom();
   return (
     <div class="relative h-[520px] p-3">
@@ -152,13 +153,21 @@ const MnemonicStep: Component<StepProps> = (props) => {
         <button
           type="button"
           class="flex items-center space-x-2"
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           onClick={() => copyToClipboard(wallet.mnemonic!.phrase)}
         >
-          <span class="text-sm uppercase">copy</span>
+          <span class="text-xs uppercase">copy</span>
           <CopyIcon class="w-[12px] h-[12px]" />
         </button>
       </div>
-      <p class="p-2 text-sm border-[0.3px] border-zinc-700/80 rounded">{wallet.mnemonic?.phrase}</p>
+      <div class="flex items-center justify-around p-2 border-[0.3px] border-zinc-700/80 rounded">
+        <p class="w-[92%] text-sm select-none" classList={{ blur: blurredOut() }}>
+          {wallet.mnemonic?.phrase}
+        </p>
+        <button type="button" onClick={() => setBlurredOut((prev) => !prev)}>
+          {blurredOut() ? <EyeIcon /> : <EyeSlashIcon />}
+        </button>
+      </div>
       <button
         type="button"
         class="absolute w-[90%] py-2 text-center bottom-0 border-[0.3px] border-zinc-700/80 rounded"
