@@ -1,4 +1,4 @@
-import { type Component, For, Match, Suspense, Switch } from 'solid-js';
+import { type Component, For, Suspense } from 'solid-js';
 import { useParams } from '@solidjs/router';
 import { createQuery } from '@tanstack/solid-query';
 import { getAssetResultSchema } from '@onix/schemas';
@@ -76,30 +76,21 @@ export const Asset: Component<{ address: string }> = (props) => {
                     rel="noopener noreferrer"
                     class="flex flex-col space-y-1"
                   >
-                    <Switch>
-                      <Match when={isSender}>
-                        <div class="flex items-center space-x-2">
-                          <SendIcon class="w-[21px] h-[21px] p-1 rounded-full bg-zinc-700/60 border-[0.6px] border-zinc-700" />
-                          <span class="capitalize">sent</span>
-                        </div>
-                        <div class="flex items-center space-x-1 text-sm text-zinc-500">
-                          <span>{formattedDate}</span>
-                          <span class="h-[3px] w-[3px] rounded-full bg-zinc-700" />
-                          <span class="capitalize">to {truncateMiddle(transfer.to, 11)}</span>
-                        </div>
-                      </Match>
-                      <Match when={!isSender}>
-                        <div class="flex items-center space-x-2">
-                          <ReceiveIcon class="w-[21px] h-[21px] p-1 rounded-full bg-zinc-700/60 border-[0.6px] border-zinc-700" />
-                          <span class="capitalize">received</span>
-                        </div>
-                        <div class="flex items-center space-x-1 text-sm text-zinc-500">
-                          <span>{formattedDate}</span>
-                          <span class="h-[3px] w-[3px] rounded-full bg-zinc-700" />
-                          <span class="capitalize">from {truncateMiddle(transfer.from, 11)}</span>
-                        </div>
-                      </Match>
-                    </Switch>
+                    <div class="flex items-center space-x-2">
+                      {isSender ? (
+                        <SendIcon class="w-[21px] h-[21px] p-1 rounded-full bg-zinc-700/60 border-[0.6px] border-zinc-700" />
+                      ) : (
+                        <ReceiveIcon class="w-[21px] h-[21px] p-1 rounded-full bg-zinc-700/60 border-[0.6px] border-zinc-700" />
+                      )}
+                      <span class="capitalize">{isSender ? 'sent' : 'received'}</span>
+                    </div>
+                    <div class="flex items-center space-x-1 text-sm text-zinc-500">
+                      <span>{formattedDate}</span>
+                      <span class="h-[3px] w-[3px] rounded-full bg-zinc-700" />
+                      <span class="capitalize">
+                        {isSender ? 'to' : 'from'} {truncateMiddle(transfer.to, 11)}
+                      </span>
+                    </div>
                   </a>
                   <div class="flex flex-col">
                     <span>{transfer.value}</span>

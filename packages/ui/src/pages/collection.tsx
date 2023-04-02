@@ -1,4 +1,4 @@
-import { type Component, Suspense } from 'solid-js';
+import { type Component, Suspense, For } from 'solid-js';
 import { useParams } from '@solidjs/router';
 import { createQuery } from '@tanstack/solid-query';
 import { nftCollectionSchema } from '@onix/schemas';
@@ -51,18 +51,20 @@ export const Collection: Component<{ address: string }> = (props) => {
           </ul>
         </div>
         <ul class="h-[400px] overflow-y-scroll grid grid-cols-2 p-3">
-          {collectionQuery.data?.nfts.map((nft) => (
-            <li>
-              <Link path={`/collections/${collectionQuery.data.contract.address}/${nft.id}`}>
-                <img
-                  src={nft.metadata.image}
-                  alt={`Image ${nft.title}`}
-                  class="w-[140px] h-[140px]"
-                />
-                <span class="text-sm">{nft.title}</span>
-              </Link>
-            </li>
-          ))}
+          <For each={collectionQuery.data?.nfts}>
+            {(nft) => (
+              <li>
+                <Link path={`/collections/${collectionQuery.data?.contract.address}/${nft.id}`}>
+                  <img
+                    src={nft.metadata.image}
+                    alt={`Image ${nft.title}`}
+                    class="w-[140px] h-[140px]"
+                  />
+                  <span class="text-sm">{nft.title}</span>
+                </Link>
+              </li>
+            )}
+          </For>
         </ul>
       </Suspense>
     </MainLayout>
