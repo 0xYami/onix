@@ -14,8 +14,6 @@ export const Onboarding: Component = () => {
     <Switch>
       <Match when={currentStep() === 'password'}>
         <PasswordStep
-          id={1}
-          totalSteps={2}
           onNext={() => setCurrentStep(() => 'mnemonic')}
           onPrevious={() => {
             navigate('/index.html');
@@ -24,8 +22,6 @@ export const Onboarding: Component = () => {
       </Match>
       <Match when={currentStep() === 'mnemonic'}>
         <MnemonicStep
-          id={2}
-          totalSteps={2}
           onNext={() => setCurrentStep(() => 'success')}
           onPrevious={() => setCurrentStep(() => 'password')}
         />
@@ -38,13 +34,14 @@ export const Onboarding: Component = () => {
 };
 
 type StepProps = {
-  id: number;
-  totalSteps: number;
   onNext: () => void;
   onPrevious: () => void;
 };
 
 const PasswordStep: Component<StepProps> = (props) => {
+  const [password, setPassword] = createSignal('');
+  const [confirmedPassword, setConfirmedPassword] = createSignal('');
+
   return (
     <div class="relative h-[520px] p-3">
       <div class="flex items-center justify-between">
@@ -52,15 +49,19 @@ const PasswordStep: Component<StepProps> = (props) => {
           <ChevronLeftIcon />
           <span>back</span>
         </button>
-        <span class="text-sm">
-          {props.id}/{props.totalSteps}
-        </span>
+        <span class="text-sm">1/2</span>
       </div>
       <div class="text-xl font-bold mb-2">Set your password</div>
       <p class="text-xs text-zinc-400">
         You will use this password to unlock your wallet extension.
       </p>
-      <form class="mt-3">
+      <form
+        class="mt-3"
+        onSubmit={(event) => {
+          event.preventDefault();
+          props.onNext();
+        }}
+      >
         <div class="flex flex-col mb-4 space-y-2">
           <label for="password" class="uppercase text-sm">
             enter password
@@ -68,11 +69,15 @@ const PasswordStep: Component<StepProps> = (props) => {
           <input
             id="password"
             type="password"
+            value={password()}
+            onInput={(event) => setPassword(event.target.value)}
+            required
+            pattern=".{8,}"
+            title="Password must be at least 8 characters long"
             placeholder="Password"
             class="bg-black border-[0.3px] border-zinc-700 rounded"
           />
         </div>
-
         <div class="flex flex-col space-y-2">
           <label for="confirm-password" class="uppercase text-sm">
             Confirm password
@@ -80,18 +85,22 @@ const PasswordStep: Component<StepProps> = (props) => {
           <input
             id="confirm-password"
             type="password"
+            value={confirmedPassword()}
+            onInput={(event) => setConfirmedPassword(event.target.value)}
+            required
+            pattern={password()}
+            title="Passwords do not match"
             placeholder="Password"
             class="bg-black border-[0.3px] border-zinc-700 rounded"
           />
         </div>
+        <button
+          type="submit"
+          class="absolute w-[90%] py-2 text-center bottom-0 border-[0.3px] border-zinc-700/80 rounded"
+        >
+          Next
+        </button>
       </form>
-      <button
-        type="button"
-        class="absolute w-[90%] py-2 text-center bottom-0 border-[0.3px] border-zinc-700/80 rounded"
-        onClick={props.onNext}
-      >
-        Next
-      </button>
     </div>
   );
 };
@@ -104,9 +113,7 @@ const MnemonicStep: Component<StepProps> = (props) => {
           <ChevronLeftIcon />
           <span>back</span>
         </button>
-        <span class="text-sm">
-          {props.id}/{props.totalSteps}
-        </span>
+        <span class="text-sm">2/2</span>
       </div>
       <div class="text-xl font-bold mb-2">Save your recovery phrase</div>
       <p class="text-xs text-zinc-400">
