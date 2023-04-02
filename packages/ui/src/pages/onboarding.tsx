@@ -1,6 +1,7 @@
-import { createSignal, Match, Switch, type Component } from 'solid-js';
+import { createEffect, createSignal, Match, Switch, type Component } from 'solid-js';
+import { createStore } from 'solid-js/store';
 import { useNavigate } from '@solidjs/router';
-import { Wallet } from 'ethers';
+import { type Mnemonic, Wallet } from 'ethers';
 import { Link } from '../components/link';
 import { ChevronLeftIcon } from '../components/icons/chevron-left';
 import { PuzzlePieceIcon } from '../components/icons/puzzle-piece';
@@ -12,9 +13,34 @@ import { copyToClipboard } from '../lib/utils';
 
 type StepName = 'password' | 'mnemonic' | 'success';
 
+type OnboardingStore = {
+  password: string;
+  confirmedPassword: string;
+  mnemonic: Mnemonic | null;
+};
+
+const [store, setStore] = createStore<OnboardingStore>({
+  password: '',
+  confirmedPassword: '',
+  mnemonic: null,
+});
+
 export const Onboarding: Component = () => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = createSignal<StepName>('password');
+
+  createEffect(async () => {
+    if (currentStep() !== 'success') return;
+    if (!store.mnemonic) return;
+    localStorage.setItem(
+      'onix-user-secrets',
+      JSON.stringify({
+        password: store.password,
+        mnemonic: store.mnemonic.phrase,
+      }),
+    );
+  });
+
   return (
     <Switch>
       <Match when={currentStep() === 'password'}>
@@ -44,8 +70,6 @@ type StepProps = {
 };
 
 const PasswordStep: Component<StepProps> = (props) => {
-  const [password, setPassword] = createSignal('');
-  const [confirmedPassword, setConfirmedPassword] = createSignal('');
   const [showPassword, setShowPassword] = createSignal(false);
   const [showConfirmedPassword, setShowConfirmedPassword] = createSignal(false);
 
@@ -77,8 +101,8 @@ const PasswordStep: Component<StepProps> = (props) => {
             <input
               id="password"
               type={showPassword() ? 'text' : 'password'}
-              value={password()}
-              onInput={(event) => setPassword(event.target.value)}
+              value={store.password}
+              onInput={(event) => setStore({ password: event.target.value })}
               autofocus
               required
               pattern=".{8,}"
@@ -103,10 +127,10 @@ const PasswordStep: Component<StepProps> = (props) => {
             <input
               id="confirm-password"
               type={showConfirmedPassword() ? 'text' : 'password'}
-              value={confirmedPassword()}
-              onInput={(event) => setConfirmedPassword(event.target.value)}
+              value={store.confirmedPassword}
+              onInput={(event) => setStore({ confirmedPassword: event.target.value })}
               required
-              pattern={password()}
+              pattern={store.password}
               title="Passwords do not match"
               placeholder="Password"
               class="w-full bg-black border-[0.3px] border-zinc-700 rounded"
@@ -133,7 +157,10 @@ const PasswordStep: Component<StepProps> = (props) => {
 
 const MnemonicStep: Component<StepProps> = (props) => {
   const [blurredOut, setBlurredOut] = createSignal(true);
+
   const wallet = Wallet.createRandom();
+  setStore({ mnemonic: wallet.mnemonic });
+
   return (
     <div class="relative h-[520px] p-3">
       <div class="flex items-center justify-between">
