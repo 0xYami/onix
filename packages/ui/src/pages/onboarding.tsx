@@ -1,11 +1,14 @@
 import { createSignal, Match, Switch, type Component } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
+import { Wallet } from 'ethers';
 import { Link } from '../components/link';
 import { ChevronLeftIcon } from '../components/icons/chevron-left';
 import { PuzzlePieceIcon } from '../components/icons/puzzle-piece';
 import { ThumbstackIcon } from '../components/icons/thumbstack';
 import { EyeIcon } from '../components/icons/eye';
 import { EyeSlashIcon } from '../components/icons/eye-slash';
+import { CopyIcon } from '../components/icons/copy';
+import { copyToClipboard } from '../lib/utils';
 
 type StepName = 'password' | 'mnemonic' | 'success';
 
@@ -128,6 +131,7 @@ const PasswordStep: Component<StepProps> = (props) => {
 };
 
 const MnemonicStep: Component<StepProps> = (props) => {
+  const wallet = Wallet.createRandom();
   return (
     <div class="relative h-[520px] p-3">
       <div class="flex items-center justify-between">
@@ -142,10 +146,18 @@ const MnemonicStep: Component<StepProps> = (props) => {
         You will use this to recover your account in case you lose your device or password.{' '}
         <span class="font-bold">Never share it with anyone!</span>
       </p>
-      <div class="my-4 uppercase">recovery phrase</div>
-      <p class="p-2 text-sm border-[0.3px] border-zinc-700/80 rounded">
-        {'vault below speed impose cinnamon agree basic husband festival beach federal supreme'}
-      </p>
+      <div class="flex items-center justify-between my-4">
+        <div class="uppercase">recovery phrase</div>
+        <button
+          type="button"
+          class="flex items-center space-x-2"
+          onClick={() => copyToClipboard(wallet.mnemonic!.phrase)}
+        >
+          <span class="text-sm uppercase">copy</span>
+          <CopyIcon class="w-[12px] h-[12px]" />
+        </button>
+      </div>
+      <p class="p-2 text-sm border-[0.3px] border-zinc-700/80 rounded">{wallet.mnemonic?.phrase}</p>
       <button
         type="button"
         class="absolute w-[90%] py-2 text-center bottom-0 border-[0.3px] border-zinc-700/80 rounded"

@@ -15,6 +15,7 @@
     "@onix/utils": "workspace:*",
     "@solidjs/router": "^0.8.2",
     "@tanstack/solid-query": "^4.27.0",
+    "ethers": "^6.2.3",
     "solid-js": "^1.7.0"
   },
   "devDependencies": {
