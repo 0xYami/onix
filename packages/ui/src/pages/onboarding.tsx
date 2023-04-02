@@ -79,6 +79,7 @@ const PasswordStep: Component<StepProps> = (props) => {
               type={showPassword() ? 'text' : 'password'}
               value={password()}
               onInput={(event) => setPassword(event.target.value)}
+              autofocus
               required
               pattern=".{8,}"
               title="Password must be at least 8 characters long"
