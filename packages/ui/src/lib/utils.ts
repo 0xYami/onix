@@ -1,10 +1,17 @@
-import type { Asset } from '@onix/utils';
+import { asyncFaillable, type Asset } from '@onix/utils';
 
 export function truncateMiddle(str: string, maxLength: number): string {
   if (str.length <= maxLength) return str;
   const leftHalfLength = Math.ceil((maxLength - 3) / 2);
   const rightHalfLength = Math.floor((maxLength - 3) / 2);
   return str.slice(0, leftHalfLength) + '...' + str.slice(str.length - rightHalfLength);
+}
+
+export async function copyToClipboard(str: string) {
+  const result = await asyncFaillable(navigator.clipboard.writeText(str));
+  if (result.failed) {
+    console.error('Failed to copy', result.reason);
+  }
 }
 
 export const assetSymbolToLogoURL: Record<Asset['symbol'], `/logos/${string}`> = {

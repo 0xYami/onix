@@ -15,10 +15,12 @@
     "@onix/utils": "workspace:*",
     "@solidjs/router": "^0.8.2",
     "@tanstack/solid-query": "^4.27.0",
+    "ethers": "^6.2.3",
     "solid-js": "^1.7.0"
   },
   "devDependencies": {
     "@crxjs/vite-plugin": "2.0.0-beta.15",
+    "@tailwindcss/forms": "^0.5.3",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.21",
     "tailwindcss": "^3.3.1",
