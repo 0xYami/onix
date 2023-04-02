@@ -4,6 +4,8 @@ import { Link } from '../components/link';
 import { ChevronLeftIcon } from '../components/icons/chevron-left';
 import { PuzzlePieceIcon } from '../components/icons/puzzle-piece';
 import { ThumbstackIcon } from '../components/icons/thumbstack';
+import { EyeIcon } from '../components/icons/eye';
+import { EyeSlashIcon } from '../components/icons/eye-slash';
 
 type StepName = 'password' | 'mnemonic' | 'success';
 
@@ -41,6 +43,8 @@ type StepProps = {
 const PasswordStep: Component<StepProps> = (props) => {
   const [password, setPassword] = createSignal('');
   const [confirmedPassword, setConfirmedPassword] = createSignal('');
+  const [showPassword, setShowPassword] = createSignal(false);
+  const [showConfirmedPassword, setShowConfirmedPassword] = createSignal(false);
 
   return (
     <div class="relative h-[520px] p-3">
@@ -52,7 +56,7 @@ const PasswordStep: Component<StepProps> = (props) => {
         <span class="text-sm">1/2</span>
       </div>
       <div class="text-xl font-bold mb-2">Set your password</div>
-      <p class="text-xs text-zinc-400">
+      <p class="text-sm text-zinc-400">
         You will use this password to unlock your wallet extension.
       </p>
       <form
@@ -63,36 +67,54 @@ const PasswordStep: Component<StepProps> = (props) => {
         }}
       >
         <div class="flex flex-col mb-4 space-y-2">
-          <label for="password" class="uppercase text-sm">
+          <label for="password" class="uppercase">
             enter password
           </label>
-          <input
-            id="password"
-            type="password"
-            value={password()}
-            onInput={(event) => setPassword(event.target.value)}
-            required
-            pattern=".{8,}"
-            title="Password must be at least 8 characters long"
-            placeholder="Password"
-            class="bg-black border-[0.3px] border-zinc-700 rounded"
-          />
+          <div class="relative flex items-center">
+            <input
+              id="password"
+              type={showPassword() ? 'text' : 'password'}
+              value={password()}
+              onInput={(event) => setPassword(event.target.value)}
+              required
+              pattern=".{8,}"
+              title="Password must be at least 8 characters long"
+              placeholder="Password"
+              class="w-full bg-black border-[0.3px] border-zinc-700 rounded"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              class="absolute right-2 z-10"
+            >
+              {showPassword() ? <EyeSlashIcon /> : <EyeIcon />}
+            </button>
+          </div>
         </div>
         <div class="flex flex-col space-y-2">
           <label for="confirm-password" class="uppercase text-sm">
             Confirm password
           </label>
-          <input
-            id="confirm-password"
-            type="password"
-            value={confirmedPassword()}
-            onInput={(event) => setConfirmedPassword(event.target.value)}
-            required
-            pattern={password()}
-            title="Passwords do not match"
-            placeholder="Password"
-            class="bg-black border-[0.3px] border-zinc-700 rounded"
-          />
+          <div class="relative flex items-center">
+            <input
+              id="confirm-password"
+              type={showConfirmedPassword() ? 'text' : 'password'}
+              value={confirmedPassword()}
+              onInput={(event) => setConfirmedPassword(event.target.value)}
+              required
+              pattern={password()}
+              title="Passwords do not match"
+              placeholder="Password"
+              class="w-full bg-black border-[0.3px] border-zinc-700 rounded"
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirmedPassword((prev) => !prev)}
+              class="absolute right-2 z-10"
+            >
+              {showConfirmedPassword() ? <EyeSlashIcon /> : <EyeIcon />}
+            </button>
+          </div>
         </div>
         <button
           type="submit"
