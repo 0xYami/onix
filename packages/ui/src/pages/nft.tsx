@@ -1,4 +1,4 @@
-import { type Component, Suspense } from 'solid-js';
+import { type Component, Suspense, For, Show } from 'solid-js';
 import { useParams } from '@solidjs/router';
 import { createQuery } from '@tanstack/solid-query';
 import { alchemyNFTSchema } from '@onix/schemas';
@@ -40,21 +40,22 @@ export const NFT: Component<{ address: string }> = (props) => {
             alt={`NFT ${nftQuery.data?.id.tokenId}`}
             class="h-[300px] w-[300px] px-2"
           />
-          {nftQuery.data?.metadata.attributes ? (
-            <span class="px-3 uppercase">
-              {nftQuery.data.metadata.attributes.length}{' '}
-              {nftQuery.data.metadata.attributes.length > 1 ? 'attributes' : 'attribute'}
-            </span>
-          ) : (
-            <span>No attribute</span>
-          )}
+          <Show when={nftQuery.data?.metadata.attributes} fallback={<span>No attribute</span>}>
+            {(attributes) => (
+              <span class="px-3 uppercase">
+                {attributes().length} {attributes().length > 1 ? 'attributes' : 'attribute'}
+              </span>
+            )}
+          </Show>
           <ul class="px-3 grid grid-cols-2 gap-2">
-            {nftQuery.data?.metadata.attributes?.map((attribute) => (
-              <li class="flex flex-col p-2 space-y-1 border border-zinc-700 rounded">
-                <span class="text-sm text-zinc-300">{attribute.trait_type}</span>
-                <span>{attribute.value}</span>
-              </li>
-            ))}
+            <For each={nftQuery.data?.metadata.attributes}>
+              {(attribute) => (
+                <li class="flex flex-col p-2 space-y-1 border border-zinc-700 rounded">
+                  <span class="text-sm text-zinc-300">{attribute.trait_type}</span>
+                  <span>{attribute.value}</span>
+                </li>
+              )}
+            </For>
           </ul>
         </div>
       </Suspense>
