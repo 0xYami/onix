@@ -1,8 +1,10 @@
 import { HttpClient } from '@onix/utils';
 import {
+  alchemyERC20BalancesSchema,
   alchemyNFTSchema,
   getNFTCollectionResponseSchema,
   getNFTCollectionsResponseSchema,
+  type AlchemyERC20Balances,
   type GetNFTCollectionsResponse,
   type AlchemyNFT,
   type NFTCollection,
@@ -21,6 +23,24 @@ export class Alchemy {
     this.#apiKey = config.apiKey;
     this.#httpClient = new HttpClient({
       baseURL: `https://eth-mainnet.g.alchemy.com`,
+    });
+  }
+
+  async getERC20Balances(
+    owner: string,
+    contractAddresses: string[],
+  ): Promise<AlchemyERC20Balances['result']> {
+    return this.#httpClient.post({
+      url: `/v2/${this.#apiKey}`,
+      data: {
+        id: 1,
+        jsonrpc: '2.0',
+        method: 'alchemy_getTokenBalances',
+        params: [owner, contractAddresses],
+      },
+      validation: {
+        response: alchemyERC20BalancesSchema.transform((balance) => balance.result),
+      },
     });
   }
 

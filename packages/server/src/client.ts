@@ -73,19 +73,22 @@ export class Client {
 
     // Limit to 3 assets for now due to rate limits
     const tokens = take(assets, 3);
-    const tokensWithBalances = await Promise.all(
-      tokens.map(async (token) => {
-        const balance = await this.etherscan.getERC20Balance(address, token.address);
-        return {
-          ...token,
-          balance: {
-            token: toBaseUnit(balance, token.decimals).toFixed(4),
-            // To be set once token prices have been fetched
-            usd: '0',
-          },
-        };
-      }),
-    );
+    const tokenAddresses = tokens.map((token) => token.address);
+    const balances = await this.alchemy.getERC20Balances(address, tokenAddresses);
+
+    const tokensWithBalances = tokens.map((token) => {
+      const asset = balances.tokenBalances.find(
+        (balance) => balance.contractAddress === token.address,
+      );
+      return {
+        ...token,
+        balance: {
+          token: toBaseUnit(Number(asset!.tokenBalance).toString(), token.decimals).toFixed(4),
+          // To be set once token prices have been fetched
+          usd: '0',
+        },
+      };
+    });
 
     const tokenSymbols = tokens.map((token) => token.symbol);
     const tokenPrices = await this.coinmarketcap.getTokenPrices(tokenSymbols);
