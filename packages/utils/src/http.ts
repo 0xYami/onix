@@ -3,7 +3,7 @@ import type { Axios, AxiosRequestConfig, CreateAxiosDefaults } from 'axios';
 import type { z, ZodSchema } from 'zod';
 import { asyncFaillable } from './helpers';
 
-type Request<TParams extends ZodSchema, TResponse extends ZodSchema> = {
+type GetRequest<TParams extends ZodSchema, TResponse extends ZodSchema> = {
   url: string;
   options: Omit<AxiosRequestConfig, 'params'> & { params: z.infer<TParams> };
   validation: {
@@ -12,8 +12,17 @@ type Request<TParams extends ZodSchema, TResponse extends ZodSchema> = {
   };
 };
 
-type RequestWithResponseValidation<TResponse extends ZodSchema> = {
+type GetRequestWithResponseValidation<TResponse extends ZodSchema> = {
   url: string;
+  options?: AxiosRequestConfig;
+  validation: {
+    response: TResponse;
+  };
+};
+
+type PostRequest<TData extends object, TResponse extends ZodSchema> = {
+  url: string;
+  data: TData;
   options?: AxiosRequestConfig;
   validation: {
     response: TResponse;
@@ -28,15 +37,15 @@ export class HttpClient {
   }
 
   async get<TParams extends ZodSchema, TResponse extends ZodSchema>(
-    config: Request<TParams, TResponse>,
+    config: GetRequest<TParams, TResponse>,
   ): Promise<z.infer<TResponse>>;
 
   async get<TResponse extends ZodSchema>(
-    config: RequestWithResponseValidation<TResponse>,
+    config: GetRequestWithResponseValidation<TResponse>,
   ): Promise<z.infer<TResponse>>;
 
   async get<TParams extends ZodSchema, TResponse extends ZodSchema>(
-    config: Request<TParams, TResponse> | RequestWithResponseValidation<TResponse>,
+    config: GetRequest<TParams, TResponse> | GetRequestWithResponseValidation<TResponse>,
   ): Promise<z.infer<TResponse>> {
     if ('params' in config.validation) {
       config.validation.params.parse(config.options?.params);
@@ -45,7 +54,19 @@ export class HttpClient {
       this.#http.get(config.url, config.options),
     );
     if (call.failed) {
-      throw new Error(`Request to ${config.url} failed`);
+      throw new Error(`GET: request to ${config.url} failed`);
+    }
+    return config.validation.response.parse(call.result.data);
+  }
+
+  async post<TData extends object, TResponse extends ZodSchema = ZodSchema>(
+    config: PostRequest<TData, TResponse>,
+  ): Promise<z.infer<TResponse>> {
+    const call = await asyncFaillable<{ data: z.infer<TResponse> }>(
+      this.#http.post(config.url, config.data, config.options),
+    );
+    if (call.failed) {
+      throw new Error(`POST: request to ${config.url} failed`);
     }
     return config.validation.response.parse(call.result.data);
   }

@@ -19,6 +19,22 @@ const assetBalanceSchema = z.object({
   usd: z.string(),
 });
 
+export const alchemyERC20BalancesSchema = z.object({
+  jsonrpc: z.string(),
+  id: z.number(),
+  result: z.object({
+    address: z.string(),
+    tokenBalances: z.array(
+      z.object({
+        contractAddress: z.string(),
+        tokenBalance: z.string(),
+      }),
+    ),
+  }),
+});
+
+export type AlchemyERC20Balances = z.infer<typeof alchemyERC20BalancesSchema>;
+
 export const addressDetailsSchema = z.object({
   address: z.string(),
   etherBalance: assetBalanceSchema,
