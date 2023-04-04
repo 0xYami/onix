@@ -9,7 +9,8 @@ import { ThumbstackIcon } from '../components/icons/thumbstack';
 import { EyeIcon } from '../components/icons/eye';
 import { EyeSlashIcon } from '../components/icons/eye-slash';
 import { CopyIcon } from '../components/icons/copy';
-import { storage } from '../lib/storage';
+import { storage, UserStorage } from '../lib/storage';
+import { userStore } from '../store';
 import { copyToClipboard } from '../lib/utils';
 
 type StepName = 'password' | 'mnemonic' | 'success';
@@ -18,12 +19,14 @@ type OnboardingStore = {
   password: string;
   confirmedPassword: string;
   mnemonic: Mnemonic | null;
+  address: string | null;
 };
 
 const [store, setStore] = createStore<OnboardingStore>({
   password: '',
   confirmedPassword: '',
   mnemonic: null,
+  address: null,
 });
 
 export const Onboarding: Component = () => {
@@ -32,11 +35,14 @@ export const Onboarding: Component = () => {
 
   createEffect(async () => {
     if (currentStep() !== 'success') return;
-    if (!store.mnemonic) return;
-    storage.setUserState({
+    if (!store.mnemonic || !store.address) return;
+    const storageState: UserStorage = {
       password: store.password,
       mnemonic: store.mnemonic.phrase,
-    });
+      address: store.address,
+    };
+    storage.setUserState(storageState);
+    userStore.initialize(storageState);
   });
 
   return (
@@ -157,7 +163,10 @@ const MnemonicStep: Component<StepProps> = (props) => {
   const [blurredOut, setBlurredOut] = createSignal(true);
 
   const wallet = Wallet.createRandom();
-  setStore({ mnemonic: wallet.mnemonic });
+  setStore({
+    mnemonic: wallet.mnemonic,
+    address: wallet.address,
+  });
 
   return (
     <div class="relative h-[520px] p-3">
