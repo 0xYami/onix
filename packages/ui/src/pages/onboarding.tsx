@@ -9,7 +9,7 @@ import { ThumbstackIcon } from '../components/icons/thumbstack';
 import { EyeIcon } from '../components/icons/eye';
 import { EyeSlashIcon } from '../components/icons/eye-slash';
 import { CopyIcon } from '../components/icons/copy';
-import { storage, UserStorage } from '../lib/storage';
+import { storage, type UserStorage } from '../lib/storage';
 import { userStore } from '../store';
 import { copyToClipboard } from '../lib/utils';
 
@@ -165,7 +165,9 @@ const MnemonicStep: Component<StepProps> = (props) => {
   const wallet = Wallet.createRandom();
   setStore({
     mnemonic: wallet.mnemonic,
-    address: wallet.address,
+    // FIX: This is Vitalik address, we use it in dev in order to have assets to display
+    address: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045',
+    // address: wallet.address,
   });
 
   return (

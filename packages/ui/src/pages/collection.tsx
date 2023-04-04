@@ -8,16 +8,17 @@ import { ChevronLeftIcon } from '../components/icons/chevron-left';
 import { TwitterIcon } from '../components/icons/twitter';
 import { DiscordIcon } from '../components/icons/discord';
 import { GlobeIcon } from '../components/icons/globe';
+import { userStore } from '../store';
 import { httpClient } from '../lib/http';
 
-export const Collection: Component<{ address: string }> = (props) => {
+export const Collection: Component = () => {
   const params = useParams<{ contractAddress: string }>();
 
   const collectionQuery = createQuery({
-    queryKey: () => ['collection', props.address, params.contractAddress],
+    queryKey: () => ['collection', userStore.address, params.contractAddress],
     queryFn: async () => {
       return httpClient.get({
-        url: `/users/${props.address}/collections/${params.contractAddress}`,
+        url: `/users/${userStore.address}/collections/${params.contractAddress}`,
         validation: {
           response: nftCollectionSchema,
         },

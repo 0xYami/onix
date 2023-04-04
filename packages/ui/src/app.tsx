@@ -29,8 +29,6 @@ const ProtectedRoute = () => {
 };
 
 const App: Component = () => {
-  const address = '0xd8da6bf26964af9d7eed9e03e53415d37aa96045';
-
   const userState = storage.getUserState();
   if (userState) {
     userStore.initialize(userState);
@@ -46,20 +44,11 @@ const App: Component = () => {
             <Route path="/index.html/onboarding" component={Onboarding} />
           </Route>
           <Route path="" component={ProtectedRoute}>
-            <Route path="/index.html/home" element={<Home address={address} />} />
-            <Route
-              path="/index.html/assets/:contractAddress"
-              element={<Asset address={address} />}
-            />
-            <Route path="/index.html/collections" element={<Collections address={address} />} />
-            <Route
-              path="/index.html/collections/:contractAddress"
-              element={<Collection address={address} />}
-            />
-            <Route
-              path="/index.html/collections/:contractAddress/:tokenId"
-              element={<NFT address={address} />}
-            />
+            <Route path="/index.html/home" component={Home} />
+            <Route path="/index.html/assets/:contractAddress" component={Asset} />
+            <Route path="/index.html/collections" component={Collections} />
+            <Route path="/index.html/collections/:contractAddress" component={Collection} />
+            <Route path="/index.html/collections/:contractAddress/:tokenId" component={NFT} />
           </Route>
         </Routes>
       </div>

@@ -20,17 +20,12 @@ function createStorage() {
   };
 
   const setUserState = (state: UserStorage) => {
-    let address = state.address;
-    // FIX: This is Vitalik address, we use it in dev in order to have assets to display
-    if (import.meta.env.DEV) {
-      address = '0xd8da6bf26964af9d7eed9e03e53415d37aa96045';
-    }
     localStorage.setItem(
       userStorageKey,
       JSON.stringify({
         password: state.password,
         mnemonic: state.mnemonic,
-        address,
+        address: state.address,
       }),
     );
   };

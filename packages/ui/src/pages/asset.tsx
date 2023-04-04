@@ -7,22 +7,24 @@ import { ChevronLeftIcon } from '../components/icons/chevron-left';
 import { ReceiveIcon } from '../components/icons/receive';
 import { SendIcon } from '../components/icons/send';
 import { Link } from '../components/link';
+import { userStore } from '../store';
 import { httpClient } from '../lib/http';
 import { truncateMiddle } from '../lib/utils';
 
-export const Asset: Component<{ address: string }> = (props) => {
+export const Asset: Component = () => {
   const params = useParams<{ contractAddress: string }>();
 
   const assetQuery = createQuery({
-    queryKey: () => ['asset', props.address, params.contractAddress],
+    queryKey: () => ['asset', userStore.address, params.contractAddress],
     queryFn: async () => {
       return httpClient.get({
-        url: `/users/${props.address}/asset/erc20/${params.contractAddress}`,
+        url: `/users/${userStore.address}/asset/erc20/${params.contractAddress}`,
         validation: {
           response: getAssetResultSchema,
         },
       });
     },
+    enabled: !!userStore.address && !!params.contractAddress,
   });
 
   return (
@@ -58,7 +60,7 @@ export const Asset: Component<{ address: string }> = (props) => {
         <ul class="max-h-[250px] mt-3 px-3 space-y-3 overflow-hidden overflow-y-scroll">
           <For each={assetQuery.data?.transfers}>
             {(transfer) => {
-              const isSender = props.address.toLowerCase() === transfer.from.toLowerCase();
+              const isSender = userStore.address?.toLowerCase() === transfer.from.toLowerCase();
               const formattedDate = new Date(Number(transfer.timeStamp) * 1000).toLocaleDateString(
                 'en-US',
                 {
