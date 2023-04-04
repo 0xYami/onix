@@ -10,23 +10,17 @@ import { NFT } from './pages/nft';
 import { Onboarding } from './pages/onboarding';
 import { Welcome } from './pages/welcome';
 
-const OnboardingRoute = () => {
-  const { isAuthenticated } = userStore;
-  return (
-    <Show when={!isAuthenticated} fallback={<Navigate href="/index.html/home" />}>
-      <Outlet />
-    </Show>
-  );
-};
+const OnboardingRoute = () => (
+  <Show when={!userStore.isAuthenticated} fallback={<Navigate href="/index.html/home" />}>
+    <Outlet />
+  </Show>
+);
 
-const ProtectedRoute = () => {
-  const { isAuthenticated } = userStore;
-  return (
-    <Show when={isAuthenticated} fallback={<Navigate href="/index.html" />}>
-      <Outlet />
-    </Show>
-  );
-};
+const ProtectedRoute = () => (
+  <Show when={userStore.isAuthenticated} fallback={<Navigate href="/index.html" />}>
+    <Outlet />
+  </Show>
+);
 
 const App: Component = () => {
   const userState = storage.getUserState();
