@@ -9,6 +9,7 @@ import { ThumbstackIcon } from '../components/icons/thumbstack';
 import { EyeIcon } from '../components/icons/eye';
 import { EyeSlashIcon } from '../components/icons/eye-slash';
 import { CopyIcon } from '../components/icons/copy';
+import { storage } from '../lib/storage';
 import { copyToClipboard } from '../lib/utils';
 
 type StepName = 'password' | 'mnemonic' | 'success';
@@ -32,13 +33,10 @@ export const Onboarding: Component = () => {
   createEffect(async () => {
     if (currentStep() !== 'success') return;
     if (!store.mnemonic) return;
-    localStorage.setItem(
-      'onix-user-secrets',
-      JSON.stringify({
-        password: store.password,
-        mnemonic: store.mnemonic.phrase,
-      }),
-    );
+    storage.setUserState({
+      password: store.password,
+      mnemonic: store.mnemonic.phrase,
+    });
   });
 
   return (
