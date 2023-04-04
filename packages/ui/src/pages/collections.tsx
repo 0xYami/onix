@@ -3,14 +3,15 @@ import { createQuery } from '@tanstack/solid-query';
 import { getNFTCollectionsResponseSchema } from '@onix/schemas';
 import { MainLayout } from '../layouts/main';
 import { Link } from '../components/link';
+import { userStore } from '../store';
 import { httpClient } from '../lib/http';
 
-export const Collections: Component<{ address: string }> = (props) => {
+export const Collections: Component = () => {
   const collectionsQuery = createQuery({
-    queryKey: () => ['collections', props.address],
+    queryKey: () => ['collections', userStore.address],
     queryFn: async () => {
       return httpClient.get({
-        url: `/users/${props.address}/nfts/collections`,
+        url: `/users/${userStore.address}/nfts/collections`,
         validation: {
           response: getNFTCollectionsResponseSchema,
         },

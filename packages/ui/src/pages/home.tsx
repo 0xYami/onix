@@ -1,6 +1,7 @@
 import { createMemo, For, Suspense, type Component } from 'solid-js';
 import { createQuery } from '@tanstack/solid-query';
 import { addressDetailsSchema, type AddressDetails } from '@onix/schemas';
+import { userStore } from '../store';
 import { assetSymbolToLogoURL } from '../lib/utils';
 import { MainLayout } from '../layouts/main';
 import { SendIcon } from '../components/icons/send';
@@ -8,18 +9,18 @@ import { ReceiveIcon } from '../components/icons/receive';
 import { Link } from '../components/link';
 import { httpClient } from '../lib/http';
 
-export const Home: Component<{ address: string }> = (props) => {
+export const Home: Component = () => {
   const userQuery = createQuery({
     queryKey: () => ['address'],
     queryFn: async () => {
       return httpClient.get({
-        url: `/users/${props.address}`,
+        url: `/users/${userStore.address}`,
         validation: {
           response: addressDetailsSchema,
         },
       });
     },
-    enabled: !!props.address,
+    enabled: !!userStore.address,
   });
 
   const assets = createMemo(() => {

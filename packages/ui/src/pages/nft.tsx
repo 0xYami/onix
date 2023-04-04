@@ -5,16 +5,17 @@ import { alchemyNFTSchema } from '@onix/schemas';
 import { MainLayout } from '../layouts/main';
 import { Link } from '../components/link';
 import { ChevronLeftIcon } from '../components/icons/chevron-left';
+import { userStore } from '../store';
 import { httpClient } from '../lib/http';
 
-export const NFT: Component<{ address: string }> = (props) => {
+export const NFT: Component = () => {
   const params = useParams<{ contractAddress: string; tokenId: string }>();
 
   const nftQuery = createQuery({
-    queryKey: () => ['nft', props.address, params.contractAddress, params.tokenId],
+    queryKey: () => ['nft', userStore.address, params.contractAddress, params.tokenId],
     queryFn: async () => {
       return httpClient.get({
-        url: `/users/${props.address}/collections/${params.contractAddress}/${params.tokenId}`,
+        url: `/users/${userStore.address}/collections/${params.contractAddress}/${params.tokenId}`,
         validation: {
           response: alchemyNFTSchema,
         },

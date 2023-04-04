@@ -9,6 +9,8 @@ import { ThumbstackIcon } from '../components/icons/thumbstack';
 import { EyeIcon } from '../components/icons/eye';
 import { EyeSlashIcon } from '../components/icons/eye-slash';
 import { CopyIcon } from '../components/icons/copy';
+import { storage, type UserStorage } from '../lib/storage';
+import { userStore } from '../store';
 import { copyToClipboard } from '../lib/utils';
 
 type StepName = 'password' | 'mnemonic' | 'success';
@@ -17,12 +19,14 @@ type OnboardingStore = {
   password: string;
   confirmedPassword: string;
   mnemonic: Mnemonic | null;
+  address: string | null;
 };
 
 const [store, setStore] = createStore<OnboardingStore>({
   password: '',
   confirmedPassword: '',
   mnemonic: null,
+  address: null,
 });
 
 export const Onboarding: Component = () => {
@@ -31,14 +35,14 @@ export const Onboarding: Component = () => {
 
   createEffect(async () => {
     if (currentStep() !== 'success') return;
-    if (!store.mnemonic) return;
-    localStorage.setItem(
-      'onix-user-secrets',
-      JSON.stringify({
-        password: store.password,
-        mnemonic: store.mnemonic.phrase,
-      }),
-    );
+    if (!store.mnemonic || !store.address) return;
+    const storageState: UserStorage = {
+      password: store.password,
+      mnemonic: store.mnemonic.phrase,
+      address: store.address,
+    };
+    storage.setUserState(storageState);
+    userStore.initialize(storageState);
   });
 
   return (
@@ -159,7 +163,12 @@ const MnemonicStep: Component<StepProps> = (props) => {
   const [blurredOut, setBlurredOut] = createSignal(true);
 
   const wallet = Wallet.createRandom();
-  setStore({ mnemonic: wallet.mnemonic });
+  setStore({
+    mnemonic: wallet.mnemonic,
+    // FIX: This is Vitalik address, we use it in dev in order to have assets to display
+    address: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045',
+    // address: wallet.address,
+  });
 
   return (
     <div class="relative h-[520px] p-3">
