@@ -1,4 +1,4 @@
-import { ErrorBoundary, Show, type Component } from 'solid-js';
+import { ErrorBoundary, Show, type Component, type JSX } from 'solid-js';
 import { Routes, Route, Navigate, Outlet } from '@solidjs/router';
 import { userStore } from './store';
 import { storage } from './lib/storage';
@@ -10,14 +10,13 @@ import { NFT } from './pages/nft';
 import { Onboarding } from './pages/onboarding';
 import { Welcome } from './pages/welcome';
 
-const OnboardingRoute = () => (
-  <Show when={!userStore.isAuthenticated} fallback={<Navigate href="/index.html/home" />}>
-    <Outlet />
-  </Show>
-);
+type ProtectedRouteProps = {
+  allowWhen: boolean;
+  fallback: JSX.Element;
+};
 
-const ProtectedRoute = () => (
-  <Show when={userStore.isAuthenticated} fallback={<Navigate href="/index.html" />}>
+const ProtectedRoute: Component<ProtectedRouteProps> = (props) => (
+  <Show when={props.allowWhen} fallback={props.fallback}>
     <Outlet />
   </Show>
 );
@@ -33,11 +32,27 @@ const App: Component = () => {
       <div class="w-[360px] h-[540px] max-h-[540px] relative text-white bg-black border-[0.3px] border-zinc-700">
         <Routes>
           <Route path="/" element={<Navigate href="/index.html" />} />
-          <Route path="" component={OnboardingRoute}>
+          <Route
+            path=""
+            element={
+              <ProtectedRoute
+                allowWhen={!userStore.isAuthenticated}
+                fallback={<Navigate href="/index.html/home" />}
+              />
+            }
+          >
             <Route path="/index.html" component={Welcome} />
             <Route path="/index.html/onboarding" component={Onboarding} />
           </Route>
-          <Route path="" component={ProtectedRoute}>
+          <Route
+            path=""
+            element={
+              <ProtectedRoute
+                allowWhen={userStore.isAuthenticated}
+                fallback={<Navigate href="/index.html" />}
+              />
+            }
+          >
             <Route path="/index.html/home" component={Home} />
             <Route path="/index.html/assets/:contractAddress" component={Asset} />
             <Route path="/index.html/collections" component={Collections} />
