@@ -10,17 +10,19 @@ import { Link } from '../components/link';
 import { httpClient } from '../lib/http';
 
 export const Home: Component = () => {
+  const { currentAccount } = userStore;
+
   const userQuery = createQuery({
     queryKey: () => ['address'],
     queryFn: async () => {
       return httpClient.get({
-        url: `/users/${userStore.address}`,
+        url: `/users/${currentAccount?.address}`,
         validation: {
           response: addressDetailsSchema,
         },
       });
     },
-    enabled: !!userStore.address,
+    enabled: !!currentAccount?.address,
   });
 
   const assets = createMemo(() => {

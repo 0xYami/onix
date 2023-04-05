@@ -12,19 +12,20 @@ import { httpClient } from '../lib/http';
 import { truncateMiddle } from '../lib/utils';
 
 export const Asset: Component = () => {
+  const { currentAccount } = userStore;
   const params = useParams<{ contractAddress: string }>();
 
   const assetQuery = createQuery({
-    queryKey: () => ['asset', userStore.address, params.contractAddress],
+    queryKey: () => ['asset', currentAccount?.address, params.contractAddress],
     queryFn: async () => {
       return httpClient.get({
-        url: `/users/${userStore.address}/asset/erc20/${params.contractAddress}`,
+        url: `/users/${currentAccount?.address}/asset/erc20/${params.contractAddress}`,
         validation: {
           response: getAssetResultSchema,
         },
       });
     },
-    enabled: !!userStore.address && !!params.contractAddress,
+    enabled: !!currentAccount?.address && !!params.contractAddress,
   });
 
   return (
@@ -60,7 +61,8 @@ export const Asset: Component = () => {
         <ul class="max-h-[250px] mt-3 px-3 space-y-3 overflow-hidden overflow-y-scroll">
           <For each={assetQuery.data?.transfers}>
             {(transfer) => {
-              const isSender = userStore.address?.toLowerCase() === transfer.from.toLowerCase();
+              const isSender =
+                currentAccount?.address.toLowerCase() === transfer.from.toLowerCase();
               const formattedDate = new Date(Number(transfer.timeStamp) * 1000).toLocaleDateString(
                 'en-US',
                 {

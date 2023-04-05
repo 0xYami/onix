@@ -6,6 +6,7 @@ import { CopyIcon } from './icons/copy';
 import { CheckIcon } from './icons/check';
 
 export const Header: Component = () => {
+  const { currentAccount } = userStore;
   const [copying, setCopying] = createSignal(false);
 
   createEffect(() => {
@@ -16,9 +17,9 @@ export const Header: Component = () => {
   });
 
   const copyAddress = () => {
-    if (!userStore.address) return;
+    if (!currentAccount?.address) return;
     setCopying(true);
-    copyToClipboard(userStore.address);
+    copyToClipboard(currentAccount.address);
   };
 
   return (
@@ -48,7 +49,7 @@ export const Header: Component = () => {
           >
             <CopyIcon class="w-[14px] h-[14px]" />
             {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
-            <span>{truncateMiddle(userStore.address!, 11)}</span>
+            <span>{truncateMiddle(currentAccount!.address, 11)}</span>
           </button>
         </Show>
       </div>

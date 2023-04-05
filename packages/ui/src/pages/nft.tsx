@@ -9,18 +9,20 @@ import { userStore } from '../store';
 import { httpClient } from '../lib/http';
 
 export const NFT: Component = () => {
+  const { currentAccount } = userStore;
   const params = useParams<{ contractAddress: string; tokenId: string }>();
 
   const nftQuery = createQuery({
-    queryKey: () => ['nft', userStore.address, params.contractAddress, params.tokenId],
+    queryKey: () => ['nft', currentAccount?.address, params.contractAddress, params.tokenId],
     queryFn: async () => {
       return httpClient.get({
-        url: `/users/${userStore.address}/collections/${params.contractAddress}/${params.tokenId}`,
+        url: `/users/${currentAccount?.address}/collections/${params.contractAddress}/${params.tokenId}`,
         validation: {
           response: alchemyNFTSchema,
         },
       });
     },
+    enabled: !!currentAccount?.address,
   });
 
   return (

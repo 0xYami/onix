@@ -8,7 +8,7 @@ import { ThumbstackIcon } from '../components/icons/thumbstack';
 import { EyeIcon } from '../components/icons/eye';
 import { EyeSlashIcon } from '../components/icons/eye-slash';
 import { CopyIcon } from '../components/icons/copy';
-import { storage } from '../lib/storage';
+import { storage, type Account } from '../lib/storage';
 import { userStore } from '../store';
 import { copyToClipboard } from '../lib/utils';
 
@@ -35,10 +35,15 @@ export const Onboarding: Component = () => {
   createEffect(async () => {
     if (currentStep() !== 'success') return;
     if (!store.mnemonic || !store.address) return;
+    const account: Account = {
+      name: 'Account 1',
+      address: store.address,
+    };
     storage.setUserState({
       password: store.password,
       mnemonic: store.mnemonic.phrase,
-      address: store.address,
+      currentAccount: account,
+      accounts: [account],
     });
   });
 

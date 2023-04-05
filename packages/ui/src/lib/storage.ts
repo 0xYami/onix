@@ -1,12 +1,19 @@
 import { z } from '@onix/schemas';
 
-const userState = z.object({
-  password: z.string().min(8),
-  mnemonic: z.string(),
+const account = z.object({
+  name: z.string(),
   address: z.string(),
 });
 
-type UserStorage = z.infer<typeof userState>;
+const userStorage = z.object({
+  password: z.string().min(8),
+  mnemonic: z.string(),
+  currentAccount: account,
+  accounts: z.array(account).nonempty(),
+});
+
+export type Account = z.infer<typeof account>;
+type UserStorage = z.infer<typeof userStorage>;
 
 function createStorage() {
   const userStorageKey = 'onix-user-secrets';
@@ -14,7 +21,7 @@ function createStorage() {
   const getUserState = (): UserStorage | null => {
     const rawValue = localStorage.getItem(userStorageKey);
     if (!rawValue) return null;
-    const state = userState.safeParse(JSON.parse(rawValue));
+    const state = userStorage.safeParse(JSON.parse(rawValue));
     if (!state.success) return null;
     return state.data;
   };
@@ -25,7 +32,8 @@ function createStorage() {
       JSON.stringify({
         password: state.password,
         mnemonic: state.mnemonic,
-        address: state.address,
+        currentAccount: state.currentAccount,
+        accounts: state.accounts,
       }),
     );
   };
