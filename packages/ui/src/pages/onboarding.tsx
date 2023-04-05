@@ -2,14 +2,13 @@ import { createEffect, createSignal, Match, Switch, type Component } from 'solid
 import { createStore } from 'solid-js/store';
 import { useNavigate } from '@solidjs/router';
 import { type Mnemonic, Wallet } from 'ethers';
-import { Link } from '../components/link';
 import { ChevronLeftIcon } from '../components/icons/chevron-left';
 import { PuzzlePieceIcon } from '../components/icons/puzzle-piece';
 import { ThumbstackIcon } from '../components/icons/thumbstack';
 import { EyeIcon } from '../components/icons/eye';
 import { EyeSlashIcon } from '../components/icons/eye-slash';
 import { CopyIcon } from '../components/icons/copy';
-import { storage, type UserStorage } from '../lib/storage';
+import { storage } from '../lib/storage';
 import { userStore } from '../store';
 import { copyToClipboard } from '../lib/utils';
 
@@ -36,13 +35,11 @@ export const Onboarding: Component = () => {
   createEffect(async () => {
     if (currentStep() !== 'success') return;
     if (!store.mnemonic || !store.address) return;
-    const storageState: UserStorage = {
+    storage.setUserState({
       password: store.password,
       mnemonic: store.mnemonic.phrase,
       address: store.address,
-    };
-    storage.setUserState(storageState);
-    userStore.initialize(storageState);
+    });
   });
 
   return (
@@ -62,7 +59,13 @@ export const Onboarding: Component = () => {
         />
       </Match>
       <Match when={currentStep() === 'success'}>
-        <SuccessStep />
+        <SuccessStep
+          onNext={() => {
+            const state = storage.getUserState();
+            if (!state) return;
+            userStore.initialize(state);
+          }}
+        />
       </Match>
     </Switch>
   );
@@ -215,7 +218,7 @@ const MnemonicStep: Component<StepProps> = (props) => {
   );
 };
 
-const SuccessStep: Component = () => (
+const SuccessStep: Component<Pick<StepProps, 'onNext'>> = (props) => (
   <div class="relative h-[520px] flex flex-col items-center justify-center p-3">
     <div class="w-[87%] uppercase">all set!</div>
     <div class="text-5xl text-end">Your wallet is ready</div>
@@ -230,11 +233,12 @@ const SuccessStep: Component = () => (
         <ThumbstackIcon class="w-[30px] h-[30px] p-2 rounded-full" />
       </div>
     </div>
-    <Link
-      path="/home"
+    <button
+      type="button"
+      onClick={props.onNext}
       class="absolute w-[90%] py-2 text-center bottom-0 border-[0.3px] border-zinc-700/80 rounded"
     >
       Finish
-    </Link>
+    </button>
   </div>
 );

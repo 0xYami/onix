@@ -6,7 +6,7 @@ const userState = z.object({
   address: z.string(),
 });
 
-export type UserStorage = z.infer<typeof userState>;
+type UserStorage = z.infer<typeof userState>;
 
 function createStorage() {
   const userStorageKey = 'onix-user-secrets';
