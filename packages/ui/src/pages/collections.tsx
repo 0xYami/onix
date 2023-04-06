@@ -26,14 +26,14 @@ export const Collections: Component = () => {
     <MainLayout>
       <Suspense fallback={<div>Loading...</div>}>
         <div class="flex flex-col p-3 space-y-2">
-          <span class="flex items-center justify-start h-[60px] text-xl">NFT Portfolio</span>
-          <span class="text-zinc-100">
+          <span class="flex items-center justify-start h-14 text-xl">NFT Portfolio</span>
+          <span class="pb-2 text-zinc-100">
             {collectionsQuery.data?.totalCount}{' '}
             {collectionsQuery.data && collectionsQuery.data.totalCount > 1
               ? 'collections'
               : 'collection'}
           </span>
-          <ul class="h-[360px] overflow-y-scroll pt-2 space-y-4">
+          <ul class="h-80 overflow-y-scroll pt-2 space-y-4">
             <For each={collectionsQuery.data?.contracts}>
               {(collection) => (
                 <li class="p-1 cursor-pointer rounded hover:bg-zinc-700/40">
@@ -41,7 +41,7 @@ export const Collections: Component = () => {
                     <img
                       src={collection.opensea?.imageUrl}
                       alt={`image-${collection.name}`}
-                      class="w-[50px] h-[50px] rounded-full"
+                      class="w-12 h-12 rounded-full"
                     />
                     <div class="flex flex-col">
                       <span>{collection.name}</span>

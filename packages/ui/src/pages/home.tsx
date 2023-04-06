@@ -42,29 +42,29 @@ export const Home: Component = () => {
   return (
     <MainLayout>
       <Suspense fallback={<div>Loading...</div>}>
-        <div class="h-[180px] flex flex-col items-center justify-center">
+        <div class="h-48 flex flex-col items-center justify-center">
           <div class="uppercase">total balance</div>
           <div class="text-2xl">${userQuery.data?.totalBalance}</div>
           <div class="w-full flex items-center justify-around my-4">
             <button
               type="button"
-              class="w-[156px] h-[38px] flex items-center justify-center space-x-2 border-[0.3px] border-zinc-700 rounded-sm"
+              class="w-40 h-10 flex items-center justify-center space-x-2 border-[0.3px] border-zinc-700 rounded-sm"
             >
-              <ReceiveIcon class="w-[12px] h-[12px]" />
+              <ReceiveIcon class="w-3 h-3" />
               <span class="uppercase">receive</span>
             </button>
             <button
               type="button"
-              class="w-[156px] h-[38px] flex items-center justify-center space-x-2 border-[0.3px] border-zinc-700 rounded-sm"
+              class="w-40 h-10 flex items-center justify-center space-x-2 border-[0.3px] border-zinc-700 rounded-sm"
             >
-              <SendIcon class="w-[12px] h-[12px]" />
+              <SendIcon class="w-3 h-3" />
               <span class="uppercase">send</span>
             </button>
           </div>
         </div>
         <div class="px-3">
           <div class="pb-3 uppercase">tokens</div>
-          <ul class="h-[250px] flex flex-col space-y-6 overflow-y-scroll">
+          <ul class="h-56 flex flex-col space-y-6 overflow-y-scroll">
             <For each={assets()}>
               {(asset) => (
                 <li>
@@ -76,7 +76,7 @@ export const Home: Component = () => {
                       <img
                         src={`${assetSymbolToLogoURL[asset.symbol]}`}
                         alt={`${asset.name} Icon`}
-                        class="w-[40px] h-[40px]"
+                        class="w-10 h-10"
                       />
                       <div class="flex flex-col">
                         <span class="font-bold">
