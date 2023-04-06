@@ -26,7 +26,7 @@ export const Header: Component = () => {
 
     const currentIndex = userStore.accounts?.length;
     if (!currentIndex) {
-      throw new Error("Can't get accout index");
+      throw new Error("Can't get account index");
     }
 
     const wallet = Wallet.fromPhrase(userStore.mnemonic);
@@ -86,14 +86,17 @@ export const Header: Component = () => {
               <div class="w-full px-4 py-3 border-b-[0.3px] border-b-zinc-700 text-[18px]">
                 Accounts
               </div>
-              <ul class="px-2 py-4 space-y-2 grow overflow-y-scroll">
+              <ul class="grow overflow-y-scroll">
                 <For each={userStore.accounts}>
                   {(account) => (
                     <li>
-                      <div class="px-2 space-y-1">
+                      <button
+                        type="button"
+                        class="w-full px-4 py-2 space-y-1 text-start hover:bg-zinc-700/40"
+                      >
                         <div class="text-[15px]">{account.name}</div>
                         <div class="text-zinc-400">{truncateMiddle(account.address, 15)}</div>
-                      </div>
+                      </button>
                     </li>
                   )}
                 </For>
