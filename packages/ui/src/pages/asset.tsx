@@ -31,7 +31,7 @@ export const Asset: Component = () => {
   return (
     <MainLayout>
       <Suspense fallback={<div>Loading...</div>}>
-        <div class="relative h-[180px] flex flex-col items-center justify-center">
+        <div class="relative h-40 flex flex-col items-center justify-center">
           <Link path="/" class="absolute w-full top-0 left-0 m-3 flex items-center space-x-1">
             <ChevronLeftIcon />
             <span>{assetQuery.data?.name}</span>
@@ -43,22 +43,22 @@ export const Asset: Component = () => {
           <div class="w-full flex items-center justify-around my-4">
             <button
               type="button"
-              class="w-[156px] h-[38px] flex items-center justify-center space-x-2 border-[0.3px] border-zinc-700 rounded-sm"
+              class="w-40 h-10 flex items-center justify-center space-x-2 border-[0.3px] border-zinc-700 rounded-sm"
             >
-              <ReceiveIcon class="w-[12px] h-[12px]" />
+              <ReceiveIcon class="w-3 h-3" />
               <span class="uppercase">receive</span>
             </button>
             <button
               type="button"
-              class="w-[156px] h-[38px] flex items-center justify-center space-x-2 border-[0.3px] border-zinc-700 rounded-sm"
+              class="w-40 h-10 flex items-center justify-center space-x-2 border-[0.3px] border-zinc-700 rounded-sm"
             >
-              <SendIcon class="w-[12px] h-[12px]" />
+              <SendIcon class="w-3 h-3" />
               <span class="uppercase">send</span>
             </button>
           </div>
         </div>
         <span class="ml-3 text-lg uppercase">Activity</span>
-        <ul class="max-h-[250px] mt-3 px-3 space-y-3 overflow-hidden overflow-y-scroll">
+        <ul class="max-h-64 mt-3 px-3 space-y-3 overflow-hidden overflow-y-scroll">
           <For each={assetQuery.data?.transfers}>
             {(transfer) => {
               const isSender =
@@ -82,15 +82,15 @@ export const Asset: Component = () => {
                   >
                     <div class="flex items-center space-x-2">
                       {isSender ? (
-                        <SendIcon class="w-[21px] h-[21px] p-1 rounded-full bg-zinc-700/60 border-[0.6px] border-zinc-700" />
+                        <SendIcon class="w-6 h-6 p-1.5 rounded-full bg-zinc-700/60" />
                       ) : (
-                        <ReceiveIcon class="w-[21px] h-[21px] p-1 rounded-full bg-zinc-700/60 border-[0.6px] border-zinc-700" />
+                        <ReceiveIcon class="w-6 h-6 p-1.5 rounded-full bg-zinc-700/60" />
                       )}
                       <span class="capitalize">{isSender ? 'sent' : 'received'}</span>
                     </div>
                     <div class="flex items-center space-x-1 text-sm text-zinc-500">
                       <span>{formattedDate}</span>
-                      <span class="h-[3px] w-[3px] rounded-full bg-zinc-700" />
+                      <span class="h-1 w-1 rounded-full bg-zinc-700" />
                       <span class="capitalize">
                         {isSender ? 'to' : 'from'} {truncateMiddle(transfer.to, 11)}
                       </span>

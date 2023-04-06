@@ -37,11 +37,11 @@ export const NFT: Component = () => {
             {nftQuery.data?.contractMetadata.name} / #{nftQuery.data?.id.tokenId}
           </span>
         </Link>
-        <div class="h-[380px] flex flex-col justify-center px-3 space-y-4 overflow-y-scroll">
+        <div class="h-96 flex flex-col justify-center px-3 space-y-4 overflow-y-scroll">
           <img
             src={nftQuery.data?.metadata.image}
             alt={`NFT ${nftQuery.data?.id.tokenId}`}
-            class="h-[300px] w-[300px] px-2"
+            class="h-80 w-80 px-2 mx-auto"
           />
           <Show when={nftQuery.data?.metadata.attributes} fallback={<span>No attribute</span>}>
             {(attributes) => (

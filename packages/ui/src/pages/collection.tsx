@@ -53,16 +53,12 @@ export const Collection: Component = () => {
             </li>
           </ul>
         </div>
-        <ul class="h-[400px] overflow-y-scroll grid grid-cols-2 p-3">
+        <ul class="h-96 overflow-y-scroll grid grid-cols-2 p-3">
           <For each={collectionQuery.data?.nfts}>
             {(nft) => (
               <li>
                 <Link path={`/collections/${collectionQuery.data?.contract.address}/${nft.id}`}>
-                  <img
-                    src={nft.metadata.image}
-                    alt={`Image ${nft.title}`}
-                    class="w-[140px] h-[140px]"
-                  />
+                  <img src={nft.metadata.image} alt={`Image ${nft.title}`} class="w-36 h-36" />
                   <span class="text-sm">{nft.title}</span>
                 </Link>
               </li>

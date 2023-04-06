@@ -52,13 +52,13 @@ export const Header: Component = () => {
   };
 
   return (
-    <header class="relative h-[48px] flex items-center px-4 space-x-2 border-b-[0.3px] border-zinc-700 text-xs">
+    <header class="relative h-12 flex items-center px-4 space-x-2 border-b-[0.3px] border-zinc-700 text-xs">
       <div class="flex items-center space-x-1">
-        <div class="w-[7px] h-[7px] rounded-full bg-green-600" />
+        <div class="w-2 h-2 rounded-full bg-green-600" />
         <span class="font-bold uppercase">mainnet</span>
       </div>
       <div class="flex items-center space-x-1">
-        <GasPumpIcon class="w-[14px] h-[14px]" />
+        <GasPumpIcon class="w-3 h-3" />
         <span>$2.01</span>
       </div>
       <div class="absolute right-0 pr-4 flex items-center space-x-2">
@@ -76,7 +76,7 @@ export const Header: Component = () => {
             onClick={copyAddress}
             class="flex items-center space-x-2 text-zinc-400/90 hover:text-white duration-200"
           >
-            <CopyIcon class="w-[14px] h-[14px]" />
+            <CopyIcon class="w-3 h-3" />
             {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
             <span>{truncateMiddle(currentAccount!.address, 11)}</span>
           </button>
