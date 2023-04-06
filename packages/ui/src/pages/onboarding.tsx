@@ -16,7 +16,6 @@ type StepName = 'password' | 'mnemonic' | 'success';
 
 type OnboardingState = {
   password: string;
-  confirmedPassword: string;
   mnemonic: Mnemonic | null;
   address: string | null;
 };
@@ -27,7 +26,6 @@ type OnboardingStore = OnboardingState & {
 
 const initialState: OnboardingState = {
   password: '',
-  confirmedPassword: '',
   mnemonic: null,
   address: null,
 };
@@ -95,6 +93,7 @@ type StepProps = {
 };
 
 const PasswordStep: Component<StepProps> = (props) => {
+  const [confirmedPassword, setConfirmedPassword] = createSignal('');
   const [showPassword, setShowPassword] = createSignal(false);
   const [showConfirmedPassword, setShowConfirmedPassword] = createSignal(false);
 
@@ -152,8 +151,8 @@ const PasswordStep: Component<StepProps> = (props) => {
             <input
               id="confirm-password"
               type={showConfirmedPassword() ? 'text' : 'password'}
-              value={store.confirmedPassword}
-              onInput={(event) => setStore({ confirmedPassword: event.target.value })}
+              value={confirmedPassword()}
+              onInput={(event) => setConfirmedPassword(event.target.value)}
               required
               pattern={store.password}
               title="Passwords do not match"
