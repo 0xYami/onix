@@ -7,16 +7,19 @@ import { userStore } from '../store';
 import { httpClient } from '../lib/http';
 
 export const Collections: Component = () => {
+  const { currentAccount } = userStore;
+
   const collectionsQuery = createQuery({
-    queryKey: () => ['collections', userStore.address],
+    queryKey: () => ['collections', currentAccount?.address],
     queryFn: async () => {
       return httpClient.get({
-        url: `/users/${userStore.address}/nfts/collections`,
+        url: `/users/${currentAccount?.address}/nfts/collections`,
         validation: {
           response: getNFTCollectionsResponseSchema,
         },
       });
     },
+    enabled: !!currentAccount?.address,
   });
 
   return (

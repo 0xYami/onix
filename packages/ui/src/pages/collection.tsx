@@ -12,18 +12,20 @@ import { userStore } from '../store';
 import { httpClient } from '../lib/http';
 
 export const Collection: Component = () => {
+  const { currentAccount } = userStore;
   const params = useParams<{ contractAddress: string }>();
 
   const collectionQuery = createQuery({
-    queryKey: () => ['collection', userStore.address, params.contractAddress],
+    queryKey: () => ['collection', currentAccount?.address, params.contractAddress],
     queryFn: async () => {
       return httpClient.get({
-        url: `/users/${userStore.address}/collections/${params.contractAddress}`,
+        url: `/users/${currentAccount?.address}/collections/${params.contractAddress}`,
         validation: {
           response: nftCollectionSchema,
         },
       });
     },
+    enabled: !!currentAccount?.address,
   });
 
   return (

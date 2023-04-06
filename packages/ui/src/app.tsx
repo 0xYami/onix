@@ -26,7 +26,6 @@ const App: Component = () => {
   if (userState) {
     userStore.initialize(userState);
   }
-
   return (
     <ErrorBoundary fallback={<div>Something went wrong :(</div>}>
       <div class="w-[360px] h-[540px] max-h-[540px] relative text-white bg-black border-[0.3px] border-zinc-700">
