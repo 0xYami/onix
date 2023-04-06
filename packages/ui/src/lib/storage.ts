@@ -5,7 +5,7 @@ const account = z.object({
   address: z.string(),
 });
 
-const userStorage = z.object({
+const userState = z.object({
   password: z.string().min(8),
   mnemonic: z.string(),
   currentAccount: account,
@@ -13,20 +13,20 @@ const userStorage = z.object({
 });
 
 export type Account = z.infer<typeof account>;
-type UserStorage = z.infer<typeof userStorage>;
+type UserState = z.infer<typeof userState>;
 
 function createStorage() {
   const userStorageKey = 'onix-user-secrets';
 
-  const getUserState = (): UserStorage | null => {
+  const getUserState = (): UserState | null => {
     const rawValue = localStorage.getItem(userStorageKey);
     if (!rawValue) return null;
-    const state = userStorage.safeParse(JSON.parse(rawValue));
+    const state = userState.safeParse(JSON.parse(rawValue));
     if (!state.success) return null;
     return state.data;
   };
 
-  const setUserState = (state: UserStorage) => {
+  const setUserState = (state: UserState) => {
     localStorage.setItem(
       userStorageKey,
       JSON.stringify({
@@ -42,7 +42,7 @@ function createStorage() {
     const state = getUserState();
     if (!state) throw new Error('[storage] user state not initialized');
     state.accounts.push(account);
-    localStorage.setItem(userStorageKey, JSON.stringify(state));
+    setUserState(state);
   };
 
   const setCurrentAccount = (account: Account) => {
