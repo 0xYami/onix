@@ -13,7 +13,7 @@ export const Home: Component = () => {
   const { currentAccount } = userStore;
 
   const userQuery = createQuery({
-    queryKey: () => ['address'],
+    queryKey: () => ['address', currentAccount?.address],
     queryFn: async () => {
       return httpClient.get({
         url: `/users/${currentAccount?.address}`,
