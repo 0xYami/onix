@@ -1,4 +1,4 @@
-import { createEffect, createSignal, Show, type Component } from 'solid-js';
+import { createEffect, createSignal, For, Show, type Component } from 'solid-js';
 import { userStore } from '../store';
 import { copyToClipboard, truncateMiddle } from '../lib/utils';
 import { GasPumpIcon } from './icons/gas-pump';
@@ -7,6 +7,7 @@ import { CheckIcon } from './icons/check';
 
 export const Header: Component = () => {
   const { currentAccount } = userStore;
+  const [showDropdown, setShowDropdown] = createSignal(false);
   const [copying, setCopying] = createSignal(false);
 
   createEffect(() => {
@@ -32,7 +33,7 @@ export const Header: Component = () => {
         <GasPumpIcon class="w-[14px] h-[14px]" />
         <span>$2.01</span>
       </div>
-      <div class="absolute right-0 pr-4 flex items-center space-x-1">
+      <div class="absolute right-0 pr-4 flex items-center space-x-2">
         <Show
           when={!copying()}
           fallback={
@@ -52,6 +53,32 @@ export const Header: Component = () => {
             <span>{truncateMiddle(currentAccount!.address, 11)}</span>
           </button>
         </Show>
+        <div class="relative">
+          <button
+            type="button"
+            onClick={() => setShowDropdown(!showDropdown())}
+            class="w-6 h-6 rounded-full bg-zinc-700"
+          />
+          <Show when={showDropdown()}>
+            <div class="absolute w-44 h-56 flex flex-col justify-start top-8 right-0 z-10 bg-black border-[0.3px] border-zinc-700 rounded">
+              <div class="w-full px-4 py-3 border-b-[0.3px] border-b-zinc-700 text-[18px]">
+                Accounts
+              </div>
+              <ul class="px-2 py-4 space-y-2">
+                <For each={userStore.accounts}>
+                  {(account) => (
+                    <li>
+                      <div class="px-2 space-y-1">
+                        <div class="text-[15px]">{account.name}</div>
+                        <div class="text-zinc-400">{truncateMiddle(account.address, 15)}</div>
+                      </div>
+                    </li>
+                  )}
+                </For>
+              </ul>
+            </div>
+          </Show>
+        </div>
       </div>
     </header>
   );
