@@ -94,7 +94,7 @@ export const Header: Component = () => {
               <ul class="grow overflow-y-scroll">
                 <For each={userStore.accounts}>
                   {(account) => (
-                    <li>
+                    <li class="relative">
                       <button
                         type="button"
                         onClick={() => switchAccount(account)}
@@ -103,6 +103,9 @@ export const Header: Component = () => {
                         <div class="text-[15px]">{account.name}</div>
                         <div class="text-zinc-400">{truncateMiddle(account.address, 15)}</div>
                       </button>
+                      <Show when={currentAccount?.address === account.address}>
+                        <div class="absolute w-2 h-2 top-1/2 right-4 bg-green-500 rounded-full" />
+                      </Show>
                     </li>
                   )}
                 </For>
