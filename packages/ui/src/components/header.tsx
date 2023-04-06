@@ -39,6 +39,11 @@ export const Header: Component = () => {
     userStore.addAccount(newAccount);
   };
 
+  const switchAccount = (account: Account) => {
+    storage.setCurrentAccount(account);
+    userStore.switchAccount(account);
+  };
+
   const copyAddress = () => {
     if (!currentAccount?.address) return;
     setCopying(true);
@@ -92,6 +97,7 @@ export const Header: Component = () => {
                     <li>
                       <button
                         type="button"
+                        onClick={() => switchAccount(account)}
                         class="w-full px-4 py-2 space-y-1 text-start hover:bg-zinc-700/40"
                       >
                         <div class="text-[15px]">{account.name}</div>

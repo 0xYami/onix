@@ -45,7 +45,14 @@ function createStorage() {
     localStorage.setItem(userStorageKey, JSON.stringify(state));
   };
 
-  return { getUserState, setUserState, addUserAccount };
+  const setCurrentAccount = (account: Account) => {
+    const state = getUserState();
+    if (!state) throw new Error('[storage] user state not initialized');
+    state.currentAccount = account;
+    setUserState(state);
+  };
+
+  return { getUserState, setUserState, setCurrentAccount, addUserAccount };
 }
 
 export const storage = createStorage();

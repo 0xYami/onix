@@ -9,12 +9,13 @@ type UserState = {
   isAuthenticated: boolean;
 };
 
-type UserAction = {
+type UserActions = {
   initialize: (state: Omit<UserState, 'isAuthenticated'>) => void;
   addAccount: (account: Account) => void;
+  switchAccount: (account: Account) => void;
 };
 
-type UserStore = UserState & UserAction;
+type UserStore = UserState & UserActions;
 
 const [userStore, setUserStore] = createStore<UserStore>({
   password: null,
@@ -33,6 +34,18 @@ const [userStore, setUserStore] = createStore<UserStore>({
   },
   addAccount: (account: Account) => {
     setUserStore('accounts', (accounts) => [...(accounts ?? []), account]);
+  },
+  switchAccount: (account: Account) => {
+    if (!userStore.accounts) {
+      throw new Error("Can't switch account when there are no accounts");
+    }
+
+    const newAccount = userStore.accounts.find((a) => a.address === account.address);
+    if (!newAccount) {
+      throw new Error('Account not found');
+    }
+
+    setUserStore('currentAccount', newAccount);
   },
 });
 
