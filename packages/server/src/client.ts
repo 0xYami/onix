@@ -96,7 +96,7 @@ export class Client {
     tokensWithBalances.forEach((asset, index) => {
       asset.balance.usd = new BigNumber(asset.balance.token)
         .times(tokenPrices[index].quote.USD.price)
-        .toFixed(4);
+        .toFixed(2);
     });
 
     const totalBalance = tokensWithBalances.reduce(
@@ -108,7 +108,7 @@ export class Client {
       address,
       etherBalance: {
         token: toBaseUnit(etherBalance, 18).toFixed(4),
-        usd: toBaseUnit(etherBalance, 18).times(etherPrice).toFixed(4),
+        usd: toBaseUnit(etherBalance, 18).times(etherPrice).toFixed(2),
       },
       totalBalance: totalBalance.toFixed(4),
       assets: tokensWithBalances,
