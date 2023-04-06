@@ -9,7 +9,7 @@ import { CheckIcon } from './icons/check';
 
 export const Header: Component = () => {
   const { currentAccount } = userStore;
-  const [showDropdown, setShowDropdown] = createSignal(true);
+  const [showDropdown, setShowDropdown] = createSignal(false);
   const [copying, setCopying] = createSignal(false);
 
   createEffect(() => {
@@ -37,6 +37,7 @@ export const Header: Component = () => {
     };
     storage.addUserAccount(newAccount);
     userStore.addAccount(newAccount);
+    switchAccount(newAccount);
   };
 
   const switchAccount = (account: Account) => {
