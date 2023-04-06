@@ -14,18 +14,25 @@ import { copyToClipboard } from '../lib/utils';
 
 type StepName = 'password' | 'mnemonic' | 'success';
 
-type OnboardingStore = {
+type OnboardingState = {
   password: string;
-  confirmedPassword: string;
   mnemonic: Mnemonic | null;
   address: string | null;
 };
 
-const [store, setStore] = createStore<OnboardingStore>({
+type OnboardingStore = OnboardingState & {
+  reset: () => void;
+};
+
+const initialState: OnboardingState = {
   password: '',
-  confirmedPassword: '',
   mnemonic: null,
   address: null,
+};
+
+const [store, setStore] = createStore<OnboardingStore>({
+  ...initialState,
+  reset: () => setStore(initialState),
 });
 
 export const Onboarding: Component = () => {
@@ -53,6 +60,7 @@ export const Onboarding: Component = () => {
         <PasswordStep
           onNext={() => setCurrentStep(() => 'mnemonic')}
           onPrevious={() => {
+            store.reset();
             navigate('/index.html');
           }}
         />
@@ -60,7 +68,10 @@ export const Onboarding: Component = () => {
       <Match when={currentStep() === 'mnemonic'}>
         <MnemonicStep
           onNext={() => setCurrentStep(() => 'success')}
-          onPrevious={() => setCurrentStep(() => 'password')}
+          onPrevious={() => {
+            store.reset();
+            setCurrentStep(() => 'password');
+          }}
         />
       </Match>
       <Match when={currentStep() === 'success'}>
@@ -82,6 +93,7 @@ type StepProps = {
 };
 
 const PasswordStep: Component<StepProps> = (props) => {
+  const [confirmedPassword, setConfirmedPassword] = createSignal('');
   const [showPassword, setShowPassword] = createSignal(false);
   const [showConfirmedPassword, setShowConfirmedPassword] = createSignal(false);
 
@@ -139,8 +151,8 @@ const PasswordStep: Component<StepProps> = (props) => {
             <input
               id="confirm-password"
               type={showConfirmedPassword() ? 'text' : 'password'}
-              value={store.confirmedPassword}
-              onInput={(event) => setStore({ confirmedPassword: event.target.value })}
+              value={confirmedPassword()}
+              onInput={(event) => setConfirmedPassword(event.target.value)}
               required
               pattern={store.password}
               title="Passwords do not match"
