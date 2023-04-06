@@ -64,7 +64,7 @@ export const Home: Component = () => {
         </div>
         <div class="px-3">
           <div class="pb-3 uppercase">tokens</div>
-          <ul class="h-56 flex flex-col space-y-6 overflow-y-scroll">
+          <ul class="h-56 flex flex-col space-y-2 overflow-y-scroll">
             <For each={assets()}>
               {(asset) => (
                 <li>
