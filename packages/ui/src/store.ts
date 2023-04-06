@@ -11,6 +11,7 @@ type UserState = {
 
 type UserAction = {
   initialize: (state: Omit<UserState, 'isAuthenticated'>) => void;
+  addAccount: (account: Account) => void;
 };
 
 type UserStore = UserState & UserAction;
@@ -29,6 +30,9 @@ const [userStore, setUserStore] = createStore<UserStore>({
       currentAccount: state.currentAccount,
       isAuthenticated: true,
     });
+  },
+  addAccount: (account: Account) => {
+    setUserStore('accounts', (accounts) => [...(accounts ?? []), account]);
   },
 });
 
