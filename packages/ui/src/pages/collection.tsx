@@ -11,19 +11,6 @@ import { GlobeIcon } from '../components/icons/globe';
 import { userStore } from '../store';
 import { httpClient } from '../lib/http';
 
-const Skeleton: Component = () => (
-  <div class="p-4 space-y-3 animate-pulse">
-    <div class="h-8 rounded bg-zinc-700/20" />
-    <div class="h-96 grid grid-cols-2 gap-4 overflow-y-hidden">
-      {Array(6)
-        .fill(0)
-        .map(() => (
-          <div class="w-36 h-36 flex items-center px-2 rounded bg-zinc-700/20" />
-        ))}
-    </div>
-  </div>
-);
-
 export const Collection: Component = () => {
   const { currentAccount } = userStore;
   const params = useParams<{ contractAddress: string }>();
@@ -82,3 +69,16 @@ export const Collection: Component = () => {
     </MainLayout>
   );
 };
+
+const Skeleton: Component = () => (
+  <div class="p-4 space-y-3 animate-pulse">
+    <div class="h-8 rounded bg-zinc-700/20" />
+    <div class="h-96 grid grid-cols-2 gap-4 overflow-y-hidden">
+      {Array(6)
+        .fill(0)
+        .map(() => (
+          <div class="w-36 h-36 flex items-center px-2 rounded bg-zinc-700/20" />
+        ))}
+    </div>
+  </div>
+);

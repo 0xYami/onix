@@ -9,29 +9,6 @@ import { ReceiveIcon } from '../components/icons/receive';
 import { Link } from '../components/link';
 import { httpClient } from '../lib/http';
 
-const Skeleton: Component = () => {
-  return (
-    <div class="bg-white/5 p-2 animate-pulse">
-      <div class="h-36 rounded-lg bg-zinc-700/20" />
-      <div class="h-8 w-2/5 mt-8 mb-4 rounded-lg bg-zinc-700/20" />
-      <div class="space-y-3">
-        <div class="h-14 flex items-center px-4 rounded-lg bg-zinc-700/20">
-          <div class="w-10 h-10 rounded-full bg-zinc-700/50" />
-        </div>
-        <div class="h-14 flex items-center px-4 rounded-lg bg-zinc-700/20">
-          <div class="w-10 h-10 rounded-full bg-zinc-700/50" />
-        </div>
-        <div class="h-14 flex items-center px-4 rounded-lg bg-zinc-700/20">
-          <div class="w-10 h-10 rounded-full bg-zinc-700/50" />
-        </div>
-        <div class="h-14 flex items-center px-4 rounded-lg bg-zinc-700/20">
-          <div class="w-10 h-10 rounded-full bg-zinc-700/50" />
-        </div>
-      </div>
-    </div>
-  );
-};
-
 export const Home: Component = () => {
   const { currentAccount } = userStore;
 
@@ -119,3 +96,24 @@ export const Home: Component = () => {
     </MainLayout>
   );
 };
+
+const Skeleton: Component = () => (
+  <div class="bg-white/5 p-4 animate-pulse">
+    <div class="h-36 rounded-lg bg-zinc-700/20" />
+    <div class="h-8 w-2/5 mt-8 mb-4 rounded-lg bg-zinc-700/20" />
+    <div class="space-y-3">
+      <div class="h-14 flex items-center px-4 rounded-lg bg-zinc-700/20">
+        <div class="w-10 h-10 rounded-full bg-zinc-700/50" />
+      </div>
+      <div class="h-14 flex items-center px-4 rounded-lg bg-zinc-700/20">
+        <div class="w-10 h-10 rounded-full bg-zinc-700/50" />
+      </div>
+      <div class="h-14 flex items-center px-4 rounded-lg bg-zinc-700/20">
+        <div class="w-10 h-10 rounded-full bg-zinc-700/50" />
+      </div>
+      <div class="h-14 flex items-center px-4 rounded-lg bg-zinc-700/20">
+        <div class="w-10 h-10 rounded-full bg-zinc-700/50" />
+      </div>
+    </div>
+  </div>
+);
