@@ -30,7 +30,7 @@ export const Asset: Component = () => {
 
   return (
     <MainLayout>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Skeleton />}>
         <div class="relative h-40 flex flex-col items-center justify-center">
           <Link path="/" class="absolute w-full top-0 left-0 m-3 flex items-center space-x-1">
             <ChevronLeftIcon />
@@ -108,3 +108,18 @@ export const Asset: Component = () => {
     </MainLayout>
   );
 };
+
+const Skeleton: Component = () => (
+  <div class="bg-white/5 p-4 animate-pulse">
+    <div class="flex items-center justify-center">
+      <div class="h-32 w-full rounded-lg bg-zinc-700/20" />
+    </div>
+    <div class="h-8 w-2/5 my-4 rounded-lg bg-zinc-700/20" />
+    <div class="space-y-3">
+      <div class="h-12 rounded-lg bg-zinc-700/20" />
+      <div class="h-12 rounded-lg bg-zinc-700/20" />
+      <div class="h-12 rounded-lg bg-zinc-700/20" />
+      <div class="h-12 rounded-lg bg-zinc-700/20" />
+    </div>
+  </div>
+);

@@ -24,9 +24,9 @@ export const Collections: Component = () => {
 
   return (
     <MainLayout>
-      <Suspense fallback={<div>Loading...</div>}>
-        <div class="flex flex-col p-3 space-y-2">
-          <span class="flex items-center justify-start h-14 text-xl">NFT Portfolio</span>
+      <div class="flex flex-col p-3 space-y-2">
+        <span class="flex items-center justify-start h-14 text-xl">NFT Portfolio</span>
+        <Suspense fallback={<Skeleton />}>
           <span class="pb-2 text-zinc-100">
             {collectionsQuery.data?.totalCount}{' '}
             {collectionsQuery.data && collectionsQuery.data.totalCount > 1
@@ -54,8 +54,29 @@ export const Collections: Component = () => {
               )}
             </For>
           </ul>
-        </div>
-      </Suspense>
+        </Suspense>
+      </div>
     </MainLayout>
   );
 };
+
+const Skeleton: Component = () => (
+  <div class="space-y-3 animate-pulse">
+    <div class="h-8 w-2/5 rounded-lg bg-zinc-700/20" />
+    <div class="h-14 flex items-center px-2 rounded-lg bg-zinc-700/20">
+      <div class="w-12 h-12 rounded-full bg-zinc-700/50" />
+    </div>
+    <div class="h-14 flex items-center px-2 rounded-lg bg-zinc-700/20">
+      <div class="w-12 h-12 rounded-full bg-zinc-700/50" />
+    </div>
+    <div class="h-14 flex items-center px-2 rounded-lg bg-zinc-700/20">
+      <div class="w-12 h-12 rounded-full bg-zinc-700/50" />
+    </div>
+    <div class="h-14 flex items-center px-2 rounded-lg bg-zinc-700/20">
+      <div class="w-12 h-12 rounded-full bg-zinc-700/50" />
+    </div>
+    <div class="h-14 flex items-center px-2 rounded-lg bg-zinc-700/20">
+      <div class="w-12 h-12 rounded-full bg-zinc-700/50" />
+    </div>
+  </div>
+);
