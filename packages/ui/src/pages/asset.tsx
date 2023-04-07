@@ -116,10 +116,10 @@ const Skeleton: Component = () => (
     </div>
     <div class="h-8 w-2/5 my-4 rounded-lg bg-zinc-700/20" />
     <div class="space-y-3">
-      <div class="h-12 flex items-center px-4 rounded-lg bg-zinc-700/20" />
-      <div class="h-12 flex items-center px-4 rounded-lg bg-zinc-700/20" />
-      <div class="h-12 flex items-center px-4 rounded-lg bg-zinc-700/20" />
-      <div class="h-12 flex items-center px-4 rounded-lg bg-zinc-700/20" />
+      <div class="h-12 rounded-lg bg-zinc-700/20" />
+      <div class="h-12 rounded-lg bg-zinc-700/20" />
+      <div class="h-12 rounded-lg bg-zinc-700/20" />
+      <div class="h-12 rounded-lg bg-zinc-700/20" />
     </div>
   </div>
 );

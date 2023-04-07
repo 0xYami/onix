@@ -75,7 +75,7 @@ const Skeleton: Component = () => (
       {Array(6)
         .fill(0)
         .map(() => (
-          <div class="h-12 flex items-center px-2 rounded bg-zinc-700/20" />
+          <div class="h-12 rounded bg-zinc-700/20" />
         ))}
     </div>
   </div>
