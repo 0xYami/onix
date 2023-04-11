@@ -36,7 +36,7 @@ export const Activity: Component = () => {
 
   return (
     <MainLayout>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Skeleton />}>
         <div class="p-3 text-xl font-bold">Activity</div>
         <ul class="max-h-96 p-3 space-y-5 overflow-y-scroll">
           <For each={Object.entries(activityQuery.data || [])}>
@@ -61,7 +61,7 @@ export const Activity: Component = () => {
                             href={linkToEtherscan}
                             target="_blank"
                             rel="noopener noreferrer"
-                            class="w-full flex space-x-2 p-2 rounded-lg hover:bg-zinc-700/50"
+                            class="w-full flex space-x-2 py-2 px-1 rounded-lg hover:bg-zinc-700/50"
                           >
                             <Switch>
                               <Match when={isSender}>
@@ -97,3 +97,19 @@ export const Activity: Component = () => {
     </MainLayout>
   );
 };
+
+const Skeleton: Component = () => (
+  <div class="bg-white/5 px-2 animate-pulse">
+    <div class="h-10 w-2/5 my-4 rounded-lg bg-zinc-700/20" />
+    <div class="h-8 w-3/5 my-4 rounded-lg bg-zinc-700/20" />
+    <div class="space-y-3">
+      <div class="h-10 rounded-lg bg-zinc-700/20" />
+      <div class="h-10 rounded-lg bg-zinc-700/20" />
+      <div class="h-10 rounded-lg bg-zinc-700/20" />
+      <div class="h-10 rounded-lg bg-zinc-700/20" />
+      <div class="h-10 rounded-lg bg-zinc-700/20" />
+      <div class="h-10 rounded-lg bg-zinc-700/20" />
+      <div class="h-10 rounded-lg bg-zinc-700/20" />
+    </div>
+  </div>
+);
