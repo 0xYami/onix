@@ -2,6 +2,7 @@ import { ErrorBoundary, Show, type Component, type JSX } from 'solid-js';
 import { Routes, Route, Navigate, Outlet } from '@solidjs/router';
 import { userStore } from './store';
 import { storage } from './lib/storage';
+import { Activity } from './pages/activity';
 import { Asset } from './pages/asset';
 import { Collection } from './pages/collection';
 import { Collections } from './pages/collections';
@@ -57,6 +58,7 @@ const App: Component = () => {
             <Route path="/index.html/collections" component={Collections} />
             <Route path="/index.html/collections/:contractAddress" component={Collection} />
             <Route path="/index.html/collections/:contractAddress/:tokenId" component={NFT} />
+            <Route path="/index.html/activity" component={Activity} />
           </Route>
         </Routes>
       </div>

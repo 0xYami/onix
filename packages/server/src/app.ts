@@ -53,6 +53,10 @@ router
       userAddress: params.address,
       contractAddress: params.contractAddress,
     });
+  })
+  .get('/users/:address/activity', async (req) => {
+    const params = addressParamsSchema.parse(req.params);
+    return client.alchemy.getAssetsTransfers(params.address);
   });
 
 const start = async () => {

@@ -202,6 +202,35 @@ export const getNFTCollectionsResponseSchema = z.object({
   ),
 });
 
+const alchemyAssetTransferSchema = z.object({
+  blockNum: z.string(),
+  from: z.string(),
+  to: z.string().nullable(),
+  value: z.number().nullable(),
+  tokenId: z.string().nullable(),
+  asset: z.string().nullable(),
+  hash: z.string(),
+  metadata: z.object({
+    blockTimestamp: z.string(),
+  }),
+  category: z.union([
+    z.literal('external'),
+    z.literal('internal'),
+    z.literal('token'),
+    z.literal('erc20'),
+    z.literal('erc721'),
+    z.literal('erc1155'),
+    z.literal('specialnft'),
+  ]),
+});
+
+export const alchemyAssetTransfersSchema = z.object({
+  result: z.object({
+    pageKey: z.string().optional(),
+    transfers: z.array(alchemyAssetTransferSchema),
+  }),
+});
+
 export type GetAssetResult = z.infer<typeof getAssetResultSchema>;
 export type Transfers = z.infer<typeof transfers>;
 export type AddressDetails = z.infer<typeof addressDetailsSchema>;
@@ -209,6 +238,8 @@ export type GetNFTCollectionResponse = z.infer<typeof getNFTCollectionResponseSc
 export type GetNFTCollectionsResponse = z.infer<typeof getNFTCollectionsResponseSchema>;
 export type NFTCollection = z.infer<typeof nftCollectionSchema>;
 export type AlchemyNFT = z.infer<typeof alchemyNFTSchema>;
+export type AlchemyAssetTransfers = z.infer<typeof alchemyAssetTransfersSchema>;
+export type AlchemyAssetTransfer = z.infer<typeof alchemyAssetTransferSchema>;
 
 export { z };
 export type { ZodSchema };

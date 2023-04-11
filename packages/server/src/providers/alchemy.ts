@@ -2,6 +2,7 @@ import { HttpClient } from '@onix/utils';
 import {
   alchemyERC20BalancesSchema,
   alchemyNFTSchema,
+  alchemyAssetTransfersSchema,
   getNFTCollectionResponseSchema,
   getNFTCollectionsResponseSchema,
   type AlchemyERC20Balances,
@@ -122,5 +123,48 @@ export class Alchemy {
         response: getNFTCollectionsResponseSchema,
       },
     });
+  }
+
+  async getAssetsTransfers(ownerAddress: string) {
+    const params = {
+      fromBlock: '0x0',
+      toBlock: 'latest',
+      withMetadata: true,
+      order: 'desc',
+      maxCount: '0x32', // 50
+      category: ['external', 'erc20', 'erc721'],
+    };
+    const sent = await this.#httpClient.post({
+      url: `/v2/${this.#apiKey}`,
+      data: {
+        id: 1,
+        jsonrpc: '2.0',
+        method: 'alchemy_getAssetTransfers',
+        params: [{ ...params, fromAddress: ownerAddress }],
+      },
+      validation: {
+        response: alchemyAssetTransfersSchema,
+      },
+    });
+    const received = await this.#httpClient.post({
+      url: `/v2/${this.#apiKey}`,
+      data: {
+        id: 1,
+        jsonrpc: '2.0',
+        method: 'alchemy_getAssetTransfers',
+        params: [{ ...params, toAddress: ownerAddress }],
+      },
+      validation: {
+        response: alchemyAssetTransfersSchema,
+      },
+    });
+
+    return {
+      result: {
+        transfers: [...sent.result.transfers, ...received.result.transfers].sort(
+          (sent, received) => parseInt(received.blockNum, 16) - parseInt(sent.blockNum, 16),
+        ),
+      },
+    };
   }
 }
