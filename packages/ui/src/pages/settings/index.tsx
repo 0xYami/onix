@@ -1,12 +1,12 @@
 import { type Component } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
-import { userStore } from '../store';
-import { truncateMiddle } from '../lib/utils';
-import { CrossIcon } from '../components/icons/cross';
-import { ChevronRightIcon } from '../components/icons/chevron-right';
-import { LockIcon } from '../components/icons/lock';
-import { KeyIcon } from '../components/icons/key';
-import { ShieldIcon } from '../components/icons/shield';
+import { userStore } from '../../store';
+import { truncateMiddle } from '../../lib/utils';
+import { CrossIcon } from '../../components/icons/cross';
+import { ChevronRightIcon } from '../../components/icons/chevron-right';
+import { LockIcon } from '../../components/icons/lock';
+import { KeyIcon } from '../../components/icons/key';
+import { ShieldIcon } from '../../components/icons/shield';
 
 export const Settings: Component = () => {
   const navigate = useNavigate();
