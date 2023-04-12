@@ -33,6 +33,7 @@ export const Settings: Component = () => {
         <div>
           <div>{currentAccount?.name}</div>
           <span class="text-sm text-neutral-500">
+            {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
             {truncateMiddle(currentAccount!.address, 11)}
           </span>
         </div>
