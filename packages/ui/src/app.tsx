@@ -11,6 +11,7 @@ import { NFT } from './pages/nft';
 import { Onboarding } from './pages/onboarding';
 import { Settings } from './pages/settings';
 import { ChangePassword } from './pages/settings/change-password';
+import { ExportKey } from './pages/settings/export-key';
 import { Welcome } from './pages/welcome';
 
 type ProtectedRouteProps = {
@@ -63,6 +64,7 @@ const App: Component = () => {
             <Route path="/index.html/activity" component={Activity} />
             <Route path="/index.html/settings" component={Settings} />
             <Route path="/index.html/settings/change-password" component={ChangePassword} />
+            <Route path="/index.html/settings/export-key" component={ExportKey} />
           </Route>
         </Routes>
       </div>
