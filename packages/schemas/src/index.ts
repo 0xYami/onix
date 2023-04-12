@@ -80,7 +80,7 @@ export const getAssetResultSchema = z.object({
   transfers: z.array(transferSchema),
 });
 
-const NFTTypeSchema = z.union([z.literal('ERC721'), z.literal('ERC1155')]);
+const NFTTypeSchema = z.union([z.literal('ERC721'), z.literal('ERC1155'), z.literal('UNKNOWN')]);
 
 const NFTMetadataSchema = z.object({
   image: z.string().optional(),
