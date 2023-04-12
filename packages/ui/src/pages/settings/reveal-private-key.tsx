@@ -10,13 +10,13 @@ import { EyeIcon } from '../../components/icons/eye';
 import { EyeSlashIcon } from '../../components/icons/eye-slash';
 import { CheckIcon } from '../../components/icons/check';
 
-export const ExportKey: Component = () => {
+export const RevealPrivateKey: Component = () => {
   const [currentStep, setCurrentStep] = createSignal<'authenticate' | 'reveal'>('authenticate');
   return (
     <div class="flex flex-col w-[360px] h-[540px] p-4 space-y-2 text-white bg-black border-[0.3px] border-zinc-700">
       <Link path="/settings" class="flex items-center space-x-1 mb-4">
         <ChevronLeftIcon />
-        <span>Settings / Export private key</span>
+        <span class="text-sm">Settings / Reveal private key</span>
       </Link>
       <Switch>
         <Match when={currentStep() === 'authenticate'}>
@@ -64,7 +64,7 @@ const RevealKeyStep: Component = () => {
         >
           <button type="button" class="flex items-center space-x-2" onClick={copyPrivateKey}>
             <span class="text-xs uppercase">copy</span>
-            <CopyIcon class="w-[12px] h-[12px]" />
+            <CopyIcon class="w-3 h-3" />
           </button>
         </Show>
       </div>

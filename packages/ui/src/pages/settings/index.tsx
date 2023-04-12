@@ -32,7 +32,7 @@ export const Settings: Component = () => {
         type="button"
         class="flex items-center justify-between mx-3 p-2 rounded hover:bg-zinc-700/30"
       >
-        <div>
+        <div class="flex flex-col items-start">
           <div>{currentAccount?.name}</div>
           <span class="text-sm text-neutral-500">
             {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
@@ -44,7 +44,7 @@ export const Settings: Component = () => {
       <div class="h-[1px] bg-neutral-800 mx-5" />
       <Link
         path="/settings/change-password"
-        class="flex items-center justify-between mx-3 px-2 py-3 rounded hover:bg-zinc-700/30"
+        class="flex items-center justify-between mx-3 p-2 rounded hover:bg-zinc-700/30"
       >
         <div class="flex items-center space-x-2">
           <LockIcon />
@@ -54,7 +54,7 @@ export const Settings: Component = () => {
       </Link>
       <Link
         path="/settings/export-key"
-        class="flex items-center justify-between mx-3 px-2 py-3 rounded hover:bg-zinc-700/30"
+        class="flex items-center justify-between mx-3 p-2 rounded hover:bg-zinc-700/30"
       >
         <div class="flex items-center space-x-2">
           <KeyIcon />
@@ -64,7 +64,7 @@ export const Settings: Component = () => {
       </Link>
       <Link
         path="/settings/reveal-mnemonic"
-        class="flex items-center justify-between mx-3 px-2 py-3 rounded hover:bg-zinc-700/30"
+        class="flex items-center justify-between mx-3 p-2 rounded hover:bg-zinc-700/30"
       >
         <div class="flex items-center space-x-2">
           <ShieldIcon />
@@ -89,7 +89,7 @@ export const AuthStep: Component<{ onNext: () => void }> = (props) => {
       }}
       class="relative h-full flex flex-col mb-4"
     >
-      <label for="password" class="uppercase mt-4 mb-2">
+      <label for="password" class="uppercase mb-3">
         confirm password
       </label>
       <div class="relative flex items-center">
@@ -109,7 +109,7 @@ export const AuthStep: Component<{ onNext: () => void }> = (props) => {
           pattern={userStore.password!}
           title="Doesn't match current password"
           placeholder="Password"
-          class="w-full bg-black border-[] border-zinc-700 rounded"
+          class="w-full bg-black border-[0.3px] border-zinc-700 rounded"
         />
         <button
           type="button"

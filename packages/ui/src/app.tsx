@@ -11,7 +11,7 @@ import { NFT } from './pages/nft';
 import { Onboarding } from './pages/onboarding';
 import { Settings } from './pages/settings';
 import { ChangePassword } from './pages/settings/change-password';
-import { ExportKey } from './pages/settings/export-key';
+import { RevealPrivateKey } from './pages/settings/reveal-private-key';
 import { RevealMnemonic } from './pages/settings/reveal-mnemonic';
 import { Welcome } from './pages/welcome';
 
@@ -37,7 +37,7 @@ const App: Component = () => {
         <Routes>
           <Route path="/" element={<Navigate href="/index.html" />} />
           <Route
-            path=""
+            path="/index.html"
             element={
               <ProtectedRoute
                 allowWhen={!userStore.isAuthenticated}
@@ -45,11 +45,11 @@ const App: Component = () => {
               />
             }
           >
-            <Route path="/index.html" component={Welcome} />
-            <Route path="/index.html/onboarding" component={Onboarding} />
+            <Route path="/" component={Welcome} />
+            <Route path="/onboarding" component={Onboarding} />
           </Route>
           <Route
-            path=""
+            path="/index.html"
             element={
               <ProtectedRoute
                 allowWhen={userStore.isAuthenticated}
@@ -57,16 +57,20 @@ const App: Component = () => {
               />
             }
           >
-            <Route path="/index.html/home" component={Home} />
-            <Route path="/index.html/assets/:contractAddress" component={Asset} />
-            <Route path="/index.html/collections" component={Collections} />
-            <Route path="/index.html/collections/:contractAddress" component={Collection} />
-            <Route path="/index.html/collections/:contractAddress/:tokenId" component={NFT} />
-            <Route path="/index.html/activity" component={Activity} />
-            <Route path="/index.html/settings" component={Settings} />
-            <Route path="/index.html/settings/change-password" component={ChangePassword} />
-            <Route path="/index.html/settings/export-key" component={ExportKey} />
-            <Route path="/index.html/settings/reveal-mnemonic" component={RevealMnemonic} />
+            <Route path="/home" component={Home} />
+            <Route path="/assets/:contractAddress" component={Asset} />
+            <Route path="/collections">
+              <Route path="/" component={Collections} />
+              <Route path="/:contractAddress" component={Collection} />
+              <Route path="/:contractAddress/:tokenId" component={NFT} />
+            </Route>
+            <Route path="/activity" component={Activity} />
+            <Route path="/settings">
+              <Route path="/" component={Settings} />
+              <Route path="/change-password" component={ChangePassword} />
+              <Route path="/export-key" component={RevealPrivateKey} />
+              <Route path="/reveal-mnemonic" component={RevealMnemonic} />
+            </Route>
           </Route>
         </Routes>
       </div>
