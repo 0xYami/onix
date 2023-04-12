@@ -7,6 +7,7 @@ import { ChevronRightIcon } from '../../components/icons/chevron-right';
 import { LockIcon } from '../../components/icons/lock';
 import { KeyIcon } from '../../components/icons/key';
 import { ShieldIcon } from '../../components/icons/shield';
+import { Link } from '../../components/link';
 
 export const Settings: Component = () => {
   const navigate = useNavigate();
@@ -38,8 +39,8 @@ export const Settings: Component = () => {
         <ChevronRightIcon />
       </button>
       <div class="h-[1px] bg-neutral-800 mx-5" />
-      <button
-        type="button"
+      <Link
+        path="/settings/change-password"
         class="flex items-center justify-between mx-3 px-2 py-3 rounded hover:bg-zinc-700/30"
       >
         <div class="flex items-center space-x-2">
@@ -47,7 +48,7 @@ export const Settings: Component = () => {
           <span>Change password</span>
         </div>
         <ChevronRightIcon />
-      </button>
+      </Link>
       <button
         type="button"
         class="flex items-center justify-between mx-3 px-2 py-3 rounded hover:bg-zinc-700/30"
