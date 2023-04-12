@@ -64,7 +64,7 @@ const RevealKeyStep: Component = () => {
         >
           <button type="button" class="flex items-center space-x-2" onClick={copyPrivateKey}>
             <span class="text-xs uppercase">copy</span>
-            <CopyIcon class="w-[12px] h-[12px]" />
+            <CopyIcon class="w-3 h-3" />
           </button>
         </Show>
       </div>
