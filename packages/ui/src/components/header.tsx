@@ -1,4 +1,5 @@
-import { createEffect, createSignal, For, Show, type Component } from 'solid-js';
+import { createEffect, createSignal, Show, type Component } from 'solid-js';
+import { Portal } from 'solid-js/web';
 import { Wallet } from 'ethers';
 import { userStore } from '../store';
 import { storage, type Account } from '../lib/storage';
@@ -6,10 +7,15 @@ import { copyToClipboard, truncateMiddle } from '../lib/utils';
 import { GasPumpIcon } from './icons/gas-pump';
 import { CopyIcon } from './icons/copy';
 import { CheckIcon } from './icons/check';
+import { CrossIcon } from './icons/cross';
+import { ChevronRightIcon } from './icons/chevron-right';
+import { LockIcon } from './icons/lock';
+import { KeyIcon } from './icons/key';
+import { ShieldIcon } from './icons/shield';
 
 export const Header: Component = () => {
   const { currentAccount } = userStore;
-  const [showDropdown, setShowDropdown] = createSignal(false);
+  const [showSettings, setShowSettings] = createSignal(true);
   const [copying, setCopying] = createSignal(false);
 
   createEffect(() => {
@@ -81,47 +87,73 @@ export const Header: Component = () => {
             <span>{truncateMiddle(currentAccount!.address, 11)}</span>
           </button>
         </Show>
-        <div class="relative">
-          <button
-            type="button"
-            onClick={() => setShowDropdown(!showDropdown())}
-            class="w-6 h-6 rounded-full bg-zinc-700"
-          />
-          <Show when={showDropdown()}>
-            <div class="absolute w-44 h-56 flex flex-col justify-around top-8 right-0 z-10 bg-black border-[0.3px] border-zinc-700 rounded">
-              <div class="w-full px-4 py-3 border-b-[0.3px] border-b-zinc-700 text-[18px]">
-                Accounts
+        <button
+          type="button"
+          onClick={() => setShowSettings(true)}
+          class="w-6 h-6 rounded-full bg-zinc-700"
+        />
+      </div>
+      <Show when={showSettings()}>
+        <Portal>
+          <div class="absolute flex items-center justify-center inset-0">
+            <div class="flex flex-col w-[360px] h-[540px] space-y-2 border-[0.3px] border-zinc-700 text-white bg-black z-50">
+              <div class="flex items-center justify-between px-5 pt-5">
+                <span class="text-xl">Settings</span>
+                <button
+                  type="button"
+                  class="p-3 border-[0.3px] border-zinc-700 rounded hover:bg-zinc-700/40"
+                  onClick={() => setShowSettings(false)}
+                >
+                  <CrossIcon />
+                </button>
               </div>
-              <ul class="grow overflow-y-scroll">
-                <For each={userStore.accounts}>
-                  {(account) => (
-                    <li class="relative">
-                      <button
-                        type="button"
-                        onClick={() => switchAccount(account)}
-                        class="w-full px-4 py-2 space-y-1 text-start hover:bg-zinc-700/40"
-                      >
-                        <div class="text-[15px]">{account.name}</div>
-                        <div class="text-zinc-400">{truncateMiddle(account.address, 15)}</div>
-                      </button>
-                      <Show when={currentAccount?.address === account.address}>
-                        <div class="absolute w-2 h-2 top-1/2 right-4 bg-green-500 rounded-full" />
-                      </Show>
-                    </li>
-                  )}
-                </For>
-              </ul>
               <button
                 type="button"
-                onClick={createAccount}
-                class="py-2 text-[15px] text-zinc-400 hover:text-white duration-200 border-t-[0.3px] border-t-zinc-700"
+                class="flex items-center justify-between mx-3 p-2 rounded hover:bg-zinc-700/30"
               >
-                Create account
+                <div>
+                  <div>{currentAccount?.name}</div>
+                  <span class="text-sm text-neutral-500">
+                    {truncateMiddle(currentAccount!.address, 11)}
+                  </span>
+                </div>
+                <ChevronRightIcon />
+              </button>
+              <div class="h-[1px] bg-neutral-800 mx-5" />
+              <button
+                type="button"
+                class="flex items-center justify-between mx-3 px-2 py-3 rounded hover:bg-zinc-700/30"
+              >
+                <div class="flex items-center space-x-2">
+                  <LockIcon />
+                  <span>Change password</span>
+                </div>
+                <ChevronRightIcon />
+              </button>
+              <button
+                type="button"
+                class="flex items-center justify-between mx-3 px-2 py-3 rounded hover:bg-zinc-700/30"
+              >
+                <div class="flex items-center space-x-2">
+                  <KeyIcon />
+                  <span>Export private key</span>
+                </div>
+                <ChevronRightIcon />
+              </button>
+              <button
+                type="button"
+                class="flex items-center justify-between mx-3 px-2 py-3 rounded hover:bg-zinc-700/30"
+              >
+                <div class="flex items-center space-x-2">
+                  <ShieldIcon />
+                  <span>Reveal recovery phrase</span>
+                </div>
+                <ChevronRightIcon />
               </button>
             </div>
-          </Show>
-        </div>
-      </div>
+          </div>
+        </Portal>
+      </Show>
     </header>
   );
 };
