@@ -62,8 +62,8 @@ export const Settings: Component = () => {
         </div>
         <ChevronRightIcon />
       </Link>
-      <button
-        type="button"
+      <Link
+        path="/settings/reveal-mnemonic"
         class="flex items-center justify-between mx-3 px-2 py-3 rounded hover:bg-zinc-700/30"
       >
         <div class="flex items-center space-x-2">
@@ -71,7 +71,7 @@ export const Settings: Component = () => {
           <span>Reveal recovery phrase</span>
         </div>
         <ChevronRightIcon />
-      </button>
+      </Link>
     </div>
   );
 };
@@ -90,7 +90,7 @@ export const AuthStep: Component<{ onNext: () => void }> = (props) => {
       class="relative h-full flex flex-col mb-4"
     >
       <label for="password" class="uppercase mt-4 mb-2">
-        enter password
+        confirm password
       </label>
       <div class="relative flex items-center">
         <input
