@@ -1,4 +1,4 @@
-import { createEffect, createSignal, Match, Switch, type Component } from 'solid-js';
+import { createEffect, createMemo, createSignal, Match, Switch, type Component } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import { useNavigate } from '@solidjs/router';
 import { type Mnemonic, Wallet } from 'ethers';
@@ -96,6 +96,11 @@ const PasswordStep: Component<StepProps> = (props) => {
   const [confirmedPassword, setConfirmedPassword] = createSignal('');
   const [showPassword, setShowPassword] = createSignal(false);
   const [showConfirmedPassword, setShowConfirmedPassword] = createSignal(false);
+  const [policyAgreed, setPolicyAgreed] = createSignal(false);
+
+  const stepIsValid = createMemo(() => {
+    return store.password.length >= 8 && confirmedPassword() === store.password && policyAgreed();
+  });
 
   return (
     <div class="relative h-[520px] p-3">
@@ -168,12 +173,45 @@ const PasswordStep: Component<StepProps> = (props) => {
             </button>
           </div>
         </div>
-        <button
-          type="submit"
-          class="absolute w-[90%] py-2 text-center bottom-0 border-[0.3px] border-zinc-700/80 rounded"
-        >
-          Next
-        </button>
+        <div class="absolute w-[90%] bottom-0 space-y-4">
+          <div
+            classList={{
+              'flex items-center justify-between p-4 space-x-3 border-[0.3px] rounded hover:bg-zinc-700/20':
+                true,
+              'border-zinc-700/80': !policyAgreed(),
+              'border-teal-800': policyAgreed(),
+            }}
+          >
+            <p class="text-sm">
+              I agree to the <span class="text-teal-500 underline">Terms</span> and{' '}
+              <span class="text-teal-500 underline">Privacy Policy</span>
+            </p>
+            <input
+              type="checkbox"
+              checked={policyAgreed()}
+              onChange={() => setPolicyAgreed(!policyAgreed())}
+              classList={{
+                'w-6 h-6 cursor-pointer border-[0.3px] border-zinc-700/80 rounded-full bg-black':
+                  true,
+                'checked:border-[0.3px] checked:border-teal-500 checked:text-black checked:hover:border-teal-500':
+                  true,
+                'focus:ring-[0.3px] focus:ring-zinc-700/80 checked:focus:ring-teal-500 focus:ring-offset-0':
+                  true,
+              }}
+            />
+          </div>
+          <button
+            type="submit"
+            disabled={!stepIsValid()}
+            classList={{
+              'w-[100%] py-2 text-center border-[0.3px] border-zinc-700/80 rounded': true,
+              'cursor-pointer hover:bg-zinc-700/20': stepIsValid(),
+              'disabled:text-zinc-700': true,
+            }}
+          >
+            Next
+          </button>
+        </div>
       </form>
     </div>
   );
