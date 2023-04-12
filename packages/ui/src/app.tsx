@@ -11,7 +11,7 @@ import { NFT } from './pages/nft';
 import { Onboarding } from './pages/onboarding';
 import { Settings } from './pages/settings';
 import { ChangePassword } from './pages/settings/change-password';
-import { ExportKey } from './pages/settings/export-key';
+import { RevealPrivateKey } from './pages/settings/reveal-private-key';
 import { RevealMnemonic } from './pages/settings/reveal-mnemonic';
 import { Welcome } from './pages/welcome';
 
@@ -68,7 +68,7 @@ const App: Component = () => {
             <Route path="/settings">
               <Route path="/" component={Settings} />
               <Route path="/change-password" component={ChangePassword} />
-              <Route path="/export-key" component={ExportKey} />
+              <Route path="/export-key" component={RevealPrivateKey} />
               <Route path="/reveal-mnemonic" component={RevealMnemonic} />
             </Route>
           </Route>
