@@ -13,6 +13,7 @@ type UserActions = {
   initialize: (state: Omit<UserState, 'isAuthenticated'>) => void;
   addAccount: (account: Account) => void;
   switchAccount: (account: Account) => void;
+  changePassword: (password: string) => void;
 };
 
 type UserStore = UserState & UserActions;
@@ -46,6 +47,9 @@ const [userStore, setUserStore] = createStore<UserStore>({
     }
 
     setUserStore('currentAccount', newAccount);
+  },
+  changePassword: (password: string) => {
+    setUserStore('password', password);
   },
 });
 
