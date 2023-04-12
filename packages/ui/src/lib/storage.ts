@@ -52,7 +52,20 @@ function createStorage() {
     setUserState(state);
   };
 
-  return { getUserState, setUserState, setCurrentAccount, addUserAccount };
+  const changePassword = (password: string) => {
+    const state = getUserState();
+    if (!state) throw new Error('[storage] user state not initialized');
+    state.password = password;
+    setUserState(state);
+  };
+
+  return {
+    getUserState,
+    setUserState,
+    setCurrentAccount,
+    addUserAccount,
+    changePassword,
+  };
 }
 
 export const storage = createStorage();
