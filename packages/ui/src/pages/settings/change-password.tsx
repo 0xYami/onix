@@ -22,7 +22,7 @@ export const ChangePassword: Component = () => {
     <div class="flex flex-col w-[360px] h-[540px] p-4 space-y-2 text-white bg-black border-[0.3px] border-zinc-700">
       <Link path="/settings" class="flex items-center space-x-1 mb-4">
         <ChevronLeftIcon />
-        <span>Settings / Change password</span>
+        <span class="text-sm">Settings / Change password</span>
       </Link>
       <Switch>
         <Match when={currentStep() === 'authenticate'}>
@@ -52,7 +52,7 @@ const ChangePasswordStep: Component<{ onNext: (password: string) => void }> = (p
     >
       <div class="flex flex-col mb-4 space-y-2">
         <label for="password" class="uppercase">
-          enter password
+          enter new password
         </label>
         <div class="relative flex items-center">
           <input
