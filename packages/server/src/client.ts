@@ -83,6 +83,7 @@ export class Client {
       return {
         ...token,
         balance: {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           token: toBaseUnit(Number(asset!.tokenBalance).toString(), token.decimals).toFixed(4),
           // To be set once token prices have been fetched
           usd: '0',
