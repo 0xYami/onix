@@ -1,18 +1,18 @@
-import { createEffect, createMemo, createSignal, Match, Switch, type Component } from 'solid-js';
+import { createEffect, createMemo, createSignal, Match, Show, Switch } from 'solid-js';
+import type { Component } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import { useNavigate } from '@solidjs/router';
 import { type Mnemonic, Wallet } from 'ethers';
+import { userStore } from '../store';
+import { storage, type Account } from '../lib/storage';
+import { copyToClipboard } from '../lib/utils';
 import { ChevronLeftIcon } from '../components/icons/chevron-left';
 import { PuzzlePieceIcon } from '../components/icons/puzzle-piece';
 import { ThumbstackIcon } from '../components/icons/thumbstack';
 import { EyeIcon } from '../components/icons/eye';
 import { EyeSlashIcon } from '../components/icons/eye-slash';
 import { CopyIcon } from '../components/icons/copy';
-import { storage, type Account } from '../lib/storage';
-import { userStore } from '../store';
-import { copyToClipboard } from '../lib/utils';
-
-type StepName = 'password' | 'mnemonic' | 'success';
+import { CheckIcon } from '../components/icons/check';
 
 type OnboardingState = {
   password: string;
@@ -34,6 +34,8 @@ const [store, setStore] = createStore<OnboardingStore>({
   ...initialState,
   reset: () => setStore(initialState),
 });
+
+type StepName = 'password' | 'mnemonic' | 'success';
 
 export const Onboarding: Component = () => {
   const navigate = useNavigate();
@@ -218,6 +220,7 @@ const PasswordStep: Component<StepProps> = (props) => {
 };
 
 const MnemonicStep: Component<StepProps> = (props) => {
+  const [copying, setCopying] = createSignal(false);
   const [blurredOut, setBlurredOut] = createSignal(true);
 
   const wallet = Wallet.createRandom();
@@ -227,6 +230,19 @@ const MnemonicStep: Component<StepProps> = (props) => {
     address: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045',
     // address: wallet.address,
   });
+
+  createEffect(() => {
+    if (!copying()) return;
+    setTimeout(() => {
+      setCopying(false);
+    }, 2000);
+  });
+
+  const copyMnemonic = () => {
+    setCopying(true);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    copyToClipboard(wallet.mnemonic!.phrase);
+  };
 
   return (
     <div class="relative h-[520px] p-3">
@@ -244,15 +260,20 @@ const MnemonicStep: Component<StepProps> = (props) => {
       </p>
       <div class="flex items-center justify-between my-4">
         <div class="uppercase">recovery phrase</div>
-        <button
-          type="button"
-          class="flex items-center space-x-2"
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          onClick={() => copyToClipboard(wallet.mnemonic!.phrase)}
+        <Show
+          when={!copying()}
+          fallback={
+            <div class="flex items-center space-x-2 text-xs text-green-600">
+              <span>Copied</span>
+              <CheckIcon />
+            </div>
+          }
         >
-          <span class="text-xs uppercase">copy</span>
-          <CopyIcon class="w-[12px] h-[12px]" />
-        </button>
+          <button type="button" class="flex items-center space-x-2" onClick={copyMnemonic}>
+            <span class="text-xs uppercase">copy</span>
+            <CopyIcon class="w-[12px] h-[12px]" />
+          </button>
+        </Show>
       </div>
       <div class="flex items-center justify-around p-2 border-[0.3px] border-zinc-700/80 rounded">
         <p class="w-[92%] text-sm select-none" classList={{ blur: blurredOut() }}>
