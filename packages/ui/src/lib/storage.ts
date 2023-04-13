@@ -10,6 +10,7 @@ const userState = z.object({
   mnemonic: z.string(),
   currentAccount: account,
   accounts: z.array(account).nonempty(),
+  status: z.union([z.literal('logged-in'), z.literal('logged-out'), z.literal('uninitialized')]),
 });
 
 export type Account = z.infer<typeof account>;
@@ -34,6 +35,7 @@ function createStorage() {
         mnemonic: state.mnemonic,
         currentAccount: state.currentAccount,
         accounts: state.accounts,
+        status: state.status,
       }),
     );
   };
@@ -59,12 +61,28 @@ function createStorage() {
     setUserState(state);
   };
 
+  const lockWallet = () => {
+    const state = getUserState();
+    if (!state) throw new Error('[storage] user state not initialized');
+    state.status = 'logged-out';
+    setUserState(state);
+  };
+
+  const unlockWallet = () => {
+    const state = getUserState();
+    if (!state) throw new Error('[storage] user state not initialized');
+    state.status = 'logged-in';
+    setUserState(state);
+  };
+
   return {
     getUserState,
     setUserState,
     setCurrentAccount,
     addUserAccount,
     changePassword,
+    lockWallet,
+    unlockWallet,
   };
 }
 

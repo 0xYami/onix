@@ -6,14 +6,16 @@ type UserState = {
   mnemonic: string | null;
   accounts: Account[] | null;
   currentAccount: Account | null;
-  isAuthenticated: boolean;
+  status: 'logged-in' | 'logged-out' | 'uninitialized';
 };
 
 type UserActions = {
-  initialize: (state: Omit<UserState, 'isAuthenticated'>) => void;
+  initialize: (state: UserState) => void;
   addAccount: (account: Account) => void;
   switchAccount: (account: Account) => void;
   changePassword: (password: string) => void;
+  lockWallet: () => void;
+  unlockWallet: () => void;
 };
 
 type UserStore = UserState & UserActions;
@@ -23,14 +25,14 @@ const [userStore, setUserStore] = createStore<UserStore>({
   mnemonic: null,
   accounts: null,
   currentAccount: null,
-  isAuthenticated: false,
-  initialize: (state: Omit<UserState, 'isAuthenticated'>) => {
+  status: 'uninitialized',
+  initialize: (state: UserState) => {
     setUserStore({
       password: state.password,
       mnemonic: state.mnemonic,
       accounts: state.accounts,
       currentAccount: state.currentAccount,
-      isAuthenticated: true,
+      status: state.status,
     });
   },
   addAccount: (account: Account) => {
@@ -51,6 +53,8 @@ const [userStore, setUserStore] = createStore<UserStore>({
   changePassword: (password: string) => {
     setUserStore('password', password);
   },
+  lockWallet: () => setUserStore('status', 'logged-out'),
+  unlockWallet: () => setUserStore('status', 'logged-in'),
 });
 
 export { userStore };

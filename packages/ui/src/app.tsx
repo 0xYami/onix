@@ -7,6 +7,7 @@ import { Asset } from './pages/asset';
 import { Collection } from './pages/collection';
 import { Collections } from './pages/collections';
 import { Home } from './pages/home';
+import { Login } from './pages/login';
 import { NFT } from './pages/nft';
 import { Onboarding } from './pages/onboarding';
 import { Settings } from './pages/settings';
@@ -40,7 +41,7 @@ const App: Component = () => {
             path="/index.html"
             element={
               <ProtectedRoute
-                allowWhen={!userStore.isAuthenticated}
+                allowWhen={userStore.status === 'uninitialized'}
                 fallback={<Navigate href="/index.html/home" />}
               />
             }
@@ -52,8 +53,19 @@ const App: Component = () => {
             path="/index.html"
             element={
               <ProtectedRoute
-                allowWhen={userStore.isAuthenticated}
+                allowWhen={userStore.status === 'logged-out'}
                 fallback={<Navigate href="/index.html" />}
+              />
+            }
+          >
+            <Route path="/login" component={Login} />
+          </Route>
+          <Route
+            path="/index.html"
+            element={
+              <ProtectedRoute
+                allowWhen={userStore.status === 'logged-in'}
+                fallback={<Navigate href="/index.html/login" />}
               />
             }
           >
