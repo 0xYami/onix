@@ -1,7 +1,7 @@
 import { createEffect, createSignal, Show, type Component } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
 import { Wallet } from 'ethers';
-import { userStore } from '../store';
+import { store } from '../store';
 import { storage, type Account } from '../lib/storage';
 import { copyToClipboard, truncateMiddle } from '../lib/utils';
 import { GasPumpIcon } from './icons/gas-pump';
@@ -10,7 +10,7 @@ import { CheckIcon } from './icons/check';
 
 export const Header: Component = () => {
   const navigate = useNavigate();
-  const { currentAccount } = userStore;
+  const { currentAccount } = store;
   const [copying, setCopying] = createSignal(false);
 
   createEffect(() => {
@@ -21,29 +21,29 @@ export const Header: Component = () => {
   });
 
   const createAccount = () => {
-    if (!userStore.mnemonic) {
+    if (!store.mnemonic) {
       throw new Error("Can't create account without mnemonic");
     }
 
-    const currentIndex = userStore.accounts?.length;
+    const currentIndex = store.accounts?.length;
     if (!currentIndex) {
       throw new Error("Can't get account index");
     }
 
-    const wallet = Wallet.fromPhrase(userStore.mnemonic);
+    const wallet = Wallet.fromPhrase(store.mnemonic);
     const newWallet = wallet.deriveChild(currentIndex);
     const newAccount: Account = {
       name: `Account ${currentIndex + 1}`,
       address: newWallet.address,
     };
     storage.addUserAccount(newAccount);
-    userStore.addAccount(newAccount);
+    store.addAccount(newAccount);
     switchAccount(newAccount);
   };
 
   const switchAccount = (account: Account) => {
     storage.setCurrentAccount(account);
-    userStore.switchAccount(account);
+    store.switchAccount(account);
   };
 
   const copyAddress = () => {

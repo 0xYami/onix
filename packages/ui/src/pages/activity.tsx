@@ -1,7 +1,7 @@
 import { For, Match, Suspense, Switch, type Component } from 'solid-js';
 import { createQuery } from '@tanstack/solid-query';
 import { alchemyAssetTransfersSchema, type AlchemyAssetTransfer } from '@onix/schemas';
-import { userStore } from '../store';
+import { store } from '../store';
 import { httpClient } from '../lib/http';
 import { truncateMiddle } from '../lib/utils';
 import { MainLayout } from '../layouts/main';
@@ -9,7 +9,7 @@ import { SendIcon } from '../components/icons/send';
 import { ReceiveIcon } from '../components/icons/receive';
 
 export const Activity: Component = () => {
-  const { currentAccount } = userStore;
+  const { currentAccount } = store;
 
   const activityQuery = createQuery({
     queryKey: () => ['activity', currentAccount?.address],

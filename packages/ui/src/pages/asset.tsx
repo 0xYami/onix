@@ -7,12 +7,12 @@ import { ChevronLeftIcon } from '../components/icons/chevron-left';
 import { ReceiveIcon } from '../components/icons/receive';
 import { SendIcon } from '../components/icons/send';
 import { Link } from '../components/link';
-import { userStore } from '../store';
+import { store } from '../store';
 import { httpClient } from '../lib/http';
 import { truncateMiddle } from '../lib/utils';
 
 export const Asset: Component = () => {
-  const { currentAccount } = userStore;
+  const { currentAccount } = store;
   const params = useParams<{ contractAddress: string }>();
 
   const assetQuery = createQuery({

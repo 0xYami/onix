@@ -3,7 +3,7 @@ import type { Component } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import { useNavigate } from '@solidjs/router';
 import { type Mnemonic, Wallet } from 'ethers';
-import { userStore } from '../store';
+import { store } from '../store';
 import { storage, type Account } from '../lib/storage';
 import { copyToClipboard } from '../lib/utils';
 import { ChevronLeftIcon } from '../components/icons/chevron-left';
@@ -30,9 +30,9 @@ const initialState: OnboardingState = {
   address: null,
 };
 
-const [store, setStore] = createStore<OnboardingStore>({
+const [onboardingStore, setOnboardingStore] = createStore<OnboardingStore>({
   ...initialState,
-  reset: () => setStore(initialState),
+  reset: () => setOnboardingStore(initialState),
 });
 
 type StepName = 'password' | 'mnemonic' | 'success';
@@ -43,14 +43,14 @@ export const Onboarding: Component = () => {
 
   createEffect(async () => {
     if (currentStep() !== 'success') return;
-    if (!store.mnemonic || !store.address) return;
+    if (!onboardingStore.mnemonic || !onboardingStore.address) return;
     const account: Account = {
       name: 'Account 1',
-      address: store.address,
+      address: onboardingStore.address,
     };
     storage.setUserState({
-      password: store.password,
-      mnemonic: store.mnemonic.phrase,
+      password: onboardingStore.password,
+      mnemonic: onboardingStore.mnemonic.phrase,
       currentAccount: account,
       accounts: [account],
       status: 'logged-in',
@@ -63,7 +63,7 @@ export const Onboarding: Component = () => {
         <PasswordStep
           onNext={() => setCurrentStep(() => 'mnemonic')}
           onPrevious={() => {
-            store.reset();
+            onboardingStore.reset();
             navigate('/index.html');
           }}
         />
@@ -72,7 +72,7 @@ export const Onboarding: Component = () => {
         <MnemonicStep
           onNext={() => setCurrentStep(() => 'success')}
           onPrevious={() => {
-            store.reset();
+            onboardingStore.reset();
             setCurrentStep(() => 'password');
           }}
         />
@@ -82,7 +82,7 @@ export const Onboarding: Component = () => {
           onNext={() => {
             const state = storage.getUserState();
             if (!state) return;
-            userStore.initialize(state);
+            store.initialize(state);
           }}
         />
       </Match>
@@ -102,7 +102,11 @@ const PasswordStep: Component<StepProps> = (props) => {
   const [policyAgreed, setPolicyAgreed] = createSignal(false);
 
   const stepIsValid = createMemo(() => {
-    return store.password.length >= 8 && confirmedPassword() === store.password && policyAgreed();
+    return (
+      onboardingStore.password.length >= 8 &&
+      confirmedPassword() === onboardingStore.password &&
+      policyAgreed()
+    );
   });
 
   return (
@@ -133,8 +137,8 @@ const PasswordStep: Component<StepProps> = (props) => {
             <input
               id="password"
               type={showPassword() ? 'text' : 'password'}
-              value={store.password}
-              onInput={(event) => setStore({ password: event.target.value })}
+              value={onboardingStore.password}
+              onInput={(event) => setOnboardingStore({ password: event.target.value })}
               autofocus
               required
               pattern=".{8,}"
@@ -162,7 +166,7 @@ const PasswordStep: Component<StepProps> = (props) => {
               value={confirmedPassword()}
               onInput={(event) => setConfirmedPassword(event.target.value)}
               required
-              pattern={store.password}
+              pattern={onboardingStore.password}
               title="Passwords do not match"
               placeholder="Password"
               class="w-full bg-black border-[0.3px] border-zinc-700 rounded"
@@ -225,7 +229,7 @@ const MnemonicStep: Component<StepProps> = (props) => {
   const [blurredOut, setBlurredOut] = createSignal(true);
 
   const wallet = Wallet.createRandom();
-  setStore({
+  setOnboardingStore({
     mnemonic: wallet.mnemonic,
     // FIX: This is Vitalik address, we use it in dev in order to have assets to display
     address: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045',

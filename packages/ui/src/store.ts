@@ -20,14 +20,14 @@ type UserActions = {
 
 type UserStore = UserState & UserActions;
 
-const [userStore, setUserStore] = createStore<UserStore>({
+const [store, setStore] = createStore<UserStore>({
   password: null,
   mnemonic: null,
   accounts: null,
   currentAccount: null,
   status: 'uninitialized',
   initialize: (state: UserState) => {
-    setUserStore({
+    setStore({
       password: state.password,
       mnemonic: state.mnemonic,
       accounts: state.accounts,
@@ -36,25 +36,25 @@ const [userStore, setUserStore] = createStore<UserStore>({
     });
   },
   addAccount: (account: Account) => {
-    setUserStore('accounts', (accounts) => [...(accounts ?? []), account]);
+    setStore('accounts', (accounts) => [...(accounts ?? []), account]);
   },
   switchAccount: (account: Account) => {
-    if (!userStore.accounts) {
+    if (!store.accounts) {
       throw new Error("Can't switch account when there are no accounts");
     }
 
-    const newAccount = userStore.accounts.find((a) => a.address === account.address);
+    const newAccount = store.accounts.find((a) => a.address === account.address);
     if (!newAccount) {
       throw new Error('Account not found');
     }
 
-    setUserStore('currentAccount', newAccount);
+    setStore('currentAccount', newAccount);
   },
   changePassword: (password: string) => {
-    setUserStore('password', password);
+    setStore('password', password);
   },
-  lockWallet: () => setUserStore('status', 'logged-out'),
-  unlockWallet: () => setUserStore('status', 'logged-in'),
+  lockWallet: () => setStore('status', 'logged-out'),
+  unlockWallet: () => setStore('status', 'logged-in'),
 });
 
-export { userStore };
+export { store };

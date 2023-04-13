@@ -1,6 +1,6 @@
 import { createMemo, createSignal, Show, type Component } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
-import { userStore } from '../../store';
+import { store } from '../../store';
 import { storage } from '../../lib/storage';
 import { truncateMiddle } from '../../lib/utils';
 import { CrossIcon } from '../../components/icons/cross';
@@ -14,11 +14,11 @@ import { EyeIcon } from '../../components/icons/eye';
 
 export const Settings: Component = () => {
   const navigate = useNavigate();
-  const { currentAccount } = userStore;
+  const { currentAccount } = store;
 
   const lockWallet = () => {
     storage.lockWallet();
-    userStore.lockWallet();
+    store.lockWallet();
   };
 
   return (
@@ -94,7 +94,7 @@ export const AuthStep: Component<{ onNext: () => void }> = (props) => {
   const [password, setPassword] = createSignal('');
   const [showPassword, setShowPassword] = createSignal(false);
   const [hasError, setHasError] = createSignal(false);
-  const isValid = createMemo(() => userStore.password === password());
+  const isValid = createMemo(() => store.password === password());
   return (
     <form
       onSubmit={(event) => {
@@ -120,7 +120,7 @@ export const AuthStep: Component<{ onNext: () => void }> = (props) => {
             setHasError(true);
           }}
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          pattern={userStore.password!}
+          pattern={store.password!}
           title="Doesn't match current password"
           placeholder="Password"
           class="w-full bg-black border-[0.3px] border-zinc-700 rounded"

@@ -1,6 +1,6 @@
 import { ErrorBoundary, Show, type Component, type JSX } from 'solid-js';
 import { Routes, Route, Navigate, Outlet } from '@solidjs/router';
-import { userStore } from './store';
+import { store } from './store';
 import { storage } from './lib/storage';
 import { Activity } from './pages/activity';
 import { Asset } from './pages/asset';
@@ -30,7 +30,7 @@ const ProtectedRoute: Component<ProtectedRouteProps> = (props) => (
 const App: Component = () => {
   const userState = storage.getUserState();
   if (userState) {
-    userStore.initialize(userState);
+    store.initialize(userState);
   }
   return (
     <ErrorBoundary fallback={<div>Something went wrong :(</div>}>
@@ -41,7 +41,7 @@ const App: Component = () => {
             path="/index.html"
             element={
               <ProtectedRoute
-                allowWhen={userStore.status === 'uninitialized'}
+                allowWhen={store.status === 'uninitialized'}
                 fallback={<Navigate href="/index.html/home" />}
               />
             }
@@ -53,7 +53,7 @@ const App: Component = () => {
             path="/index.html"
             element={
               <ProtectedRoute
-                allowWhen={userStore.status === 'logged-out'}
+                allowWhen={store.status === 'logged-out'}
                 fallback={<Navigate href="/index.html" />}
               />
             }
@@ -64,7 +64,7 @@ const App: Component = () => {
             path="/index.html"
             element={
               <ProtectedRoute
-                allowWhen={userStore.status === 'logged-in'}
+                allowWhen={store.status === 'logged-in'}
                 fallback={<Navigate href="/index.html/login" />}
               />
             }

@@ -1,7 +1,7 @@
 import { createEffect, createSignal, Match, Show, Switch, type Component } from 'solid-js';
 import { Wallet } from 'ethers';
 import { AuthStep } from './index';
-import { userStore } from '../../store';
+import { store } from '../../store';
 import { copyToClipboard } from '../../lib/utils';
 import { Link } from '../../components/link';
 import { ChevronLeftIcon } from '../../components/icons/chevron-left';
@@ -42,7 +42,7 @@ const RevealKeyStep: Component = () => {
   });
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const wallet = Wallet.fromPhrase(userStore.mnemonic!);
+  const wallet = Wallet.fromPhrase(store.mnemonic!);
 
   const copyPrivateKey = () => {
     setCopying(true);

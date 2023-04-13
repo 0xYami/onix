@@ -3,11 +3,11 @@ import { createQuery } from '@tanstack/solid-query';
 import { getNFTCollectionsResponseSchema } from '@onix/schemas';
 import { MainLayout } from '../layouts/main';
 import { Link } from '../components/link';
-import { userStore } from '../store';
+import { store } from '../store';
 import { httpClient } from '../lib/http';
 
 export const Collections: Component = () => {
-  const { currentAccount } = userStore;
+  const { currentAccount } = store;
 
   const collectionsQuery = createQuery({
     queryKey: () => ['collections', currentAccount?.address],

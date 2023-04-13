@@ -1,6 +1,6 @@
 import { createEffect, createSignal, Match, Show, Switch, type Component } from 'solid-js';
 import { AuthStep } from './index';
-import { userStore } from '../../store';
+import { store } from '../../store';
 import { copyToClipboard } from '../../lib/utils';
 import { Link } from '../../components/link';
 import { ChevronLeftIcon } from '../../components/icons/chevron-left';
@@ -43,7 +43,7 @@ const RevealStep: Component = () => {
   const copyMnemonic = () => {
     setCopying(true);
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    copyToClipboard(userStore.mnemonic!);
+    copyToClipboard(store.mnemonic!);
   };
 
   return (
@@ -72,7 +72,7 @@ const RevealStep: Component = () => {
             blur: blurredOut(),
           }}
         >
-          {userStore.mnemonic}
+          {store.mnemonic}
         </p>
         <button type="button" onClick={() => setBlurredOut((prev) => !prev)}>
           {blurredOut() ? <EyeIcon /> : <EyeSlashIcon />}

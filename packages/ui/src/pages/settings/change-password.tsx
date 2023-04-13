@@ -1,6 +1,6 @@
 import { createSignal, Match, Switch, type Component } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
-import { userStore } from '../../store';
+import { store } from '../../store';
 import { storage } from '../../lib/storage';
 import { AuthStep } from './index';
 import { ChevronLeftIcon } from '../../components/icons/chevron-left';
@@ -14,7 +14,7 @@ export const ChangePassword: Component = () => {
 
   const changePassword = (password: string) => {
     storage.changePassword(password);
-    userStore.changePassword(password);
+    store.changePassword(password);
     navigate('/index.html');
   };
 

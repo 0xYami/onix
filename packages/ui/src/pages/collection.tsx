@@ -8,11 +8,11 @@ import { ChevronLeftIcon } from '../components/icons/chevron-left';
 import { TwitterIcon } from '../components/icons/twitter';
 import { DiscordIcon } from '../components/icons/discord';
 import { GlobeIcon } from '../components/icons/globe';
-import { userStore } from '../store';
+import { store } from '../store';
 import { httpClient } from '../lib/http';
 
 export const Collection: Component = () => {
-  const { currentAccount } = userStore;
+  const { currentAccount } = store;
   const params = useParams<{ contractAddress: string }>();
 
   const collectionQuery = createQuery({
