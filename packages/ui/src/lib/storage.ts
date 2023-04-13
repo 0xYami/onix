@@ -1,4 +1,5 @@
 import { z } from '@onix/schemas';
+import { config } from './config';
 
 const account = z.object({
   name: z.string(),
@@ -16,11 +17,9 @@ const userState = z.object({
 export type Account = z.infer<typeof account>;
 type UserState = z.infer<typeof userState>;
 
-function createStorage() {
-  const storageKey = 'onix-user-secrets';
-
+function createStorage(config: { storageKey: string }) {
   const getUserState = (): UserState | null => {
-    const rawValue = localStorage.getItem(storageKey);
+    const rawValue = localStorage.getItem(config.storageKey);
     if (!rawValue) return null;
     const state = userState.safeParse(JSON.parse(rawValue));
     if (!state.success) return null;
@@ -29,7 +28,7 @@ function createStorage() {
 
   const setUserState = (state: UserState) => {
     localStorage.setItem(
-      storageKey,
+      config.storageKey,
       JSON.stringify({
         password: state.password,
         mnemonic: state.mnemonic,
@@ -86,4 +85,6 @@ function createStorage() {
   };
 }
 
-export const storage = createStorage();
+export const storage = createStorage({
+  storageKey: config.storageKey,
+});
