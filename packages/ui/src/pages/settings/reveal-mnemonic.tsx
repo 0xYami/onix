@@ -1,6 +1,6 @@
 import { createSignal, Match, Switch, type Component } from 'solid-js';
 import { AuthStep } from './index';
-import { store } from '../../store';
+import { store } from '../../lib/store';
 import { Link } from '../../components/link';
 import { Copy } from '../../components/copy';
 import { ChevronLeftIcon } from '../../components/icons/chevron-left';

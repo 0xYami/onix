@@ -1,6 +1,6 @@
 import { createMemo, createSignal, Show, type Component } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
-import { store } from '../../store';
+import { store } from '../../lib/store';
 import { storage } from '../../lib/storage';
 import { truncateMiddleString } from '../../lib/utils';
 import { CrossIcon } from '../../components/icons/cross';

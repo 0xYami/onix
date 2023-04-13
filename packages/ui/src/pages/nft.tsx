@@ -2,11 +2,11 @@ import { type Component, Suspense, For, Show } from 'solid-js';
 import { useParams } from '@solidjs/router';
 import { createQuery } from '@tanstack/solid-query';
 import { alchemyNFTSchema } from '@onix/schemas';
+import { store } from '../lib/store';
+import { httpClient } from '../lib/http';
 import { MainLayout } from '../layouts/main';
 import { Link } from '../components/link';
 import { ChevronLeftIcon } from '../components/icons/chevron-left';
-import { store } from '../store';
-import { httpClient } from '../lib/http';
 
 export const NFT: Component = () => {
   const { currentAccount } = store;

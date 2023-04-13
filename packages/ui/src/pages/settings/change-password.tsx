@@ -1,6 +1,6 @@
 import { createSignal, Match, Switch, type Component } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
-import { store } from '../../store';
+import { store } from '../../lib/store';
 import { storage } from '../../lib/storage';
 import { AuthStep } from './index';
 import { ChevronLeftIcon } from '../../components/icons/chevron-left';

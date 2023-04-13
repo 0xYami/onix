@@ -1,5 +1,5 @@
 import { createSignal, Show, type Component } from 'solid-js';
-import { store } from '../store';
+import { store } from '../lib/store';
 import { storage } from '../lib/storage';
 import { EyeIcon } from '../components/icons/eye';
 import { EyeSlashIcon } from '../components/icons/eye-slash';

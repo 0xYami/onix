@@ -2,14 +2,14 @@ import { type Component, For, Suspense } from 'solid-js';
 import { useParams } from '@solidjs/router';
 import { createQuery } from '@tanstack/solid-query';
 import { getAssetResultSchema } from '@onix/schemas';
+import { store } from '../lib/store';
+import { httpClient } from '../lib/http';
+import { truncateMiddleString } from '../lib/utils';
 import { MainLayout } from '../layouts/main';
 import { ChevronLeftIcon } from '../components/icons/chevron-left';
 import { ReceiveIcon } from '../components/icons/receive';
 import { SendIcon } from '../components/icons/send';
 import { Link } from '../components/link';
-import { store } from '../store';
-import { httpClient } from '../lib/http';
-import { truncateMiddleString } from '../lib/utils';
 
 export const Asset: Component = () => {
   const { currentAccount } = store;

@@ -3,7 +3,7 @@ import type { Component } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import { useNavigate } from '@solidjs/router';
 import { type Mnemonic, Wallet } from 'ethers';
-import { store } from '../store';
+import { store } from '../lib/store';
 import { storage, type Account } from '../lib/storage';
 import { Copy } from '../components/copy';
 import { ChevronLeftIcon } from '../components/icons/chevron-left';

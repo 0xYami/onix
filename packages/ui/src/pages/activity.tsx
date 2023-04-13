@@ -1,7 +1,7 @@
 import { For, Match, Suspense, Switch, type Component } from 'solid-js';
 import { createQuery } from '@tanstack/solid-query';
 import { alchemyAssetTransfersSchema, type AlchemyAssetTransfer } from '@onix/schemas';
-import { store } from '../store';
+import { store } from '../lib/store';
 import { httpClient } from '../lib/http';
 import { truncateMiddleString } from '../lib/utils';
 import { MainLayout } from '../layouts/main';

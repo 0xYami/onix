@@ -1,7 +1,7 @@
 import { createEffect, createSignal, type Component } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
 import { Wallet } from 'ethers';
-import { store } from '../store';
+import { store } from '../lib/store';
 import { storage, type Account } from '../lib/storage';
 import { truncateMiddleString } from '../lib/utils';
 import { GasPumpIcon } from './icons/gas-pump';

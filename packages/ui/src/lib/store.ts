@@ -1,5 +1,5 @@
 import { createStore } from 'solid-js/store';
-import type { Account } from './lib/storage';
+import type { Account } from './storage';
 
 type UserState = {
   password: string | null;

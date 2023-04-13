@@ -1,10 +1,10 @@
 import { type Component, Suspense, For } from 'solid-js';
 import { createQuery } from '@tanstack/solid-query';
 import { getNFTCollectionsResponseSchema } from '@onix/schemas';
+import { store } from '../lib/store';
+import { httpClient } from '../lib/http';
 import { MainLayout } from '../layouts/main';
 import { Link } from '../components/link';
-import { store } from '../store';
-import { httpClient } from '../lib/http';
 
 export const Collections: Component = () => {
   const { currentAccount } = store;

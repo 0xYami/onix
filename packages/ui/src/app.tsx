@@ -1,6 +1,6 @@
 import { ErrorBoundary, Show, type Component, type JSX } from 'solid-js';
 import { Routes, Route, Navigate, Outlet } from '@solidjs/router';
-import { store } from './store';
+import { store } from './lib/store';
 import { storage } from './lib/storage';
 import { Activity } from './pages/activity';
 import { Asset } from './pages/asset';
