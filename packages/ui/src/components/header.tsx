@@ -3,7 +3,7 @@ import { useNavigate } from '@solidjs/router';
 import { Wallet } from 'ethers';
 import { store } from '../store';
 import { storage, type Account } from '../lib/storage';
-import { truncateMiddle } from '../lib/utils';
+import { truncateMiddleString } from '../lib/utils';
 import { GasPumpIcon } from './icons/gas-pump';
 import { Copy } from './copy';
 import { CopyIcon } from './icons/copy';
@@ -62,7 +62,7 @@ export const Header: Component = () => {
           <>
             <CopyIcon class="w-3 h-3" />
             {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
-            <span>{truncateMiddle(currentAccount!.address, 11)}</span>
+            <span>{truncateMiddleString(currentAccount!.address, 11)}</span>
           </>
         </Copy>
         <button

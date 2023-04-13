@@ -3,7 +3,7 @@ import { createQuery } from '@tanstack/solid-query';
 import { alchemyAssetTransfersSchema, type AlchemyAssetTransfer } from '@onix/schemas';
 import { store } from '../store';
 import { httpClient } from '../lib/http';
-import { truncateMiddle } from '../lib/utils';
+import { truncateMiddleString } from '../lib/utils';
 import { MainLayout } from '../layouts/main';
 import { SendIcon } from '../components/icons/send';
 import { ReceiveIcon } from '../components/icons/receive';
@@ -69,7 +69,7 @@ export const Activity: Component = () => {
                                 <div class="flex flex-col">
                                   <span>Sent</span>
                                   <span class="text-sm text-zinc-400">
-                                    To: {transfer.to ? truncateMiddle(transfer.to, 11) : null}
+                                    To: {transfer.to ? truncateMiddleString(transfer.to, 11) : null}
                                   </span>
                                 </div>
                               </Match>
@@ -78,7 +78,8 @@ export const Activity: Component = () => {
                                 <div class="flex flex-col">
                                   <span>Received</span>
                                   <span class="text-sm text-zinc-400">
-                                    From: {transfer.from ? truncateMiddle(transfer.from, 11) : null}
+                                    From:{' '}
+                                    {transfer.from ? truncateMiddleString(transfer.from, 11) : null}
                                   </span>
                                 </div>
                               </Match>

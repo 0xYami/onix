@@ -9,7 +9,7 @@ import { SendIcon } from '../components/icons/send';
 import { Link } from '../components/link';
 import { store } from '../store';
 import { httpClient } from '../lib/http';
-import { truncateMiddle } from '../lib/utils';
+import { truncateMiddleString } from '../lib/utils';
 
 export const Asset: Component = () => {
   const { currentAccount } = store;
@@ -92,7 +92,7 @@ export const Asset: Component = () => {
                       <span>{formattedDate}</span>
                       <span class="h-1 w-1 rounded-full bg-zinc-700" />
                       <span class="capitalize">
-                        {isSender ? 'to' : 'from'} {truncateMiddle(transfer.to, 11)}
+                        {isSender ? 'to' : 'from'} {truncateMiddleString(transfer.to, 11)}
                       </span>
                     </div>
                   </a>

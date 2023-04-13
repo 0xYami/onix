@@ -1,6 +1,6 @@
 import { asyncFaillable, type Asset } from '@onix/utils';
 
-export function truncateMiddle(str: string, maxLength: number): string {
+export function truncateMiddleString(str: string, maxLength: number): string {
   if (str.length <= maxLength) return str;
   const leftHalfLength = Math.ceil((maxLength - 3) / 2);
   const rightHalfLength = Math.floor((maxLength - 3) / 2);

@@ -2,7 +2,7 @@ import { createMemo, createSignal, Show, type Component } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
 import { store } from '../../store';
 import { storage } from '../../lib/storage';
-import { truncateMiddle } from '../../lib/utils';
+import { truncateMiddleString } from '../../lib/utils';
 import { CrossIcon } from '../../components/icons/cross';
 import { ChevronRightIcon } from '../../components/icons/chevron-right';
 import { LockIcon } from '../../components/icons/lock';
@@ -43,7 +43,7 @@ export const Settings: Component = () => {
           <div>{currentAccount?.name}</div>
           <span class="text-sm text-neutral-500">
             {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
-            {truncateMiddle(currentAccount!.address, 11)}
+            {truncateMiddleString(currentAccount!.address, 11)}
           </span>
         </div>
         <ChevronRightIcon />
