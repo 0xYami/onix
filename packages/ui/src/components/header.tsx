@@ -1,12 +1,12 @@
-import { createEffect, createSignal, Show, type Component } from 'solid-js';
+import { createEffect, createSignal, type Component } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
 import { Wallet } from 'ethers';
 import { store } from '../store';
 import { storage, type Account } from '../lib/storage';
-import { copyToClipboard, truncateMiddle } from '../lib/utils';
+import { truncateMiddle } from '../lib/utils';
 import { GasPumpIcon } from './icons/gas-pump';
+import { Copy } from './copy';
 import { CopyIcon } from './icons/copy';
-import { CheckIcon } from './icons/check';
 
 export const Header: Component = () => {
   const navigate = useNavigate();
@@ -46,12 +46,6 @@ export const Header: Component = () => {
     store.switchAccount(account);
   };
 
-  const copyAddress = () => {
-    if (!currentAccount?.address) return;
-    setCopying(true);
-    copyToClipboard(currentAccount.address);
-  };
-
   return (
     <header class="relative h-12 flex items-center px-4 space-x-2 border-b-[0.3px] border-zinc-700 text-xs">
       <div class="flex items-center space-x-1">
@@ -63,25 +57,14 @@ export const Header: Component = () => {
         <span>$2.01</span>
       </div>
       <div class="absolute right-0 pr-4 flex items-center space-x-2">
-        <Show
-          when={!copying()}
-          fallback={
-            <div class="flex items-center space-x-2 text-green-600">
-              <CheckIcon />
-              <span>Copied</span>
-            </div>
-          }
-        >
-          <button
-            type="button"
-            onClick={copyAddress}
-            class="flex items-center space-x-2 text-zinc-400/90 hover:text-white duration-200"
-          >
+        {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
+        <Copy value={currentAccount!.address}>
+          <>
             <CopyIcon class="w-3 h-3" />
             {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
             <span>{truncateMiddle(currentAccount!.address, 11)}</span>
-          </button>
-        </Show>
+          </>
+        </Copy>
         <button
           type="button"
           onClick={() => navigate('/index.html/settings')}

@@ -1,14 +1,12 @@
-import { createEffect, createSignal, Match, Show, Switch, type Component } from 'solid-js';
+import { createSignal, Match, Switch, type Component } from 'solid-js';
 import { Wallet } from 'ethers';
 import { AuthStep } from './index';
 import { store } from '../../store';
-import { copyToClipboard } from '../../lib/utils';
 import { Link } from '../../components/link';
+import { Copy } from '../../components/copy';
 import { ChevronLeftIcon } from '../../components/icons/chevron-left';
-import { CopyIcon } from '../../components/icons/copy';
 import { EyeIcon } from '../../components/icons/eye';
 import { EyeSlashIcon } from '../../components/icons/eye-slash';
-import { CheckIcon } from '../../components/icons/check';
 
 export const RevealPrivateKey: Component = () => {
   const [currentStep, setCurrentStep] = createSignal<'authenticate' | 'reveal'>('authenticate');
@@ -31,42 +29,16 @@ export const RevealPrivateKey: Component = () => {
 };
 
 const RevealKeyStep: Component = () => {
-  const [copying, setCopying] = createSignal(false);
   const [blurredOut, setBlurredOut] = createSignal(true);
-
-  createEffect(() => {
-    if (!copying()) return;
-    setTimeout(() => {
-      setCopying(false);
-    }, 2000);
-  });
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const wallet = Wallet.fromPhrase(store.mnemonic!);
-
-  const copyPrivateKey = () => {
-    setCopying(true);
-    copyToClipboard(wallet.privateKey);
-  };
 
   return (
     <div class="relative h-full space-y-4">
       <div class="flex items-center justify-between">
         <div class="uppercase">private key</div>
-        <Show
-          when={!copying()}
-          fallback={
-            <div class="flex items-center space-x-2 text-xs text-green-600">
-              <span>Copied</span>
-              <CheckIcon />
-            </div>
-          }
-        >
-          <button type="button" class="flex items-center space-x-2" onClick={copyPrivateKey}>
-            <span class="text-xs uppercase">copy</span>
-            <CopyIcon class="w-3 h-3" />
-          </button>
-        </Show>
+        <Copy value={wallet.privateKey} />
       </div>
       <div class="flex items-center justify-around p-2 border-[0.3px] border-zinc-700/80 rounded">
         <p
