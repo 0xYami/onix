@@ -2,17 +2,17 @@ import { type Component, Suspense, For } from 'solid-js';
 import { useParams } from '@solidjs/router';
 import { createQuery } from '@tanstack/solid-query';
 import { nftCollectionSchema } from '@onix/schemas';
-import { MainLayout } from '../layouts/main';
-import { Link } from '../components/link';
-import { ChevronLeftIcon } from '../components/icons/chevron-left';
-import { TwitterIcon } from '../components/icons/twitter';
-import { DiscordIcon } from '../components/icons/discord';
-import { GlobeIcon } from '../components/icons/globe';
-import { userStore } from '../store';
-import { httpClient } from '../lib/http';
+import { store } from '~/lib/store';
+import { httpClient } from '~/lib/http';
+import { MainLayout } from '~/layouts/main';
+import { Link } from '~/components/link';
+import { ChevronLeftIcon } from '~/components/icons/chevron-left';
+import { TwitterIcon } from '~/components/icons/twitter';
+import { DiscordIcon } from '~/components/icons/discord';
+import { GlobeIcon } from '~/components/icons/globe';
 
 export const Collection: Component = () => {
-  const { currentAccount } = userStore;
+  const { currentAccount } = store;
   const params = useParams<{ contractAddress: string }>();
 
   const collectionQuery = createQuery({

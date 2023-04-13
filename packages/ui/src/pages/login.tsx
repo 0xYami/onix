@@ -1,8 +1,8 @@
 import { createSignal, Show, type Component } from 'solid-js';
-import { userStore } from '../store';
-import { storage } from '../lib/storage';
-import { EyeIcon } from '../components/icons/eye';
-import { EyeSlashIcon } from '../components/icons/eye-slash';
+import { store } from '~/lib/store';
+import { storage } from '~/lib/storage';
+import { EyeIcon } from '~/components/icons/eye';
+import { EyeSlashIcon } from '~/components/icons/eye-slash';
 
 export const Login: Component = () => {
   const [password, setPassword] = createSignal('');
@@ -17,12 +17,12 @@ export const Login: Component = () => {
       <form
         onSubmit={(event) => {
           event.preventDefault();
-          if (userStore.password !== password()) {
+          if (store.password !== password()) {
             setIsWrong(true);
             return;
           }
           storage.unlockWallet();
-          userStore.unlockWallet();
+          store.unlockWallet();
         }}
         class="w-full flex flex-col space-y-3"
       >

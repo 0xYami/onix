@@ -1,9 +1,9 @@
 import type { ParentComponent } from 'solid-js';
-import { Header } from '../components/header';
-import { Link } from '../components/link';
-import { BoltIcon } from '../components/icons/bolt';
-import { GemIcon } from '../components/icons/gem';
-import { HomeIcon } from '../components/icons/home';
+import { Header } from '~/components/header';
+import { Link } from '~/components/link';
+import { BoltIcon } from '~/components/icons/bolt';
+import { GemIcon } from '~/components/icons/gem';
+import { HomeIcon } from '~/components/icons/home';
 
 export const MainLayout: ParentComponent = (props) => {
   return (

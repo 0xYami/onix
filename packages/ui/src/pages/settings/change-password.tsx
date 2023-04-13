@@ -1,12 +1,12 @@
 import { createSignal, Match, Switch, type Component } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
-import { userStore } from '../../store';
-import { storage } from '../../lib/storage';
+import { store } from '~/lib/store';
+import { storage } from '~/lib/storage';
+import { ChevronLeftIcon } from '~/components/icons/chevron-left';
+import { EyeIcon } from '~/components/icons/eye';
+import { EyeSlashIcon } from '~/components/icons/eye-slash';
+import { Link } from '~/components/link';
 import { AuthStep } from './index';
-import { ChevronLeftIcon } from '../../components/icons/chevron-left';
-import { EyeIcon } from '../../components/icons/eye';
-import { EyeSlashIcon } from '../../components/icons/eye-slash';
-import { Link } from '../../components/link';
 
 export const ChangePassword: Component = () => {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ export const ChangePassword: Component = () => {
 
   const changePassword = (password: string) => {
     storage.changePassword(password);
-    userStore.changePassword(password);
+    store.changePassword(password);
     navigate('/index.html');
   };
 

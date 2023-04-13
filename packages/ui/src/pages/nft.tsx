@@ -2,14 +2,14 @@ import { type Component, Suspense, For, Show } from 'solid-js';
 import { useParams } from '@solidjs/router';
 import { createQuery } from '@tanstack/solid-query';
 import { alchemyNFTSchema } from '@onix/schemas';
-import { MainLayout } from '../layouts/main';
-import { Link } from '../components/link';
-import { ChevronLeftIcon } from '../components/icons/chevron-left';
-import { userStore } from '../store';
-import { httpClient } from '../lib/http';
+import { store } from '~/lib/store';
+import { httpClient } from '~/lib/http';
+import { MainLayout } from '~/layouts/main';
+import { Link } from '~/components/link';
+import { ChevronLeftIcon } from '~/components/icons/chevron-left';
 
 export const NFT: Component = () => {
-  const { currentAccount } = userStore;
+  const { currentAccount } = store;
   const params = useParams<{ contractAddress: string; tokenId: string }>();
 
   const nftQuery = createQuery({

@@ -2,17 +2,17 @@ import { type Component, For, Suspense } from 'solid-js';
 import { useParams } from '@solidjs/router';
 import { createQuery } from '@tanstack/solid-query';
 import { getAssetResultSchema } from '@onix/schemas';
-import { MainLayout } from '../layouts/main';
-import { ChevronLeftIcon } from '../components/icons/chevron-left';
-import { ReceiveIcon } from '../components/icons/receive';
-import { SendIcon } from '../components/icons/send';
-import { Link } from '../components/link';
-import { userStore } from '../store';
-import { httpClient } from '../lib/http';
-import { truncateMiddle } from '../lib/utils';
+import { store } from '~/lib/store';
+import { httpClient } from '~/lib/http';
+import { truncateMiddleString } from '~/lib/utils';
+import { MainLayout } from '~/layouts/main';
+import { Link } from '~/components/link';
+import { ChevronLeftIcon } from '~/components/icons/chevron-left';
+import { ReceiveIcon } from '~/components/icons/receive';
+import { SendIcon } from '~/components/icons/send';
 
 export const Asset: Component = () => {
-  const { currentAccount } = userStore;
+  const { currentAccount } = store;
   const params = useParams<{ contractAddress: string }>();
 
   const assetQuery = createQuery({
@@ -92,7 +92,7 @@ export const Asset: Component = () => {
                       <span>{formattedDate}</span>
                       <span class="h-1 w-1 rounded-full bg-zinc-700" />
                       <span class="capitalize">
-                        {isSender ? 'to' : 'from'} {truncateMiddle(transfer.to, 11)}
+                        {isSender ? 'to' : 'from'} {truncateMiddleString(transfer.to, 11)}
                       </span>
                     </div>
                   </a>
