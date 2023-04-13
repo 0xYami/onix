@@ -15,6 +15,7 @@ type UserActions = {
   switchAccount: (account: Account) => void;
   changePassword: (password: string) => void;
   lockWallet: () => void;
+  unlockWallet: () => void;
 };
 
 type UserStore = UserState & UserActions;
@@ -52,9 +53,8 @@ const [userStore, setUserStore] = createStore<UserStore>({
   changePassword: (password: string) => {
     setUserStore('password', password);
   },
-  lockWallet: () => {
-    setUserStore('status', 'logged-out');
-  },
+  lockWallet: () => setUserStore('status', 'logged-out'),
+  unlockWallet: () => setUserStore('status', 'logged-in'),
 });
 
 export { userStore };

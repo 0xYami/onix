@@ -68,6 +68,13 @@ function createStorage() {
     setUserState(state);
   };
 
+  const unlockWallet = () => {
+    const state = getUserState();
+    if (!state) throw new Error('[storage] user state not initialized');
+    state.status = 'logged-in';
+    setUserState(state);
+  };
+
   return {
     getUserState,
     setUserState,
@@ -75,6 +82,7 @@ function createStorage() {
     addUserAccount,
     changePassword,
     lockWallet,
+    unlockWallet,
   };
 }
 

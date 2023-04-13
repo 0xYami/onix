@@ -7,6 +7,7 @@ import { Asset } from './pages/asset';
 import { Collection } from './pages/collection';
 import { Collections } from './pages/collections';
 import { Home } from './pages/home';
+import { Login } from './pages/login';
 import { NFT } from './pages/nft';
 import { Onboarding } from './pages/onboarding';
 import { Settings } from './pages/settings';
@@ -57,7 +58,7 @@ const App: Component = () => {
               />
             }
           >
-            <Route path="/login" element={<div>Foo</div>} />
+            <Route path="/login" component={Login} />
           </Route>
           <Route
             path="/index.html"
