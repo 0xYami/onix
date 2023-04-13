@@ -53,6 +53,7 @@ export const Onboarding: Component = () => {
       mnemonic: store.mnemonic.phrase,
       currentAccount: account,
       accounts: [account],
+      status: 'logged-in',
     });
   });
 

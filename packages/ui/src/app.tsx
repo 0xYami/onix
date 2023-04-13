@@ -40,7 +40,7 @@ const App: Component = () => {
             path="/index.html"
             element={
               <ProtectedRoute
-                allowWhen={!userStore.isAuthenticated}
+                allowWhen={userStore.status === 'uninitialized'}
                 fallback={<Navigate href="/index.html/home" />}
               />
             }
@@ -52,8 +52,19 @@ const App: Component = () => {
             path="/index.html"
             element={
               <ProtectedRoute
-                allowWhen={userStore.isAuthenticated}
+                allowWhen={userStore.status === 'logged-out'}
                 fallback={<Navigate href="/index.html" />}
+              />
+            }
+          >
+            <Route path="/login" element={<div>Foo</div>} />
+          </Route>
+          <Route
+            path="/index.html"
+            element={
+              <ProtectedRoute
+                allowWhen={userStore.status === 'logged-in'}
+                fallback={<Navigate href="/index.html/login" />}
               />
             }
           >

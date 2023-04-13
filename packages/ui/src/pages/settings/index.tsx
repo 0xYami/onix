@@ -1,6 +1,7 @@
 import { createMemo, createSignal, Show, type Component } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
 import { userStore } from '../../store';
+import { storage } from '../../lib/storage';
 import { truncateMiddle } from '../../lib/utils';
 import { CrossIcon } from '../../components/icons/cross';
 import { ChevronRightIcon } from '../../components/icons/chevron-right';
@@ -14,8 +15,14 @@ import { EyeIcon } from '../../components/icons/eye';
 export const Settings: Component = () => {
   const navigate = useNavigate();
   const { currentAccount } = userStore;
+
+  const lockWallet = () => {
+    storage.lockWallet();
+    userStore.lockWallet();
+  };
+
   return (
-    <div class="flex flex-col w-[360px] h-[540px] space-y-2 text-white bg-black border-[0.3px] border-zinc-700">
+    <div class="relative flex flex-col w-[360px] h-[540px] space-y-2 text-white bg-black border-[0.3px] border-zinc-700">
       <div class="flex items-center justify-between px-5 pt-5">
         <span class="text-xl">Settings</span>
         <button
@@ -72,6 +79,13 @@ export const Settings: Component = () => {
         </div>
         <ChevronRightIcon />
       </Link>
+      <button
+        type="button"
+        onClick={lockWallet}
+        class="absolute w-[90%] py-2 mx-auto bottom-4 left-0 right-0 border-[0.3px] border-zinc-700/80 rounded hover:bg-zinc-700/20"
+      >
+        Lock wallet
+      </button>
     </div>
   );
 };
