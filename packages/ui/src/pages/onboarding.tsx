@@ -3,14 +3,14 @@ import type { Component } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import { useNavigate } from '@solidjs/router';
 import { type Mnemonic, Wallet } from 'ethers';
-import { store } from '../lib/store';
-import { storage, type Account } from '../lib/storage';
-import { Copy } from '../components/copy';
-import { ChevronLeftIcon } from '../components/icons/chevron-left';
-import { PuzzlePieceIcon } from '../components/icons/puzzle-piece';
-import { ThumbstackIcon } from '../components/icons/thumbstack';
-import { EyeIcon } from '../components/icons/eye';
-import { EyeSlashIcon } from '../components/icons/eye-slash';
+import { store } from '~/lib/store';
+import { storage, type Account } from '~/lib/storage';
+import { Copy } from '~/components/copy';
+import { ChevronLeftIcon } from '~/components/icons/chevron-left';
+import { PuzzlePieceIcon } from '~/components/icons/puzzle-piece';
+import { ThumbstackIcon } from '~/components/icons/thumbstack';
+import { EyeIcon } from '~/components/icons/eye';
+import { EyeSlashIcon } from '~/components/icons/eye-slash';
 
 type OnboardingState = {
   password: string;

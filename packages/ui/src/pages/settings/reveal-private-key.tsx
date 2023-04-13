@@ -1,12 +1,12 @@
 import { createSignal, Match, Switch, type Component } from 'solid-js';
 import { Wallet } from 'ethers';
+import { store } from '~/lib/store';
+import { Link } from '~/components/link';
+import { Copy } from '~/components/copy';
+import { ChevronLeftIcon } from '~/components/icons/chevron-left';
+import { EyeIcon } from '~/components/icons/eye';
+import { EyeSlashIcon } from '~/components/icons/eye-slash';
 import { AuthStep } from './index';
-import { store } from '../../lib/store';
-import { Link } from '../../components/link';
-import { Copy } from '../../components/copy';
-import { ChevronLeftIcon } from '../../components/icons/chevron-left';
-import { EyeIcon } from '../../components/icons/eye';
-import { EyeSlashIcon } from '../../components/icons/eye-slash';
 
 export const RevealPrivateKey: Component = () => {
   const [currentStep, setCurrentStep] = createSignal<'authenticate' | 'reveal'>('authenticate');

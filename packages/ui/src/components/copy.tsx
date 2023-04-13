@@ -1,6 +1,6 @@
 import { createEffect, createSignal, Match, Show, Switch } from 'solid-js';
 import type { Component, JSX } from 'solid-js';
-import { copyToClipboard } from '../lib/utils';
+import { copyToClipboard } from '~/lib/utils';
 import { CheckIcon } from './icons/check';
 import { CopyIcon } from './icons/copy';
 

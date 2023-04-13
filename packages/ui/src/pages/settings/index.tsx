@@ -1,16 +1,16 @@
 import { createMemo, createSignal, Show, type Component } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
-import { store } from '../../lib/store';
-import { storage } from '../../lib/storage';
-import { truncateMiddleString } from '../../lib/utils';
-import { CrossIcon } from '../../components/icons/cross';
-import { ChevronRightIcon } from '../../components/icons/chevron-right';
-import { LockIcon } from '../../components/icons/lock';
-import { KeyIcon } from '../../components/icons/key';
-import { ShieldIcon } from '../../components/icons/shield';
-import { Link } from '../../components/link';
-import { EyeSlashIcon } from '../../components/icons/eye-slash';
-import { EyeIcon } from '../../components/icons/eye';
+import { store } from '~/lib/store';
+import { storage } from '~/lib/storage';
+import { truncateMiddleString } from '~/lib/utils';
+import { CrossIcon } from '~/components/icons/cross';
+import { ChevronRightIcon } from '~/components/icons/chevron-right';
+import { LockIcon } from '~/components/icons/lock';
+import { KeyIcon } from '~/components/icons/key';
+import { ShieldIcon } from '~/components/icons/shield';
+import { Link } from '~/components/link';
+import { EyeSlashIcon } from '~/components/icons/eye-slash';
+import { EyeIcon } from '~/components/icons/eye';
 
 export const Settings: Component = () => {
   const navigate = useNavigate();

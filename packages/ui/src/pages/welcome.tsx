@@ -1,5 +1,5 @@
 import type { Component } from 'solid-js';
-import { Link } from '../components/link';
+import { Link } from '~/components/link';
 
 export const Welcome: Component = () => {
   return (

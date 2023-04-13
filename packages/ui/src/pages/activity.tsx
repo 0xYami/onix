@@ -1,12 +1,12 @@
 import { For, Match, Suspense, Switch, type Component } from 'solid-js';
 import { createQuery } from '@tanstack/solid-query';
 import { alchemyAssetTransfersSchema, type AlchemyAssetTransfer } from '@onix/schemas';
-import { store } from '../lib/store';
-import { httpClient } from '../lib/http';
-import { truncateMiddleString } from '../lib/utils';
-import { MainLayout } from '../layouts/main';
-import { SendIcon } from '../components/icons/send';
-import { ReceiveIcon } from '../components/icons/receive';
+import { store } from '~/lib/store';
+import { httpClient } from '~/lib/http';
+import { truncateMiddleString } from '~/lib/utils';
+import { MainLayout } from '~/layouts/main';
+import { SendIcon } from '~/components/icons/send';
+import { ReceiveIcon } from '~/components/icons/receive';
 
 export const Activity: Component = () => {
   const { currentAccount } = store;
