@@ -17,10 +17,10 @@ export type Account = z.infer<typeof account>;
 type UserState = z.infer<typeof userState>;
 
 function createStorage() {
-  const userStorageKey = 'onix-user-secrets';
+  const storageKey = 'onix-user-secrets';
 
   const getUserState = (): UserState | null => {
-    const rawValue = localStorage.getItem(userStorageKey);
+    const rawValue = localStorage.getItem(storageKey);
     if (!rawValue) return null;
     const state = userState.safeParse(JSON.parse(rawValue));
     if (!state.success) return null;
@@ -29,7 +29,7 @@ function createStorage() {
 
   const setUserState = (state: UserState) => {
     localStorage.setItem(
-      userStorageKey,
+      storageKey,
       JSON.stringify({
         password: state.password,
         mnemonic: state.mnemonic,
