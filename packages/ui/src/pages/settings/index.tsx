@@ -27,19 +27,19 @@ export const Settings: Component = () => {
           <CrossIcon />
         </Link>
       </div>
-      <button
-        type="button"
+      <Link
+        path="/settings/accounts"
         class="flex items-center justify-between mx-3 p-2 rounded hover:bg-zinc-700/30"
       >
         <div class="flex flex-col items-start">
           <div>{currentAccount?.name}</div>
           <span class="text-sm text-neutral-500">
             {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
-            {truncateMiddleString(currentAccount!.address, 11)}
+            {truncateMiddleString(currentAccount!.address, 15)}
           </span>
         </div>
         <ChevronRightIcon />
-      </button>
+      </Link>
       <div class="h-[1px] bg-neutral-800 mx-5" />
       <Link
         path="/settings/change-password"

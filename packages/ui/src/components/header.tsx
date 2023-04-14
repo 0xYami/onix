@@ -11,32 +11,6 @@ import { CopyIcon } from './icons/copy';
 export const Header: Component = () => {
   const { currentAccount } = store;
 
-  const createAccount = () => {
-    if (!store.mnemonic) {
-      throw new Error("Can't create account without mnemonic");
-    }
-
-    const currentIndex = store.accounts?.length;
-    if (!currentIndex) {
-      throw new Error("Can't get account index");
-    }
-
-    const wallet = Wallet.fromPhrase(store.mnemonic);
-    const newWallet = wallet.deriveChild(currentIndex);
-    const newAccount: Account = {
-      name: `Account ${currentIndex + 1}`,
-      address: newWallet.address,
-    };
-    storage.addUserAccount(newAccount);
-    store.addAccount(newAccount);
-    switchAccount(newAccount);
-  };
-
-  const switchAccount = (account: Account) => {
-    storage.setCurrentAccount(account);
-    store.switchAccount(account);
-  };
-
   return (
     <header class="relative h-12 flex items-center px-4 space-x-2 border-b-[0.3px] border-zinc-700 text-xs">
       <div class="flex items-center space-x-1">
