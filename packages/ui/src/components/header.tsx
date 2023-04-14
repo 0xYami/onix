@@ -1,7 +1,5 @@
 import { type Component } from 'solid-js';
-import { Wallet } from 'ethers';
 import { store } from '~/lib/store';
-import { storage, type Account } from '~/lib/storage';
 import { truncateMiddleString } from '~/lib/utils';
 import { Link } from './link';
 import { Copy } from './copy';
@@ -10,7 +8,6 @@ import { CopyIcon } from './icons/copy';
 
 export const Header: Component = () => {
   const { currentAccount } = store;
-
   return (
     <header class="relative h-12 flex items-center px-4 space-x-2 border-b-[0.3px] border-zinc-700 text-xs">
       <div class="flex items-center space-x-1">

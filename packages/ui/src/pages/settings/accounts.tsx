@@ -2,7 +2,7 @@ import { For, Show, type Component } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
 import { Wallet } from 'ethers';
 import { store } from '~/lib/store';
-import { Account, storage } from '~/lib/storage';
+import { storage, type Account } from '~/lib/storage';
 import { truncateMiddleString } from '~/lib/utils';
 import { Link } from '~/components/link';
 import { ChevronLeftIcon } from '~/components/icons/chevron-left';
