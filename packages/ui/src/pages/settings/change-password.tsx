@@ -103,7 +103,7 @@ const ChangePasswordStep: Component<{ onNext: (password: string) => void }> = (p
       </div>
       <button
         type="submit"
-        class="w-[100%] absolute bottom-0 py-2 text-center cursor-pointer border-[0.3px] border-zinc-700/80 rounded hover:bg-zinc-700/20"
+        class="w-[100%] absolute bottom-0 py-2 text-center border-[0.3px] border-zinc-700/80 rounded hover:bg-zinc-700/20"
       >
         Save
       </button>

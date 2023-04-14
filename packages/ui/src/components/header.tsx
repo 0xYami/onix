@@ -1,24 +1,15 @@
-import { createEffect, createSignal, type Component } from 'solid-js';
-import { useNavigate } from '@solidjs/router';
+import { type Component } from 'solid-js';
 import { Wallet } from 'ethers';
 import { store } from '~/lib/store';
 import { storage, type Account } from '~/lib/storage';
 import { truncateMiddleString } from '~/lib/utils';
+import { Link } from './link';
 import { Copy } from './copy';
 import { GasPumpIcon } from './icons/gas-pump';
 import { CopyIcon } from './icons/copy';
 
 export const Header: Component = () => {
-  const navigate = useNavigate();
   const { currentAccount } = store;
-  const [copying, setCopying] = createSignal(false);
-
-  createEffect(() => {
-    if (!copying()) return;
-    setTimeout(() => {
-      setCopying(false);
-    }, 2000);
-  });
 
   const createAccount = () => {
     if (!store.mnemonic) {
@@ -65,11 +56,7 @@ export const Header: Component = () => {
             <span>{truncateMiddleString(currentAccount!.address, 11)}</span>
           </>
         </Copy>
-        <button
-          type="button"
-          onClick={() => navigate('/index.html/settings')}
-          class="w-6 h-6 rounded-full bg-zinc-700"
-        />
+        <Link path="/settings" class="w-6 h-6 rounded-full bg-zinc-700" />
       </div>
     </header>
   );
