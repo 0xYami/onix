@@ -1,15 +1,11 @@
 import type { AddressDetails, GetAssetResult } from '@onix/schemas';
 import { assets } from '@onix/utils';
 import { BigNumber } from 'bignumber.js';
+import type { ERC20ActivityParams } from './schemas';
 import { take, toBaseUnit } from './utils';
 import { Alchemy } from './providers/alchemy';
 import { Etherscan } from './providers/etherscan';
 import { CoinMarketCap } from './providers/coinmarketcap';
-
-type GetAssetParams = {
-  userAddress: string;
-  contractAddress: string;
-};
 
 type ClientConfig = {
   apiKeys: {
@@ -30,9 +26,54 @@ export class Client {
     this.coinmarketcap = new CoinMarketCap({ apiKey: config.apiKeys.coinmarketcap });
   }
 
-  async getAsset(params: GetAssetParams): Promise<GetAssetResult> {
+  async getEtherBalance(address: string): Promise<AddressDetails['etherBalance']> {
+    const [etherBalance, etherPrice] = await Promise.all([
+      this.etherscan.getEtherBalance(address),
+      this.etherscan.getEtherPrice(),
+    ]);
+    return {
+      token: toBaseUnit(etherBalance, 18).toFixed(4),
+      usd: toBaseUnit(etherBalance, 18).times(etherPrice).toFixed(2),
+    };
+  }
+
+  async getEtherActivity(address: string): Promise<GetAssetResult> {
+    const balance = await this.getEtherBalance(address);
+    const txs = await this.etherscan.getNormalTransactions(address);
+    return {
+      name: 'Ether',
+      symbol: 'ETH',
+      address: '',
+      balance,
+      transfers: txs.map((tx) => ({
+        from: tx.from,
+        to: tx.to,
+        hash: tx.hash,
+        blockHash: tx.blockHash,
+        blockNumber: tx.blockNumber,
+        gas: tx.gas,
+        gasUsed: tx.gasUsed,
+        gasPrice: tx.gasPrice,
+        nonce: tx.nonce,
+        value: toBaseUnit(tx.value, 18).toFixed(4),
+        timeStamp: tx.timeStamp,
+        tokenName: 'Ether',
+        tokenSymbol: 'ETH',
+        tokenDecimal: '18',
+        confirmations: tx.confirmations,
+        contractAddress: '',
+        transactionIndex: tx.transactionIndex,
+        cumulativeGasUsed: tx.cumulativeGasUsed,
+      })),
+    };
+  }
+
+  async getAsset(params: ERC20ActivityParams): Promise<GetAssetResult> {
+    if (params.contractAddressOrSymbol.toLowerCase() === 'eth') {
+      return this.getEtherActivity(params.userAddress);
+    }
     const asset = assets.find((asset) => {
-      return asset.address.toLowerCase() === params.contractAddress.toLowerCase();
+      return asset.address.toLowerCase() === params.contractAddressOrSymbol.toLowerCase();
     });
 
     if (!asset) {
@@ -40,13 +81,13 @@ export class Client {
     }
 
     const [balance, [price]] = await Promise.all([
-      this.etherscan.getERC20Balance(params.userAddress, params.contractAddress),
+      this.etherscan.getERC20Balance(params.userAddress, params.contractAddressOrSymbol),
       this.coinmarketcap.getTokenPrices([asset.symbol]),
     ]);
 
     const transfers = await this.etherscan.getERC20Transfers(
       params.userAddress,
-      params.contractAddress,
+      params.contractAddressOrSymbol,
     );
 
     transfers.forEach((transfer) => {
