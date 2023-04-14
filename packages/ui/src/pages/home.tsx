@@ -31,7 +31,8 @@ export const Home: Component = () => {
       {
         name: 'Ethereum',
         symbol: 'ETH',
-        address: '',
+        // There's no address for ethereum native asset therefore we need to use the symbol - see ONI-116
+        address: 'ETH',
         balance: userQuery.data.etherBalance,
       },
       ...userQuery.data.assets,

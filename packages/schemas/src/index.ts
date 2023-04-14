@@ -230,6 +230,39 @@ export const alchemyAssetTransfersSchema = z.object({
   }),
 });
 
+export const normalTransactionSchema = z.object({
+  blockNumber: z.string(),
+  timeStamp: z.string(),
+  hash: z.string(),
+  nonce: z.string(),
+  blockHash: z.string(),
+  transactionIndex: z.string(),
+  from: z.string(),
+  to: z.string(),
+  value: z.string(),
+  gas: z.string(),
+  gasPrice: z.string(),
+  isError: z.union([z.literal('0'), z.literal('1')]),
+  txreceipt_status: z.union([z.literal('0'), z.literal('1')]),
+  input: z.string(),
+  contractAddress: z.string(),
+  cumulativeGasUsed: z.string(),
+  gasUsed: z.string(),
+  confirmations: z.string(),
+  methodId: z.string(),
+  functionName: z.string(),
+});
+
+export type EtherscanNormalTransaction = z.infer<typeof normalTransactionSchema>;
+
+export const getEtherscanNormalTransactions = z.object({
+  status: z.union([z.literal('1'), z.literal('0')]),
+  message: z.string(),
+  result: normalTransactionSchema.array(),
+});
+
+export type GetEtherscanNormalTransactions = z.infer<typeof getEtherscanNormalTransactions>;
+
 export type GetAssetResult = z.infer<typeof getAssetResultSchema>;
 export type Transfers = z.infer<typeof transfers>;
 export type AddressDetails = z.infer<typeof addressDetailsSchema>;

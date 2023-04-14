@@ -96,9 +96,7 @@ export const Asset: Component = () => {
                       </span>
                     </div>
                   </a>
-                  <div class="flex flex-col">
-                    <span>{transfer.value}</span>
-                  </div>
+                  <div class="flex flex-col">{transfer.value}</div>
                 </li>
               );
             }}

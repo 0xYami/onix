@@ -1,5 +1,9 @@
 import axios, { type Axios } from 'axios';
-import type { Transfers } from '@onix/schemas';
+import type {
+  EtherscanNormalTransaction,
+  GetEtherscanNormalTransactions,
+  Transfers,
+} from '@onix/schemas';
 import { asyncFaillable } from '@onix/utils';
 
 type BaseResponse<TResult> = {
@@ -74,6 +78,30 @@ export class Etherscan {
     }
 
     return response.result.data.result.ethusd;
+  }
+
+  async getNormalTransactions(address: string): Promise<EtherscanNormalTransaction[]> {
+    const response = await asyncFaillable<{ data: GetEtherscanNormalTransactions }>(
+      this.#httpClient.get('/', {
+        params: {
+          module: 'account',
+          action: 'txlist',
+          address,
+          startblock: 0,
+          endblock: 99999999,
+          page: 1,
+          offset: 100,
+          sort: 'desc',
+          apiKey: this.#apiKey,
+        },
+      }),
+    );
+
+    if (response.failed) {
+      throw new Error('Failed to get normal transactions');
+    }
+
+    return response.result.data.result;
   }
 
   async getERC20Balance(

@@ -2,7 +2,12 @@ import Fastify, { type FastifyServerOptions } from 'fastify';
 import cors from '@fastify/cors';
 import { Client } from './client';
 import { getConfig, type Config } from './config';
-import { addressParamsSchema, nftQueryParamsSchema, userAssetParamsSchema } from './schemas';
+import {
+  addressParamsSchema,
+  erc20ActivityParams,
+  nftQueryParamsSchema,
+  userAssetParamsSchema,
+} from './schemas';
 
 const envToLoggerOptions: Record<Config['env'], FastifyServerOptions['logger']> = {
   production: true,
@@ -47,11 +52,11 @@ router
     const { address, contractAddress, tokenId } = nftQueryParamsSchema.parse(req.params);
     return client.alchemy.getNFT(address, contractAddress, tokenId);
   })
-  .get('/users/:address/asset/erc20/:contractAddress', async (req) => {
-    const params = userAssetParamsSchema.parse(req.params);
+  .get('/users/:userAddress/asset/erc20/:contractAddressOrSymbol', async (req) => {
+    const params = erc20ActivityParams.parse(req.params);
     return client.getAsset({
-      userAddress: params.address,
-      contractAddress: params.contractAddress,
+      userAddress: params.userAddress,
+      contractAddressOrSymbol: params.contractAddressOrSymbol,
     });
   })
   .get('/users/:address/activity', async (req) => {
