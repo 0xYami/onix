@@ -52,7 +52,7 @@ export const Settings: Component = () => {
         <ChevronRightIcon />
       </Link>
       <Link
-        path="/settings/export-key"
+        path="/settings/reveal-private-key"
         class="flex items-center justify-between mx-3 p-2 rounded hover:bg-zinc-700/30"
       >
         <div class="flex items-center space-x-2">
