@@ -100,18 +100,12 @@ export class Client {
         .toFixed(2);
     });
 
-    const totalBalance = tokensWithBalances.reduce(
-      (acc, asset) => acc.plus(new BigNumber(asset.balance.usd)),
-      new BigNumber(0),
-    );
-
     const result: AddressDetails = {
       address,
       etherBalance: {
         token: toBaseUnit(etherBalance, 18).toFixed(4),
         usd: toBaseUnit(etherBalance, 18).times(etherPrice).toFixed(2),
       },
-      totalBalance: totalBalance.toFixed(4),
       assets: tokensWithBalances,
     };
 

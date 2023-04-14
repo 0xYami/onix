@@ -42,9 +42,10 @@ export const Home: Component = () => {
   return (
     <MainLayout>
       <Suspense fallback={<Skeleton />}>
-        <div class="h-48 flex flex-col items-center justify-center">
-          <div class="uppercase">total balance</div>
-          <div class="text-2xl">${userQuery.data?.totalBalance}</div>
+        <div class="h-52 flex flex-col items-center justify-center">
+          <img src={assetSymbolToLogoURL['ETH']} alt="eth-logo" class="w-9 h-9 my-2" />
+          <div class="text-2xl">{userQuery.data?.etherBalance.token} ETH</div>
+          <div>${userQuery.data?.etherBalance.usd}</div>
           <div class="w-full flex items-center justify-around my-4">
             <button
               type="button"
@@ -64,7 +65,7 @@ export const Home: Component = () => {
         </div>
         <div class="px-3">
           <div class="pb-3 uppercase">tokens</div>
-          <ul class="h-56 flex flex-col space-y-2 overflow-y-scroll">
+          <ul class="h-52 flex flex-col space-y-2 overflow-y-scroll">
             <For each={assets()}>
               {(asset) => (
                 <li>
