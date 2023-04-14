@@ -38,7 +38,6 @@ export type AlchemyERC20Balances = z.infer<typeof alchemyERC20BalancesSchema>;
 export const addressDetailsSchema = z.object({
   address: z.string(),
   etherBalance: assetBalanceSchema,
-  totalBalance: z.string(),
   assets: z.array(
     z.object({
       name: z.string(),
