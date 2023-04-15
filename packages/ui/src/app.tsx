@@ -14,8 +14,7 @@ import { Settings } from './pages/settings';
 import { Account } from './pages/settings/account';
 import { Accounts } from './pages/settings/accounts';
 import { ChangePassword } from './pages/settings/change-password';
-import { RevealPrivateKey } from './pages/settings/reveal-private-key';
-import { RevealMnemonic } from './pages/settings/reveal-mnemonic';
+import { Reveal } from './pages/settings/reveal';
 import { Welcome } from './pages/welcome';
 
 type ProtectedRouteProps = {
@@ -84,8 +83,8 @@ const App: Component = () => {
               <Route path="/accounts" component={Accounts} />
               <Route path="/accounts/:address" component={Account} />
               <Route path="/change-password" component={ChangePassword} />
-              <Route path="/reveal-private-key" component={RevealPrivateKey} />
-              <Route path="/reveal-mnemonic" component={RevealMnemonic} />
+              <Route path="/reveal-private-key" element={<Reveal operation="private-key" />} />
+              <Route path="/reveal-mnemonic" element={<Reveal operation="mnemonic" />} />
             </Route>
           </Route>
         </Routes>
