@@ -272,7 +272,7 @@ const MnemonicStep: Component<StepProps> = (props) => {
 };
 
 const SuccessStep: Component<Pick<StepProps, 'onNext'>> = (props) => (
-  <div class="relative h-[520px] flex flex-col items-center justify-center p-3">
+  <div class="relative h-[520px] flex-center flex-col p-3">
     <div class="w-[87%] uppercase">all set!</div>
     <div class="text-5xl text-end">Your wallet is ready</div>
     <div class="mt-24 p-4 space-y-3 bg-gray-800/40 border-[0.3px] border-zinc-700/80 rounded">

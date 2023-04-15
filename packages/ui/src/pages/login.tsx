@@ -9,7 +9,7 @@ export const Login: Component = () => {
   const [showPassword, setShowPassword] = createSignal(false);
   const [isWrong, setIsWrong] = createSignal(false);
   return (
-    <div class="h-full flex flex-col items-center justify-center px-4 space-y-10">
+    <div class="h-full flex-center flex-col px-4 space-y-10">
       <div class="flex flex-col items-center w-full">
         <div class="text-7xl font-bold">Onix</div>
         <div class="w-[70%] text-xs uppercase text-right text-zinc-400">where only you own it</div>

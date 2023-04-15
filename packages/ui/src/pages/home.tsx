@@ -43,21 +43,21 @@ export const Home: Component = () => {
   return (
     <MainLayout>
       <Suspense fallback={<Skeleton />}>
-        <div class="h-52 flex flex-col items-center justify-center">
+        <div class="h-52 flex-center flex-col">
           <img src={assetSymbolToLogoURL['ETH']} alt="eth-logo" class="w-9 h-9 my-2" />
           <div class="text-2xl">{userQuery.data?.etherBalance.token} ETH</div>
           <div>${userQuery.data?.etherBalance.usd}</div>
           <div class="w-full flex items-center justify-around my-4">
             <button
               type="button"
-              class="w-40 h-10 flex items-center justify-center space-x-2 border-[0.3px] border-zinc-700 rounded-sm"
+              class="w-40 h-10 flex-center space-x-2 border-[0.3px] border-zinc-700 rounded-sm"
             >
               <ReceiveIcon class="w-3 h-3" />
               <span class="uppercase">receive</span>
             </button>
             <button
               type="button"
-              class="w-40 h-10 flex items-center justify-center space-x-2 border-[0.3px] border-zinc-700 rounded-sm"
+              class="w-40 h-10 flex-center space-x-2 border-[0.3px] border-zinc-700 rounded-sm"
             >
               <SendIcon class="w-3 h-3" />
               <span class="uppercase">send</span>

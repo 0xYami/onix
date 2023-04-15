@@ -32,12 +32,7 @@ export const Collection: Component = () => {
     <MainLayout>
       <Suspense fallback={<Skeleton />}>
         <div class="flex items-center justify-between p-3">
-          <Link
-            path="/collections"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="flex items-center space-x-1"
-          >
+          <Link path="/collections" class="flex items-center space-x-1">
             <ChevronLeftIcon />
             <span>{collectionQuery.data?.contract.name}</span>
           </Link>

@@ -31,7 +31,7 @@ export const Asset: Component = () => {
   return (
     <MainLayout>
       <Suspense fallback={<Skeleton />}>
-        <div class="relative h-48 flex flex-col items-center justify-center">
+        <div class="relative h-48 flex-center flex-col">
           <Link path="/" class="absolute w-full top-0 left-0 m-3 flex items-center space-x-1">
             <ChevronLeftIcon />
             <span>{assetQuery.data?.name}</span>
@@ -43,14 +43,14 @@ export const Asset: Component = () => {
           <div class="w-full flex items-center justify-around mt-4">
             <button
               type="button"
-              class="w-40 h-10 flex items-center justify-center space-x-2 border-[0.3px] border-zinc-700 rounded-sm"
+              class="w-40 h-10 flex-center space-x-2 border-[0.3px] border-zinc-700 rounded-sm"
             >
               <ReceiveIcon class="w-3 h-3" />
               <span class="uppercase">receive</span>
             </button>
             <button
               type="button"
-              class="w-40 h-10 flex items-center justify-center space-x-2 border-[0.3px] border-zinc-700 rounded-sm"
+              class="w-40 h-10 flex-center space-x-2 border-[0.3px] border-zinc-700 rounded-sm"
             >
               <SendIcon class="w-3 h-3" />
               <span class="uppercase">send</span>
@@ -109,7 +109,7 @@ export const Asset: Component = () => {
 
 const Skeleton: Component = () => (
   <div class="bg-white/5 p-4 animate-pulse">
-    <div class="flex items-center justify-center">
+    <div class="flex-center">
       <div class="h-32 w-full rounded-lg bg-zinc-700/20" />
     </div>
     <div class="h-8 w-2/5 my-4 rounded-lg bg-zinc-700/20" />
