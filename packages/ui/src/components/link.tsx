@@ -10,7 +10,7 @@ export const Link: ParentComponent<LinkProps> = (props) => {
   // To correctly match active class
   if (props.path !== '/') href += props.path;
   return (
-    <A href={href} end={props.end} class={props.class} activeClass={props.activeClass}>
+    <A href={href} {...props}>
       {props.children}
     </A>
   );
