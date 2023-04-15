@@ -63,8 +63,7 @@ const ConfirmStep: Component<{ account: Account }> = (props) => {
       <div class="absolute w-[100%] bottom-0 space-y-4">
         <div
           classList={{
-            'flex items-center justify-between p-4 space-x-3 border-[0.3px] rounded hover:bg-zinc-700/20':
-              true,
+            'flex-between p-4 space-x-3 border-[0.3px] rounded hover:bg-zinc-700/20': true,
             'border-zinc-700/80': !confirmed(),
             'border-teal-800': confirmed(),
           }}

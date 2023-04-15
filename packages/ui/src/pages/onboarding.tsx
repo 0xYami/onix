@@ -109,7 +109,7 @@ const PasswordStep: Component<StepProps> = (props) => {
 
   return (
     <div class="relative h-[520px] p-3">
-      <div class="flex items-center justify-between">
+      <div class="flex-between">
         <button type="button" class="flex items-center py-4 space-x-2" onClick={props.onPrevious}>
           <ChevronLeftIcon />
           <span>back</span>
@@ -181,8 +181,7 @@ const PasswordStep: Component<StepProps> = (props) => {
         <div class="absolute w-[90%] bottom-0 space-y-4">
           <div
             classList={{
-              'flex items-center justify-between p-4 space-x-3 border-[0.3px] rounded hover:bg-zinc-700/20':
-                true,
+              'flex-between p-4 space-x-3 border-[0.3px] rounded hover:bg-zinc-700/20': true,
               'border-zinc-700/80': !policyAgreed(),
               'border-teal-800': policyAgreed(),
             }}
@@ -235,7 +234,7 @@ const MnemonicStep: Component<StepProps> = (props) => {
 
   return (
     <div class="relative h-[520px] p-3">
-      <div class="flex items-center justify-between">
+      <div class="flex-between">
         <button type="button" class="flex items-center py-4 space-x-2" onClick={props.onPrevious}>
           <ChevronLeftIcon />
           <span>back</span>
@@ -247,7 +246,7 @@ const MnemonicStep: Component<StepProps> = (props) => {
         You will use this to recover your account in case you lose your device or password.{' '}
         <span class="font-bold">Never share it with anyone!</span>
       </p>
-      <div class="flex items-center justify-between my-4">
+      <div class="flex-between my-4">
         <div class="uppercase">recovery phrase</div>
         {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
         <Copy value={wallet.mnemonic!.phrase} />
@@ -281,7 +280,7 @@ const SuccessStep: Component<Pick<StepProps, 'onNext'>> = (props) => (
         <div class="h-9 w-[85%] bg-zinc-800 rounded-r-full" />
         <PuzzlePieceIcon class="w-9 h-9 p-2 border-[0.3px] border-zinc-700 rounded-full" />
       </div>
-      <div class="h-9 flex items-center justify-between px-2 space-x-2 bg-zinc-800">
+      <div class="h-9 flex-between px-2 space-x-2 bg-zinc-800">
         <div>Onix</div>
         <ThumbstackIcon class="w-8 h-8 p-2 rounded-full" />
       </div>

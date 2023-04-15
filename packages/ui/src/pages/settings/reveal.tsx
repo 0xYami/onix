@@ -48,7 +48,7 @@ const RevealPrivateKey: Component<{ mnemonic: string }> = (props) => {
   const wallet = Wallet.fromPhrase(props.mnemonic);
   return (
     <div class="relative h-full space-y-4">
-      <div class="flex items-center justify-between">
+      <div class="flex-between">
         <div class="uppercase">private key</div>
         <Copy value={wallet.privateKey} />
       </div>
@@ -84,7 +84,7 @@ const RevealMnemonic: Component<{ mnemonic: string }> = (props) => {
   const [blurredOut, setBlurredOut] = createSignal(true);
   return (
     <div class="relative h-full space-y-4">
-      <div class="flex items-center justify-between">
+      <div class="flex-between">
         <div class="uppercase">Recovery phrase</div>
         <Copy value={props.mnemonic} />
       </div>

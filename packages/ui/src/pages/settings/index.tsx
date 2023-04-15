@@ -21,16 +21,13 @@ export const Settings: Component = () => {
 
   return (
     <div class="relative h-full space-y-2 border-[0.3px] border-zinc-700">
-      <div class="flex items-center justify-between px-5 pt-5">
+      <div class="flex-between px-5 pt-5">
         <span class="text-xl">Settings</span>
         <Link path="/" class="p-3 border-[0.3px] border-zinc-700 rounded hover:bg-zinc-700/40">
           <CrossIcon />
         </Link>
       </div>
-      <Link
-        path="/settings/accounts"
-        class="flex items-center justify-between mx-3 p-2 rounded hover:bg-zinc-700/30"
-      >
+      <Link path="/settings/accounts" class="flex-between mx-3 p-2 rounded hover:bg-zinc-700/30">
         <div>
           <div>{currentAccount?.name}</div>
           <span class="text-sm text-neutral-500">
@@ -43,7 +40,7 @@ export const Settings: Component = () => {
       <div class="h-[1px] bg-neutral-800 mx-5" />
       <Link
         path="/settings/change-password"
-        class="flex items-center justify-between mx-3 p-2 rounded hover:bg-zinc-700/30"
+        class="flex-between mx-3 p-2 rounded hover:bg-zinc-700/30"
       >
         <div class="flex items-center space-x-2">
           <LockIcon />
@@ -54,7 +51,7 @@ export const Settings: Component = () => {
       <Link
         path="/settings/reveal-private-key"
         state={{ from: 'settings' }}
-        class="flex items-center justify-between mx-3 p-2 rounded hover:bg-zinc-700/30"
+        class="flex-between mx-3 p-2 rounded hover:bg-zinc-700/30"
       >
         <div class="flex items-center space-x-2">
           <KeyIcon />
@@ -65,7 +62,7 @@ export const Settings: Component = () => {
       <Link
         path="/settings/reveal-mnemonic"
         state={{ from: 'settings' }}
-        class="flex items-center justify-between mx-3 p-2 rounded hover:bg-zinc-700/30"
+        class="flex-between mx-3 p-2 rounded hover:bg-zinc-700/30"
       >
         <div class="flex items-center space-x-2">
           <ShieldIcon />

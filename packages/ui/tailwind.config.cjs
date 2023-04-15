@@ -13,6 +13,11 @@ module.exports = {
           justifyContent: 'center',
           alignItems: 'center',
         },
+        '.flex-between': {
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        },
       });
     },
   ],

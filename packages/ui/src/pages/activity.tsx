@@ -56,7 +56,7 @@ export const Activity: Component = () => {
                         transfer.from.toLowerCase() === currentAccount?.address.toLowerCase();
                       const linkToEtherscan = `https://etherscan.io/tx/${transfer.hash}`;
                       return (
-                        <li class="flex items-center justify-between">
+                        <li class="flex-between">
                           <a
                             href={linkToEtherscan}
                             target="_blank"
