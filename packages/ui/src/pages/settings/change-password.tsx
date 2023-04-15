@@ -19,7 +19,7 @@ export const ChangePassword: Component = () => {
   };
 
   return (
-    <div class="h-full flex flex-col p-4 space-y-2 border-[0.3px] border-zinc-700">
+    <div class="h-full flex flex-col p-4 space-y-2">
       <Link path="/settings" class="flex items-center space-x-1 mb-4">
         <ChevronLeftIcon />
         <span class="text-sm">Settings / Change password</span>
@@ -65,7 +65,7 @@ const ChangePasswordStep: Component<{ onNext: (password: string) => void }> = (p
             pattern=".{8,}"
             title="Password must be at least 8 characters long"
             placeholder="Password"
-            class="w-full bg-black border-[0.3px] border-zinc-700 rounded"
+            class="w-full bg-black border-thin border-zinc-700 rounded"
           />
           <button
             type="button"
@@ -90,7 +90,7 @@ const ChangePasswordStep: Component<{ onNext: (password: string) => void }> = (p
             pattern={confirmedPassword()}
             title="Passwords do not match"
             placeholder="Password"
-            class="w-full bg-black border-[0.3px] border-zinc-700 rounded"
+            class="w-full bg-black border-thin border-zinc-700 rounded"
           />
           <button
             type="button"
@@ -103,7 +103,7 @@ const ChangePasswordStep: Component<{ onNext: (password: string) => void }> = (p
       </div>
       <button
         type="submit"
-        class="w-[100%] absolute bottom-0 py-2 text-center border-[0.3px] border-zinc-700/80 rounded hover:bg-zinc-700/20"
+        class="w-[100%] absolute bottom-0 py-2 text-center border-thin border-zinc-700/80 rounded hover:bg-zinc-700/20"
       >
         Save
       </button>

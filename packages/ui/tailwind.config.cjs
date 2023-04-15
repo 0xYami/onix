@@ -2,7 +2,14 @@
 module.exports = {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      borderWidth: {
+        thin: '0.3px',
+      },
+      ringWidth: {
+        thin: '0.3px',
+      },
+    },
   },
   plugins: [
     require('@tailwindcss/forms'),

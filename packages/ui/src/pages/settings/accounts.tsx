@@ -18,7 +18,7 @@ export const Accounts: Component = () => {
   };
 
   return (
-    <div class="h-full p-4 space-y-2 border-[0.3px] border-zinc-700">
+    <div class="h-full p-4 space-y-2">
       <Link path="/settings" class="flex items-center space-x-1 mb-4">
         <ChevronLeftIcon />
         <span class="text-sm">Settings / Your accounts</span>
@@ -59,7 +59,7 @@ export const Accounts: Component = () => {
       </ul>
       <Link
         path="/settings/accounts/create"
-        class="absolute w-[90%] py-2 bottom-4 text-center border-[0.3px] border-zinc-700/80 rounded hover:bg-zinc-700/20"
+        class="absolute w-[90%] py-2 bottom-4 text-center border-thin border-zinc-700/80 rounded hover:bg-zinc-700/20"
       >
         + Add account
       </Link>

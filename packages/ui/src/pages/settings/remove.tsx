@@ -12,7 +12,7 @@ export const Remove: Component = () => {
   const location = useLocation<{ from: string }>();
   const account = store.accounts?.find((account) => account.name === location.state?.from);
   return (
-    <div class="h-full flex flex-col p-4 space-y-2 border-[0.3px] border-zinc-700">
+    <div class="h-full flex flex-col p-4 space-y-2">
       <Link path="/settings" class="flex items-center space-x-1 mb-4">
         <ChevronLeftIcon />
         <span class="text-sm">{location.state?.from} / Remove account</span>
@@ -63,7 +63,7 @@ const ConfirmStep: Component<{ account: Account }> = (props) => {
       <div class="absolute w-[100%] bottom-0 space-y-4">
         <div
           classList={{
-            'flex-between p-4 space-x-3 border-[0.3px] rounded hover:bg-zinc-700/20': true,
+            'flex-between p-4 space-x-3 border-thin rounded hover:bg-zinc-700/20': true,
             'border-zinc-700/80': !confirmed(),
             'border-teal-800': confirmed(),
           }}
@@ -77,11 +77,10 @@ const ConfirmStep: Component<{ account: Account }> = (props) => {
             checked={confirmed()}
             onChange={() => setConfirmed(!confirmed())}
             classList={{
-              'w-6 h-6 cursor-pointer border-[0.3px] border-zinc-700/80 rounded-full bg-black':
+              'w-6 h-6 cursor-pointer border-thin border-zinc-700/80 rounded-full bg-black': true,
+              'checked:border-thin checked:border-teal-500 checked:text-black checked:hover:border-teal-500':
                 true,
-              'checked:border-[0.3px] checked:border-teal-500 checked:text-black checked:hover:border-teal-500':
-                true,
-              'focus:ring-[0.3px] focus:ring-zinc-700/80 checked:focus:ring-teal-500 focus:ring-offset-0':
+              'focus:ring-thin focus:ring-zinc-700/80 checked:focus:ring-teal-500 focus:ring-offset-0':
                 true,
             }}
           />
@@ -91,8 +90,7 @@ const ConfirmStep: Component<{ account: Account }> = (props) => {
           disabled={!confirmed()}
           onClick={removeAccount}
           classList={{
-            'w-[100%] py-2 text-center text-red-600 border-[0.3px] border-zinc-700/80 rounded':
-              true,
+            'w-[100%] py-2 text-center text-red-600 border-thin border-zinc-700/80 rounded': true,
             'border-red-600 hover:bg-zinc-700/20': confirmed(),
             'disabled:text-zinc-700': true,
           }}

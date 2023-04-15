@@ -36,7 +36,7 @@ export const Login: Component = () => {
             required
             autofocus
             placeholder="Password"
-            class="w-full bg-black border-[0.3px] border-zinc-700 rounded"
+            class="w-full bg-black border-thin border-zinc-700 rounded"
           />
           <button
             type="button"
@@ -51,7 +51,7 @@ export const Login: Component = () => {
         </Show>
         <button
           type="submit"
-          class="w-[100%] py-2 bottom-0 text-center border-[0.3px] border-zinc-700/80 hover:bg-zinc-700/20 rounded"
+          class="w-[100%] py-2 bottom-0 text-center border-thin border-zinc-700/80 hover:bg-zinc-700/20 rounded"
         >
           Unlock
         </button>

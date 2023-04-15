@@ -12,7 +12,7 @@ import { BinIcon } from '~/components/icons/bin';
 export const Account: Component = () => {
   const { currentAccount } = store;
   return (
-    <div class="h-full space-y-2 border-[0.3px] border-zinc-700">
+    <div class="h-full space-y-2">
       <Link path="/settings/accounts" class="flex items-center px-4 pt-4 space-x-1">
         <ChevronLeftIcon />
         <span class="text-sm">Your Accounts</span>

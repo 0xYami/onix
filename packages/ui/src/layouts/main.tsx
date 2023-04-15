@@ -10,7 +10,7 @@ export const MainLayout: ParentComponent = (props) => {
     <>
       <Header />
       {props.children}
-      <nav class="absolute w-full h-12 bottom-0 flex items-center bg-black border-t-[0.3px] border-zinc-700 z-10">
+      <nav class="absolute w-full h-12 bottom-0 flex items-center bg-black border-t-thin border-zinc-700 z-10">
         <Link path="/home" end class="w-full h-full flex-center" activeClass="text-teal-500">
           <HomeIcon />
         </Link>

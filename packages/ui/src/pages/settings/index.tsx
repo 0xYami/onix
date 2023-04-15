@@ -20,10 +20,10 @@ export const Settings: Component = () => {
   };
 
   return (
-    <div class="relative h-full space-y-2 border-[0.3px] border-zinc-700">
+    <div class="relative h-full space-y-2">
       <div class="flex-between px-5 pt-5">
         <span class="text-xl">Settings</span>
-        <Link path="/" class="p-3 border-[0.3px] border-zinc-700 rounded hover:bg-zinc-700/40">
+        <Link path="/" class="p-3 border-thin border-zinc-700 rounded hover:bg-zinc-700/40">
           <CrossIcon />
         </Link>
       </div>
@@ -73,7 +73,7 @@ export const Settings: Component = () => {
       <button
         type="button"
         onClick={lockWallet}
-        class="absolute w-[90%] py-2 mx-auto bottom-4 left-0 right-0 border-[0.3px] border-zinc-700/80 rounded hover:bg-zinc-700/20"
+        class="absolute w-[90%] py-2 mx-auto bottom-4 left-0 right-0 border-thin border-zinc-700/80 rounded hover:bg-zinc-700/20"
       >
         Lock wallet
       </button>
@@ -114,7 +114,7 @@ export const AuthStep: Component<{ onNext: () => void }> = (props) => {
           pattern={store.password!}
           title="Doesn't match current password"
           placeholder="Password"
-          class="w-full bg-black border-[0.3px] border-zinc-700 rounded"
+          class="w-full bg-black border-thin border-zinc-700 rounded"
         />
         <button
           type="button"
@@ -129,7 +129,7 @@ export const AuthStep: Component<{ onNext: () => void }> = (props) => {
       </Show>
       <button
         type="submit"
-        class="absolute w-[100%] py-2 bottom-0 text-center border-[0.3px] border-zinc-700/80 hover:bg-zinc-700/20 rounded"
+        class="absolute w-[100%] py-2 bottom-0 text-center border-thin border-zinc-700/80 hover:bg-zinc-700/20 rounded"
       >
         Next
       </button>

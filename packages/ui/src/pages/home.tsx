@@ -50,14 +50,14 @@ export const Home: Component = () => {
           <div class="w-full flex items-center justify-around my-4">
             <button
               type="button"
-              class="w-40 h-10 flex-center space-x-2 border-[0.3px] border-zinc-700 rounded-sm"
+              class="w-40 h-10 flex-center space-x-2 border-thin border-zinc-700 rounded-sm"
             >
               <ReceiveIcon class="w-3 h-3" />
               <span class="uppercase">receive</span>
             </button>
             <button
               type="button"
-              class="w-40 h-10 flex-center space-x-2 border-[0.3px] border-zinc-700 rounded-sm"
+              class="w-40 h-10 flex-center space-x-2 border-thin border-zinc-700 rounded-sm"
             >
               <SendIcon class="w-3 h-3" />
               <span class="uppercase">send</span>

@@ -9,7 +9,7 @@ import { CopyIcon } from './icons/copy';
 export const Header: Component = () => {
   const { currentAccount } = store;
   return (
-    <header class="relative h-12 flex items-center px-4 space-x-2 border-b-[0.3px] border-zinc-700 text-xs">
+    <header class="relative h-12 flex items-center px-4 space-x-2 border-b-thin border-zinc-700 text-xs">
       <div class="flex items-center space-x-1">
         <div class="w-2 h-2 rounded-full bg-green-600" />
         <span class="font-bold uppercase">mainnet</span>
