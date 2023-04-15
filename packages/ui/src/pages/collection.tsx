@@ -59,7 +59,7 @@ export const Collection: Component = () => {
               <li>
                 <Link path={`/collections/${collectionQuery.data?.contract.address}/${nft.id}`}>
                   <img src={nft.metadata.image} alt={`Image ${nft.title}`} class="w-36 h-36" />
-                  <span class="text-sm">{nft.title}</span>
+                  <div class="text-sm">{nft.title}</div>
                 </Link>
               </li>
             )}

@@ -20,7 +20,7 @@ export const Settings: Component = () => {
   };
 
   return (
-    <div class="relative flex flex-col w-[360px] h-[540px] space-y-2 text-white bg-black border-[0.3px] border-zinc-700">
+    <div class="relative h-full space-y-2 border-[0.3px] border-zinc-700">
       <div class="flex items-center justify-between px-5 pt-5">
         <span class="text-xl">Settings</span>
         <Link path="/" class="p-3 border-[0.3px] border-zinc-700 rounded hover:bg-zinc-700/40">
@@ -31,7 +31,7 @@ export const Settings: Component = () => {
         path="/settings/accounts"
         class="flex items-center justify-between mx-3 p-2 rounded hover:bg-zinc-700/30"
       >
-        <div class="flex flex-col items-start">
+        <div>
           <div>{currentAccount?.name}</div>
           <span class="text-sm text-neutral-500">
             {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
@@ -95,14 +95,14 @@ export const AuthStep: Component<{ onNext: () => void }> = (props) => {
         event.preventDefault();
         props.onNext();
       }}
-      class="relative h-full flex flex-col mb-4"
+      class="relative h-full space-y-4"
     >
-      <label for="password" class="uppercase mb-3">
+      <label for="confirm-password" class="uppercase mb-3">
         confirm password
       </label>
       <div class="relative flex items-center">
         <input
-          id="password"
+          id="confirm-password"
           type={showPassword() ? 'text' : 'password'}
           value={password()}
           onInput={(event) => setPassword(event.currentTarget.value)}

@@ -18,7 +18,7 @@ export const Header: Component = () => {
         <GasPumpIcon class="w-3 h-3" />
         <span>$2.01</span>
       </div>
-      <div class="absolute right-0 pr-4 flex items-center space-x-2">
+      <div class="absolute right-4 flex items-center space-x-2">
         {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
         <Copy value={currentAccount!.address}>
           <>

@@ -18,7 +18,7 @@ export const Accounts: Component = () => {
   };
 
   return (
-    <div class="flex flex-col w-[360px] h-[540px] p-4 space-y-2 text-white bg-black border-[0.3px] border-zinc-700">
+    <div class="h-full p-4 space-y-2 border-[0.3px] border-zinc-700">
       <Link path="/settings" class="flex items-center space-x-1 mb-4">
         <ChevronLeftIcon />
         <span class="text-sm">Settings / Your accounts</span>

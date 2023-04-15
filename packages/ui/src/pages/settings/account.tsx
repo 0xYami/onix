@@ -12,12 +12,12 @@ import { BinIcon } from '~/components/icons/bin';
 export const Account: Component = () => {
   const { currentAccount } = store;
   return (
-    <div class="flex flex-col w-[360px] h-[540px] space-y-2 text-white bg-black border-[0.3px] border-zinc-700">
+    <div class="h-full space-y-2 border-[0.3px] border-zinc-700">
       <Link path="/settings/accounts" class="flex items-center px-4 pt-4 space-x-1">
         <ChevronLeftIcon />
         <span class="text-sm">Your Accounts</span>
       </Link>
-      <div class="flex flex-col items-start mx-3 p-2">
+      <div class="mx-3 p-2">
         <div>{currentAccount?.name}</div>
         <span class="text-sm text-neutral-500">
           {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}

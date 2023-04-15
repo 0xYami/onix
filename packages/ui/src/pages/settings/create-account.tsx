@@ -40,7 +40,7 @@ export const CreateAccount: Component = () => {
   };
 
   return (
-    <div class="flex flex-col w-[360px] h-[540px] p-4 space-y-2 text-white bg-black border-[0.3px] border-zinc-700">
+    <div class="h-full flex flex-col p-4 space-y-2 border-[0.3px] border-zinc-700">
       <Link path="/settings/accounts" class="flex items-center space-x-1 mb-4">
         <ChevronLeftIcon />
         <span class="text-sm">Settings / Create account</span>
@@ -50,7 +50,7 @@ export const CreateAccount: Component = () => {
           event.preventDefault();
           createAccount();
         }}
-        class="relative h-full flex flex-col mb-4"
+        class="relative h-full mb-4"
       >
         <label for="name" class="mb-3">
           Account name
@@ -78,7 +78,7 @@ export const CreateAccount: Component = () => {
           type="submit"
           disabled={!name()}
           classList={{
-            'absolute w-[100%] py-2 bottom-0 text-center border-[0.3px] border-zinc-700/80 rounded':
+            'absolute w-[100%] py-2 bottom-0 left-0 right-0 text-center border-[0.3px] border-zinc-700/80 rounded':
               true,
             'hover:bg-zinc-700/20 ': !!name(),
           }}

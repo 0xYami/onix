@@ -72,22 +72,20 @@ export const Home: Component = () => {
                 <li>
                   <Link
                     path={`/assets/${asset.address}`}
-                    class="flex items-start justify-between px-1 py-2 rounded-lg hover:bg-zinc-700/20 hover:duration-100"
+                    class="relative flex items-start px-1 py-2 space-x-2 rounded-lg hover:bg-zinc-700/20 hover:duration-100"
                   >
-                    <div class="flex items-center space-x-3">
-                      <img
-                        src={`${assetSymbolToLogoURL[asset.symbol]}`}
-                        alt={`${asset.name} Icon`}
-                        class="w-10 h-10"
-                      />
-                      <div class="flex flex-col">
-                        <span class="font-bold">
-                          {asset.balance.token} {asset.symbol}
-                        </span>
-                        <span class="text-xs text-zinc-400">{asset.name}</span>
+                    <img
+                      src={`${assetSymbolToLogoURL[asset.symbol]}`}
+                      alt={`${asset.name} Icon`}
+                      class="w-10 h-10"
+                    />
+                    <div>
+                      <div class="font-bold">
+                        {asset.balance.token} {asset.symbol}
                       </div>
+                      <div class="text-xs text-zinc-400">{asset.name}</div>
                     </div>
-                    <span>${asset.balance.usd}</span>
+                    <div class="absolute right-0">${asset.balance.usd}</div>
                   </Link>
                 </li>
               )}

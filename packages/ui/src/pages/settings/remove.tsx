@@ -8,11 +8,11 @@ import { ChevronLeftIcon } from '~/components/icons/chevron-left';
 import { AuthStep } from './index';
 
 export const Remove: Component = () => {
-  const [currentStep, setCurrentStep] = createSignal<'authenticate' | 'confirm'>('confirm');
+  const [currentStep, setCurrentStep] = createSignal<'authenticate' | 'confirm'>('authenticate');
   const location = useLocation<{ from: string }>();
   const account = store.accounts?.find((account) => account.name === location.state?.from);
   return (
-    <div class="flex flex-col w-[360px] h-[540px] p-4 space-y-2 text-white bg-black border-[0.3px] border-zinc-700">
+    <div class="h-full flex flex-col p-4 space-y-2 border-[0.3px] border-zinc-700">
       <Link path="/settings" class="flex items-center space-x-1 mb-4">
         <ChevronLeftIcon />
         <span class="text-sm">{location.state?.from} / Remove account</span>

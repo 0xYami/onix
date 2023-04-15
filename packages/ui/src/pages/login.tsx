@@ -24,7 +24,7 @@ export const Login: Component = () => {
           storage.unlockWallet();
           store.unlockWallet();
         }}
-        class="w-full flex flex-col space-y-3"
+        class="w-full space-y-3"
       >
         <div class="relative flex items-center">
           <input

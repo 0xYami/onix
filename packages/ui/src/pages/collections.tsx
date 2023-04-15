@@ -43,11 +43,11 @@ export const Collections: Component = () => {
                       alt={`image-${collection.name}`}
                       class="w-12 h-12 rounded-full"
                     />
-                    <div class="flex flex-col">
-                      <span>{collection.name}</span>
-                      <span class="text-sm text-zinc-400">
+                    <div>
+                      <div>{collection.name}</div>
+                      <div class="text-sm text-zinc-400">
                         {collection.totalBalance} {collection.totalBalance > 1 ? 'NFTs' : 'NFT'}
-                      </span>
+                      </div>
                     </div>
                   </Link>
                 </li>

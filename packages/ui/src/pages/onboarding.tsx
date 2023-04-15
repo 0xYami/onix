@@ -121,13 +121,13 @@ const PasswordStep: Component<StepProps> = (props) => {
         You will use this password to unlock your wallet extension.
       </p>
       <form
-        class="mt-3"
         onSubmit={(event) => {
           event.preventDefault();
           props.onNext();
         }}
+        class="mt-3"
       >
-        <div class="flex flex-col mb-4 space-y-2">
+        <div class="mb-4 space-y-2">
           <label for="password" class="uppercase">
             enter password
           </label>
@@ -153,7 +153,7 @@ const PasswordStep: Component<StepProps> = (props) => {
             </button>
           </div>
         </div>
-        <div class="flex flex-col space-y-2">
+        <div class="space-y-2">
           <label for="confirm-password" class="uppercase text-sm">
             Confirm password
           </label>
@@ -275,15 +275,15 @@ const SuccessStep: Component<Pick<StepProps, 'onNext'>> = (props) => (
   <div class="relative h-[520px] flex flex-col items-center justify-center p-3">
     <div class="w-[87%] uppercase">all set!</div>
     <div class="text-5xl text-end">Your wallet is ready</div>
-    <div class="mt-24 p-4 flex flex-col space-y-3 bg-gray-800/40 border-[0.3px] border-zinc-700/80 rounded">
+    <div class="mt-24 p-4 space-y-3 bg-gray-800/40 border-[0.3px] border-zinc-700/80 rounded">
       <div>Pin the Onix extension for easier access</div>
       <div class="flex items-center space-x-2">
-        <span class="h-[36px] w-[85%] bg-zinc-800 rounded-r-full" />
-        <PuzzlePieceIcon class="w-[36px] h-[36px] p-2 border-[0.3px] border-zinc-700 rounded-full" />
+        <div class="h-9 w-[85%] bg-zinc-800 rounded-r-full" />
+        <PuzzlePieceIcon class="w-9 h-9 p-2 border-[0.3px] border-zinc-700 rounded-full" />
       </div>
-      <div class="h-[36px] flex items-center justify-between px-2 space-x-2 bg-zinc-800">
-        <span>Onix</span>
-        <ThumbstackIcon class="w-[30px] h-[30px] p-2 rounded-full" />
+      <div class="h-9 flex items-center justify-between px-2 space-x-2 bg-zinc-800">
+        <div>Onix</div>
+        <ThumbstackIcon class="w-8 h-8 p-2 rounded-full" />
       </div>
     </div>
     <button
