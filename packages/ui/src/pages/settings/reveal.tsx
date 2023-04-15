@@ -1,4 +1,5 @@
 import { createSignal, Match, Switch, type Component } from 'solid-js';
+import { useLocation } from '@solidjs/router';
 import { Wallet } from 'ethers';
 import { store } from '~/lib/store';
 import { Link } from '~/components/link';
@@ -13,13 +14,14 @@ type RevealProps = {
 };
 
 export const Reveal: Component<RevealProps> = (props) => {
+  const location = useLocation<{ from: string }>();
   const [currentStep, setCurrentStep] = createSignal<'authenticate' | 'reveal'>('authenticate');
   return (
     <div class="flex flex-col w-[360px] h-[540px] p-4 space-y-2 text-white bg-black border-[0.3px] border-zinc-700">
       <Link path="/settings" class="flex items-center space-x-1 mb-4">
         <ChevronLeftIcon />
-        <span class="text-sm">
-          Settings /{' '}
+        <span class="text-sm capitalize">
+          {location.state?.from || 'Settings'} /{' '}
           {props.operation === 'private-key' ? 'Reveal private key' : 'Reveal recovery phrase'}
         </span>
       </Link>
