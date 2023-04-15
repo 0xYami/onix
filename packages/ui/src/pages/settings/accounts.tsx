@@ -1,6 +1,5 @@
 import { For, Show, type Component } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
-import { Wallet } from 'ethers';
 import { store } from '~/lib/store';
 import { storage, type Account } from '~/lib/storage';
 import { truncateMiddleString } from '~/lib/utils';
@@ -10,27 +9,6 @@ import { ThreeDotsIcon } from '~/components/icons/three-dots';
 
 export const Accounts: Component = () => {
   const navigate = useNavigate();
-
-  const createAccount = () => {
-    if (!store.mnemonic) {
-      throw new Error("Can't create account without mnemonic");
-    }
-
-    const currentIndex = store.accounts?.length;
-    if (!currentIndex) {
-      throw new Error("Can't get account index");
-    }
-
-    const wallet = Wallet.fromPhrase(store.mnemonic);
-    const newWallet = wallet.deriveChild(currentIndex);
-    const newAccount: Account = {
-      name: `Account ${currentIndex + 1}`,
-      address: newWallet.address,
-    };
-    storage.addUserAccount(newAccount);
-    store.addAccount(newAccount);
-    switchAccount(newAccount);
-  };
 
   const switchAccount = (account: Account) => {
     if (store.currentAccount?.address === account.address) return;
@@ -68,7 +46,7 @@ export const Accounts: Component = () => {
                     <div class="w-2 h-2 bg-green-700 rounded-full" />
                   </Show>
                   <Link
-                    path={`/settings/accounts/${account.address}`}
+                    path={`/settings/accounts/view/${account.address}`}
                     class="w-6 h-6 flex items-center justify-center rounded-full hover:bg-black"
                   >
                     <ThreeDotsIcon />
@@ -79,13 +57,12 @@ export const Accounts: Component = () => {
           )}
         </For>
       </ul>
-      <button
-        type="button"
-        onClick={createAccount}
-        class="absolute w-[90%] py-2 mx-auto bottom-4 left-0 right-0 border-[0.3px] border-zinc-700/80 rounded hover:bg-zinc-700/20"
+      <Link
+        path="/settings/accounts/create"
+        class="absolute w-[90%] py-2 bottom-4 text-center border-[0.3px] border-zinc-700/80 rounded hover:bg-zinc-700/20"
       >
         + Add account
-      </button>
+      </Link>
     </div>
   );
 };
