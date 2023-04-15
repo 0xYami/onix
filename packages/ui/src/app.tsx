@@ -82,7 +82,7 @@ const App: Component = () => {
             <Route path="/settings">
               <Route path="/" component={Settings} />
               <Route path="/accounts" component={Accounts} />
-              <Route path="/accounts/:address" component={Account} />
+              <Route path="/accounts/view/:address" component={Account} />
               <Route path="/change-password" component={ChangePassword} />
               <Route path="/reveal-private-key" element={<Reveal operation="private-key" />} />
               <Route path="/reveal-mnemonic" element={<Reveal operation="mnemonic" />} />

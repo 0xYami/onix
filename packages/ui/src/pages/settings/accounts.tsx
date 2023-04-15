@@ -68,7 +68,7 @@ export const Accounts: Component = () => {
                     <div class="w-2 h-2 bg-green-700 rounded-full" />
                   </Show>
                   <Link
-                    path={`/settings/accounts/${account.address}`}
+                    path={`/settings/accounts/view/${account.address}`}
                     class="w-6 h-6 flex items-center justify-center rounded-full hover:bg-black"
                   >
                     <ThreeDotsIcon />
