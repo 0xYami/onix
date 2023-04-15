@@ -12,6 +12,7 @@ type UserState = {
 type UserActions = {
   initialize: (state: UserState) => void;
   addAccount: (account: Account) => void;
+  removeAccount: (account: Account) => void;
   switchAccount: (account: Account) => void;
   changePassword: (password: string) => void;
   lockWallet: () => void;
@@ -37,6 +38,16 @@ const [store, setStore] = createStore<UserStore>({
   },
   addAccount: (account: Account) => {
     setStore('accounts', (accounts) => [...(accounts ?? []), account]);
+  },
+  removeAccount: (account: Account) => {
+    if (!store.accounts || store.accounts.length === 0) {
+      throw new Error('[store] tried to remove account while no account exists');
+    }
+    const accounts = store.accounts.filter((acc) => acc.address !== account.address);
+    if (accounts.length === 0) {
+      throw new Error('[store] tried to remove the last account');
+    }
+    setStore('accounts', accounts);
   },
   switchAccount: (account: Account) => {
     if (!store.accounts) {

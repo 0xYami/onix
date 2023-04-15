@@ -57,8 +57,9 @@ export const Account: Component = () => {
         </div>
         <ChevronRightIcon />
       </Link>
-      <button
-        type="button"
+      <Link
+        path="/settings/remove"
+        state={{ from: currentAccount?.name }}
         class="flex items-center justify-between mx-3 p-2 rounded hover:bg-zinc-700/30"
       >
         <div class="flex items-center space-x-2">
@@ -66,7 +67,7 @@ export const Account: Component = () => {
           <span>Remove account</span>
         </div>
         <ChevronRightIcon />
-      </button>
+      </Link>
     </div>
   );
 };
