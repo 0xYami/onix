@@ -17,7 +17,7 @@ export const Reveal: Component<RevealProps> = (props) => {
   const location = useLocation<{ from: string }>();
   const [currentStep, setCurrentStep] = createSignal<'authenticate' | 'reveal'>('authenticate');
   return (
-    <div class="flex flex-col w-[360px] h-[540px] p-4 space-y-2 text-white bg-black border-[0.3px] border-zinc-700">
+    <div class="h-full flex flex-col p-4 space-y-2">
       <Link path="/settings" class="flex items-center space-x-1 mb-4">
         <ChevronLeftIcon />
         <span class="text-sm capitalize">
@@ -48,11 +48,11 @@ const RevealPrivateKey: Component<{ mnemonic: string }> = (props) => {
   const wallet = Wallet.fromPhrase(props.mnemonic);
   return (
     <div class="relative h-full space-y-4">
-      <div class="flex items-center justify-between">
+      <div class="flex-between">
         <div class="uppercase">private key</div>
         <Copy value={wallet.privateKey} />
       </div>
-      <div class="flex items-center justify-around p-2 border-[0.3px] border-zinc-700/80 rounded">
+      <div class="flex items-center justify-around p-2 border-thin border-zinc-700/80 rounded">
         <p
           classList={{
             'w-[92%] text-sm select-none break-words line-clamp-3': true,
@@ -72,7 +72,7 @@ const RevealPrivateKey: Component<{ mnemonic: string }> = (props) => {
       </p>
       <Link
         path="/"
-        class="absolute w-full py-2 bottom-0 text-center border-[0.3px] border-zinc-700/80 cursor-pointer hover:bg-zinc-700/20 rounded"
+        class="absolute w-full py-2 bottom-0 text-center border-thin border-zinc-700/80 cursor-pointer hover:bg-zinc-700/20 rounded"
       >
         Close
       </Link>
@@ -84,11 +84,11 @@ const RevealMnemonic: Component<{ mnemonic: string }> = (props) => {
   const [blurredOut, setBlurredOut] = createSignal(true);
   return (
     <div class="relative h-full space-y-4">
-      <div class="flex items-center justify-between">
+      <div class="flex-between">
         <div class="uppercase">Recovery phrase</div>
         <Copy value={props.mnemonic} />
       </div>
-      <div class="flex items-center justify-around p-2 border-[0.3px] border-zinc-700/80 rounded">
+      <div class="flex items-center justify-around p-2 border-thin border-zinc-700/80 rounded">
         <p
           classList={{
             'w-[92%] text-sm select-none break-words line-clamp-3': true,
@@ -108,7 +108,7 @@ const RevealMnemonic: Component<{ mnemonic: string }> = (props) => {
       </p>
       <Link
         path="/"
-        class="absolute w-full py-2 bottom-0 text-center border-[0.3px] border-zinc-700/80 cursor-pointer hover:bg-zinc-700/20 rounded"
+        class="absolute w-full py-2 bottom-0 text-center border-thin border-zinc-700/80 cursor-pointer hover:bg-zinc-700/20 rounded"
       >
         Close
       </Link>

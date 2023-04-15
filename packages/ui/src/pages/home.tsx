@@ -43,21 +43,21 @@ export const Home: Component = () => {
   return (
     <MainLayout>
       <Suspense fallback={<Skeleton />}>
-        <div class="h-52 flex flex-col items-center justify-center">
+        <div class="h-52 flex-center flex-col">
           <img src={assetSymbolToLogoURL['ETH']} alt="eth-logo" class="w-9 h-9 my-2" />
           <div class="text-2xl">{userQuery.data?.etherBalance.token} ETH</div>
           <div>${userQuery.data?.etherBalance.usd}</div>
           <div class="w-full flex items-center justify-around my-4">
             <button
               type="button"
-              class="w-40 h-10 flex items-center justify-center space-x-2 border-[0.3px] border-zinc-700 rounded-sm"
+              class="w-40 h-10 flex-center space-x-2 border-thin border-zinc-700 rounded-sm"
             >
               <ReceiveIcon class="w-3 h-3" />
               <span class="uppercase">receive</span>
             </button>
             <button
               type="button"
-              class="w-40 h-10 flex items-center justify-center space-x-2 border-[0.3px] border-zinc-700 rounded-sm"
+              class="w-40 h-10 flex-center space-x-2 border-thin border-zinc-700 rounded-sm"
             >
               <SendIcon class="w-3 h-3" />
               <span class="uppercase">send</span>
@@ -72,22 +72,20 @@ export const Home: Component = () => {
                 <li>
                   <Link
                     path={`/assets/${asset.address}`}
-                    class="flex items-start justify-between px-1 py-2 rounded-lg hover:bg-zinc-700/20 hover:duration-100"
+                    class="relative flex items-start px-1 py-2 space-x-2 rounded-lg hover:bg-zinc-700/20 hover:duration-100"
                   >
-                    <div class="flex items-center space-x-3">
-                      <img
-                        src={`${assetSymbolToLogoURL[asset.symbol]}`}
-                        alt={`${asset.name} Icon`}
-                        class="w-10 h-10"
-                      />
-                      <div class="flex flex-col">
-                        <span class="font-bold">
-                          {asset.balance.token} {asset.symbol}
-                        </span>
-                        <span class="text-xs text-zinc-400">{asset.name}</span>
+                    <img
+                      src={`${assetSymbolToLogoURL[asset.symbol]}`}
+                      alt={`${asset.name} Icon`}
+                      class="w-10 h-10"
+                    />
+                    <div>
+                      <div class="font-bold">
+                        {asset.balance.token} {asset.symbol}
                       </div>
+                      <div class="text-xs text-zinc-400">{asset.name}</div>
                     </div>
-                    <span>${asset.balance.usd}</span>
+                    <div class="absolute right-0">${asset.balance.usd}</div>
                   </Link>
                 </li>
               )}

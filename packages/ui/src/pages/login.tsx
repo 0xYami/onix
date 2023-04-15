@@ -9,7 +9,7 @@ export const Login: Component = () => {
   const [showPassword, setShowPassword] = createSignal(false);
   const [isWrong, setIsWrong] = createSignal(false);
   return (
-    <div class="h-full flex flex-col items-center justify-center px-4 space-y-10">
+    <div class="h-full flex-center flex-col px-4 space-y-10">
       <div class="flex flex-col items-center w-full">
         <div class="text-7xl font-bold">Onix</div>
         <div class="w-[70%] text-xs uppercase text-right text-zinc-400">where only you own it</div>
@@ -24,7 +24,7 @@ export const Login: Component = () => {
           storage.unlockWallet();
           store.unlockWallet();
         }}
-        class="w-full flex flex-col space-y-3"
+        class="w-full space-y-3"
       >
         <div class="relative flex items-center">
           <input
@@ -36,7 +36,7 @@ export const Login: Component = () => {
             required
             autofocus
             placeholder="Password"
-            class="w-full bg-black border-[0.3px] border-zinc-700 rounded"
+            class="w-full bg-black border-thin border-zinc-700 rounded"
           />
           <button
             type="button"
@@ -51,7 +51,7 @@ export const Login: Component = () => {
         </Show>
         <button
           type="submit"
-          class="w-[100%] py-2 bottom-0 text-center border-[0.3px] border-zinc-700/80 hover:bg-zinc-700/20 rounded"
+          class="w-[100%] py-2 bottom-0 text-center border-thin border-zinc-700/80 hover:bg-zinc-700/20 rounded"
         >
           Unlock
         </button>

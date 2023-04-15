@@ -12,12 +12,12 @@ import { BinIcon } from '~/components/icons/bin';
 export const Account: Component = () => {
   const { currentAccount } = store;
   return (
-    <div class="flex flex-col w-[360px] h-[540px] space-y-2 text-white bg-black border-[0.3px] border-zinc-700">
+    <div class="h-full space-y-2">
       <Link path="/settings/accounts" class="flex items-center px-4 pt-4 space-x-1">
         <ChevronLeftIcon />
         <span class="text-sm">Your Accounts</span>
       </Link>
-      <div class="flex flex-col items-start mx-3 p-2">
+      <div class="mx-3 p-2">
         <div>{currentAccount?.name}</div>
         <span class="text-sm text-neutral-500">
           {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
@@ -25,10 +25,7 @@ export const Account: Component = () => {
         </span>
       </div>
       <div class="h-[1px] bg-neutral-800 mx-5" />
-      <Link
-        path="/settings/accounts"
-        class="flex items-center justify-between mx-3 p-2 rounded hover:bg-zinc-700/30"
-      >
+      <Link path="/settings/accounts" class="flex-between mx-3 p-2 rounded hover:bg-zinc-700/30">
         <div class="flex items-center space-x-2">
           <PenIcon />
           <span>Edit name</span>
@@ -38,7 +35,7 @@ export const Account: Component = () => {
       <Link
         path="/settings/reveal-private-key"
         state={{ from: currentAccount?.name }}
-        class="flex items-center justify-between mx-3 p-2 rounded hover:bg-zinc-700/30"
+        class="flex-between mx-3 p-2 rounded hover:bg-zinc-700/30"
       >
         <div class="flex items-center space-x-2">
           <KeyIcon />
@@ -49,7 +46,7 @@ export const Account: Component = () => {
       <Link
         path="/settings/reveal-mnemonic"
         state={{ from: currentAccount?.name }}
-        class="flex items-center justify-between mx-3 p-2 rounded hover:bg-zinc-700/30"
+        class="flex-between mx-3 p-2 rounded hover:bg-zinc-700/30"
       >
         <div class="flex items-center space-x-2">
           <ShieldIcon />
@@ -60,7 +57,7 @@ export const Account: Component = () => {
       <Link
         path="/settings/remove"
         state={{ from: currentAccount?.name }}
-        class="flex items-center justify-between mx-3 p-2 rounded hover:bg-zinc-700/30"
+        class="flex-between  mx-3 p-2 rounded hover:bg-zinc-700/30"
       >
         <div class="flex items-center space-x-2">
           <BinIcon />

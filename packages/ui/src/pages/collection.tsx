@@ -31,13 +31,8 @@ export const Collection: Component = () => {
   return (
     <MainLayout>
       <Suspense fallback={<Skeleton />}>
-        <div class="flex items-center justify-between p-3">
-          <Link
-            path="/collections"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="flex items-center space-x-1"
-          >
+        <div class="flex-between p-3">
+          <Link path="/collections" class="flex items-center space-x-1">
             <ChevronLeftIcon />
             <span>{collectionQuery.data?.contract.name}</span>
           </Link>
@@ -59,7 +54,7 @@ export const Collection: Component = () => {
               <li>
                 <Link path={`/collections/${collectionQuery.data?.contract.address}/${nft.id}`}>
                   <img src={nft.metadata.image} alt={`Image ${nft.title}`} class="w-36 h-36" />
-                  <span class="text-sm">{nft.title}</span>
+                  <div class="text-sm">{nft.title}</div>
                 </Link>
               </li>
             )}

@@ -109,7 +109,7 @@ const PasswordStep: Component<StepProps> = (props) => {
 
   return (
     <div class="relative h-[520px] p-3">
-      <div class="flex items-center justify-between">
+      <div class="flex-between">
         <button type="button" class="flex items-center py-4 space-x-2" onClick={props.onPrevious}>
           <ChevronLeftIcon />
           <span>back</span>
@@ -121,13 +121,13 @@ const PasswordStep: Component<StepProps> = (props) => {
         You will use this password to unlock your wallet extension.
       </p>
       <form
-        class="mt-3"
         onSubmit={(event) => {
           event.preventDefault();
           props.onNext();
         }}
+        class="mt-3"
       >
-        <div class="flex flex-col mb-4 space-y-2">
+        <div class="mb-4 space-y-2">
           <label for="password" class="uppercase">
             enter password
           </label>
@@ -142,7 +142,7 @@ const PasswordStep: Component<StepProps> = (props) => {
               pattern=".{8,}"
               title="Password must be at least 8 characters long"
               placeholder="Password"
-              class="w-full bg-black border-[0.3px] border-zinc-700 rounded"
+              class="w-full bg-black border-thin border-zinc-700 rounded"
             />
             <button
               type="button"
@@ -153,7 +153,7 @@ const PasswordStep: Component<StepProps> = (props) => {
             </button>
           </div>
         </div>
-        <div class="flex flex-col space-y-2">
+        <div class="space-y-2">
           <label for="confirm-password" class="uppercase text-sm">
             Confirm password
           </label>
@@ -167,7 +167,7 @@ const PasswordStep: Component<StepProps> = (props) => {
               pattern={onboardingStore.password}
               title="Passwords do not match"
               placeholder="Password"
-              class="w-full bg-black border-[0.3px] border-zinc-700 rounded"
+              class="w-full bg-black border-thin border-zinc-700 rounded"
             />
             <button
               type="button"
@@ -181,8 +181,7 @@ const PasswordStep: Component<StepProps> = (props) => {
         <div class="absolute w-[90%] bottom-0 space-y-4">
           <div
             classList={{
-              'flex items-center justify-between p-4 space-x-3 border-[0.3px] rounded hover:bg-zinc-700/20':
-                true,
+              'flex-between p-4 space-x-3 border-thin rounded hover:bg-zinc-700/20': true,
               'border-zinc-700/80': !policyAgreed(),
               'border-teal-800': policyAgreed(),
             }}
@@ -196,11 +195,10 @@ const PasswordStep: Component<StepProps> = (props) => {
               checked={policyAgreed()}
               onChange={() => setPolicyAgreed(!policyAgreed())}
               classList={{
-                'w-6 h-6 cursor-pointer border-[0.3px] border-zinc-700/80 rounded-full bg-black':
+                'w-6 h-6 cursor-pointer border-thin border-zinc-700/80 rounded-full bg-black': true,
+                'checked:border-thin checked:border-teal-500 checked:text-black checked:hover:border-teal-500':
                   true,
-                'checked:border-[0.3px] checked:border-teal-500 checked:text-black checked:hover:border-teal-500':
-                  true,
-                'focus:ring-[0.3px] focus:ring-zinc-700/80 checked:focus:ring-teal-500 focus:ring-offset-0':
+                'focus:ring-thin focus:ring-zinc-700/80 checked:focus:ring-teal-500 focus:ring-offset-0':
                   true,
               }}
             />
@@ -209,7 +207,7 @@ const PasswordStep: Component<StepProps> = (props) => {
             type="submit"
             disabled={!stepIsValid()}
             classList={{
-              'w-[100%] py-2 text-center border-[0.3px] border-zinc-700/80 rounded': true,
+              'w-[100%] py-2 text-center border-thin border-zinc-700/80 rounded': true,
               'cursor-pointer hover:bg-zinc-700/20': stepIsValid(),
               'disabled:text-zinc-700': true,
             }}
@@ -235,7 +233,7 @@ const MnemonicStep: Component<StepProps> = (props) => {
 
   return (
     <div class="relative h-[520px] p-3">
-      <div class="flex items-center justify-between">
+      <div class="flex-between">
         <button type="button" class="flex items-center py-4 space-x-2" onClick={props.onPrevious}>
           <ChevronLeftIcon />
           <span>back</span>
@@ -247,12 +245,12 @@ const MnemonicStep: Component<StepProps> = (props) => {
         You will use this to recover your account in case you lose your device or password.{' '}
         <span class="font-bold">Never share it with anyone!</span>
       </p>
-      <div class="flex items-center justify-between my-4">
+      <div class="flex-between my-4">
         <div class="uppercase">recovery phrase</div>
         {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
         <Copy value={wallet.mnemonic!.phrase} />
       </div>
-      <div class="flex items-center justify-around p-2 border-[0.3px] border-zinc-700/80 rounded">
+      <div class="flex items-center justify-around p-2 border-thin border-zinc-700/80 rounded">
         <p class="w-[92%] text-sm select-none" classList={{ blur: blurredOut() }}>
           {wallet.mnemonic?.phrase}
         </p>
@@ -262,7 +260,7 @@ const MnemonicStep: Component<StepProps> = (props) => {
       </div>
       <button
         type="button"
-        class="absolute w-[90%] py-2 text-center bottom-0 border-[0.3px] border-zinc-700/80 rounded"
+        class="absolute w-[90%] py-2 text-center bottom-0 border-thin border-zinc-700/80 rounded"
         onClick={props.onNext}
       >
         I saved it
@@ -272,24 +270,24 @@ const MnemonicStep: Component<StepProps> = (props) => {
 };
 
 const SuccessStep: Component<Pick<StepProps, 'onNext'>> = (props) => (
-  <div class="relative h-[520px] flex flex-col items-center justify-center p-3">
+  <div class="relative h-[520px] flex-center flex-col p-3">
     <div class="w-[87%] uppercase">all set!</div>
     <div class="text-5xl text-end">Your wallet is ready</div>
-    <div class="mt-24 p-4 flex flex-col space-y-3 bg-gray-800/40 border-[0.3px] border-zinc-700/80 rounded">
+    <div class="mt-24 p-4 space-y-3 bg-gray-800/40 border-thin border-zinc-700/80 rounded">
       <div>Pin the Onix extension for easier access</div>
       <div class="flex items-center space-x-2">
-        <span class="h-[36px] w-[85%] bg-zinc-800 rounded-r-full" />
-        <PuzzlePieceIcon class="w-[36px] h-[36px] p-2 border-[0.3px] border-zinc-700 rounded-full" />
+        <div class="h-9 w-[85%] bg-zinc-800 rounded-r-full" />
+        <PuzzlePieceIcon class="w-9 h-9 p-2 border-thin border-zinc-700 rounded-full" />
       </div>
-      <div class="h-[36px] flex items-center justify-between px-2 space-x-2 bg-zinc-800">
-        <span>Onix</span>
-        <ThumbstackIcon class="w-[30px] h-[30px] p-2 rounded-full" />
+      <div class="h-9 flex-between px-2 space-x-2 bg-zinc-800">
+        <div>Onix</div>
+        <ThumbstackIcon class="w-8 h-8 p-2 rounded-full" />
       </div>
     </div>
     <button
       type="button"
       onClick={props.onNext}
-      class="absolute w-[90%] py-2 text-center bottom-0 border-[0.3px] border-zinc-700/80 rounded"
+      class="absolute w-[90%] py-2 text-center bottom-0 border-thin border-zinc-700/80 rounded"
     >
       Finish
     </button>

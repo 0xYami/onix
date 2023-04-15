@@ -38,7 +38,7 @@ export const Activity: Component = () => {
     <MainLayout>
       <Suspense fallback={<Skeleton />}>
         <div class="p-3 text-xl font-bold">Activity</div>
-        <ul class="max-h-96 p-3 space-y-5 overflow-y-scroll">
+        <ul class="h-96 p-3 space-y-5 overflow-y-scroll">
           <For each={Object.entries(activityQuery.data || [])}>
             {([date, transfer]) => (
               <div class="space-y-3">
@@ -56,7 +56,7 @@ export const Activity: Component = () => {
                         transfer.from.toLowerCase() === currentAccount?.address.toLowerCase();
                       const linkToEtherscan = `https://etherscan.io/tx/${transfer.hash}`;
                       return (
-                        <li class="flex items-center justify-between">
+                        <li class="flex-between">
                           <a
                             href={linkToEtherscan}
                             target="_blank"
@@ -66,21 +66,21 @@ export const Activity: Component = () => {
                             <Switch>
                               <Match when={isSender}>
                                 <SendIcon class="w-10 h-10 p-3 rounded-full bg-zinc-700/60" />
-                                <div class="flex flex-col">
-                                  <span>Sent</span>
-                                  <span class="text-sm text-zinc-400">
+                                <div>
+                                  <div>Sent</div>
+                                  <div class="text-sm text-zinc-400">
                                     To: {transfer.to ? truncateMiddleString(transfer.to, 11) : null}
-                                  </span>
+                                  </div>
                                 </div>
                               </Match>
                               <Match when={!isSender}>
                                 <ReceiveIcon class="w-10 h-10 p-3 rounded-full bg-zinc-700/60" />
-                                <div class="flex flex-col">
-                                  <span>Received</span>
-                                  <span class="text-sm text-zinc-400">
+                                <div>
+                                  <div>Received</div>
+                                  <div class="text-sm text-zinc-400">
                                     From:{' '}
                                     {transfer.from ? truncateMiddleString(transfer.from, 11) : null}
-                                  </span>
+                                  </div>
                                 </div>
                               </Match>
                             </Switch>
