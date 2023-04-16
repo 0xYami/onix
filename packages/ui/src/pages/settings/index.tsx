@@ -87,7 +87,10 @@ export const Settings: Component = () => {
                   >
                     <button
                       type="button"
-                      onClick={() => switchAccount(account)}
+                      onClick={(event) => {
+                        event.preventDefault();
+                        switchAccount(account);
+                      }}
                       class="hidden group-hover:flex group-hover:items-center p-2 space-x-1 rounded text-sm hover:bg-black"
                     >
                       <SyncIcon />
