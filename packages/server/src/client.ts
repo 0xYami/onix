@@ -29,11 +29,11 @@ export class Client {
   async getEtherBalance(address: string): Promise<AddressDetails['etherBalance']> {
     const [etherBalance, etherPrice] = await Promise.all([
       this.etherscan.getEtherBalance(address),
-      this.etherscan.getEtherPrice(),
+      this.etherscan.getEtherPrices(),
     ]);
     return {
       token: toBaseUnit(etherBalance, 18).toFixed(4),
-      usd: toBaseUnit(etherBalance, 18).times(etherPrice).toFixed(2),
+      usd: toBaseUnit(etherBalance, 18).times(etherPrice.ethusd).toFixed(2),
     };
   }
 
@@ -109,7 +109,7 @@ export class Client {
   async getAddressDetails(address: string): Promise<AddressDetails> {
     const [etherBalance, etherPrice] = await Promise.all([
       this.etherscan.getEtherBalance(address),
-      this.etherscan.getEtherPrice(),
+      this.etherscan.getEtherPrices(),
     ]);
 
     // Limit to 3 assets for now due to rate limits
@@ -145,7 +145,7 @@ export class Client {
       address,
       etherBalance: {
         token: toBaseUnit(etherBalance, 18).toFixed(4),
-        usd: toBaseUnit(etherBalance, 18).times(etherPrice).toFixed(2),
+        usd: toBaseUnit(etherBalance, 18).times(etherPrice.ethusd).toFixed(2),
       },
       assets: tokensWithBalances,
     };
