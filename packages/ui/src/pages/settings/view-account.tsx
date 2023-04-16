@@ -26,7 +26,7 @@ export const ViewAccount: Component = () => {
         <div>{account?.name}</div>
         <span class="text-sm text-neutral-500">
           {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
-          {truncateMiddleString(account?.address!, 15)}
+          {truncateMiddleString(account!.address, 15)}
         </span>
       </div>
       <div class="h-[1px] bg-neutral-800 mx-5" />
