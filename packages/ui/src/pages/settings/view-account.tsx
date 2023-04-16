@@ -9,7 +9,7 @@ import { KeyIcon } from '~/components/icons/key';
 import { ShieldIcon } from '~/components/icons/shield';
 import { BinIcon } from '~/components/icons/bin';
 
-export const Account: Component = () => {
+export const ViewAccount: Component = () => {
   const { currentAccount } = store;
   return (
     <div class="h-full space-y-2">

@@ -11,7 +11,7 @@ import { Login } from './pages/login';
 import { NFT } from './pages/nft';
 import { Onboarding } from './pages/onboarding';
 import { Settings } from './pages/settings';
-import { Account } from './pages/settings/account';
+import { ViewAccount } from './pages/settings/view-account';
 import { CreateAccount } from './pages/settings/create-account';
 import { ChangePassword } from './pages/settings/change-password';
 import { Reveal } from './pages/settings/reveal';
@@ -84,7 +84,7 @@ const App: Component = () => {
               <Route path="/change-password" component={ChangePassword} />
               <Route path="/accounts/create" component={CreateAccount} />
               <Route path="/accounts/remove" component={Remove} />
-              <Route path="/accounts/:address" component={Account} />
+              <Route path="/accounts/:address" component={ViewAccount} />
               <Route path="/reveal-private-key" element={<Reveal operation="private-key" />} />
               <Route path="/reveal-mnemonic" element={<Reveal operation="mnemonic" />} />
             </Route>
