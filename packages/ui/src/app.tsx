@@ -11,12 +11,12 @@ import { Login } from './pages/login';
 import { NFT } from './pages/nft';
 import { Onboarding } from './pages/onboarding';
 import { Settings } from './pages/settings';
-import { Account } from './pages/settings/account';
-import { Accounts } from './pages/settings/accounts';
+import { ViewAccount } from './pages/settings/view-account';
 import { CreateAccount } from './pages/settings/create-account';
+import { EditAccount } from './pages/settings/edit-account';
 import { ChangePassword } from './pages/settings/change-password';
+import { RemoveAccount } from './pages/settings/remove-account';
 import { Reveal } from './pages/settings/reveal';
-import { Remove } from './pages/settings/remove';
 import { Welcome } from './pages/welcome';
 
 type ProtectedRouteProps = {
@@ -82,13 +82,13 @@ const App: Component = () => {
             <Route path="/activity" component={Activity} />
             <Route path="/settings">
               <Route path="/" component={Settings} />
-              <Route path="/accounts" component={Accounts} />
-              <Route path="/accounts/create" component={CreateAccount} />
-              <Route path="/accounts/view/:address" component={Account} />
               <Route path="/change-password" component={ChangePassword} />
+              <Route path="/accounts/create" component={CreateAccount} />
+              <Route path="/accounts/edit" component={EditAccount} />
+              <Route path="/accounts/remove" component={RemoveAccount} />
+              <Route path="/accounts/:address" component={ViewAccount} />
               <Route path="/reveal-private-key" element={<Reveal operation="private-key" />} />
               <Route path="/reveal-mnemonic" element={<Reveal operation="mnemonic" />} />
-              <Route path="/remove" component={Remove} />
             </Route>
           </Route>
         </Routes>

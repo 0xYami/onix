@@ -1,54 +1,40 @@
-import { createMemo, createSignal, Show, type Component } from 'solid-js';
-import { useNavigate } from '@solidjs/router';
-import { Wallet } from 'ethers';
+import { createSignal, Show, type Component } from 'solid-js';
+import { useLocation, useNavigate } from '@solidjs/router';
 import { store } from '~/lib/store';
-import { storage, type Account } from '~/lib/storage';
+import { storage } from '~/lib/storage';
 import { Link } from '~/components/link';
 import { ChevronLeftIcon } from '~/components/icons/chevron-left';
 
-export const CreateAccount: Component = () => {
-  const derivedAccount = createMemo<Account>(() => {
-    if (!store.mnemonic) {
-      throw new Error("Can't create account without mnemonic");
-    }
-    const currentIndex = store.accounts?.length;
-    if (!currentIndex) {
-      throw new Error("Can't get account index");
-    }
-    const wallet = Wallet.fromPhrase(store.mnemonic).deriveChild(currentIndex);
-    return {
-      name: `Account ${currentIndex + 1}`,
-      address: wallet.address,
-    };
-  });
-
-  const [name, setName] = createSignal(derivedAccount().name);
+export const EditAccount: Component = () => {
+  const [name, setName] = createSignal('');
   const [hasError, setHasError] = createSignal(false);
   const navigate = useNavigate();
+  const location = useLocation<{ from: string }>();
 
-  const createAccount = () => {
-    const account: Account = {
-      name: name(),
-      address: derivedAccount().address,
-    };
-    storage.addUserAccount(account);
-    store.addAccount(account);
-    // switch account
-    storage.setCurrentAccount(account);
-    store.switchAccount(account);
-    navigate('/index.html/settings');
+  const account = store.accounts?.find(
+    (account) => account.name.toLowerCase() === location.state?.from?.toLowerCase(),
+  );
+
+  const editAccount = () => {
+    if (!account) return;
+    store.editAccount(account.address, { ...account, name: name() });
+    storage.editAccount(account.address, { ...account, name: name() });
+    navigate(`/index.html/settings/accounts/${account.address}`);
   };
 
   return (
     <div class="h-full flex flex-col p-4 space-y-2">
-      <Link path="/settings" class="flex items-center space-x-1 mb-4">
+      <Link
+        path={`/settings/accounts/${account?.address}`}
+        class="flex items-center space-x-1 mb-4"
+      >
         <ChevronLeftIcon />
-        <span class="text-sm">Settings / New account</span>
+        <span class="text-sm">Settings / Edit account</span>
       </Link>
       <form
         onSubmit={(event) => {
           event.preventDefault();
-          createAccount();
+          editAccount();
         }}
         class="relative h-full space-y-4"
       >
@@ -62,6 +48,7 @@ export const CreateAccount: Component = () => {
           onInput={(event) => setName(event.currentTarget.value)}
           required
           autofocus
+          placeholder={location.state?.from}
           onFocus={() => setHasError(false)}
           onBlur={() => {
             if (!/^\s*$/.test(name())) return;

@@ -1,18 +1,26 @@
-import { createMemo, createSignal, Show, type Component } from 'solid-js';
+import { createMemo, createSignal, For, Show, type Component } from 'solid-js';
+import { useNavigate } from '@solidjs/router';
 import { store } from '~/lib/store';
-import { storage } from '~/lib/storage';
+import { storage, type Account } from '~/lib/storage';
 import { truncateMiddleString } from '~/lib/utils';
+import { Link } from '~/components/link';
 import { CrossIcon } from '~/components/icons/cross';
 import { ChevronRightIcon } from '~/components/icons/chevron-right';
 import { LockIcon } from '~/components/icons/lock';
-import { KeyIcon } from '~/components/icons/key';
 import { ShieldIcon } from '~/components/icons/shield';
-import { Link } from '~/components/link';
 import { EyeSlashIcon } from '~/components/icons/eye-slash';
 import { EyeIcon } from '~/components/icons/eye';
+import { SyncIcon } from '~/components/icons/sync';
 
 export const Settings: Component = () => {
-  const { currentAccount } = store;
+  const navigate = useNavigate();
+
+  const switchAccount = (account: Account) => {
+    if (store.currentAccount?.address === account.address) return;
+    storage.setCurrentAccount(account);
+    store.switchAccount(account);
+    navigate('/index.html');
+  };
 
   const lockWallet = () => {
     storage.lockWallet();
@@ -20,63 +28,82 @@ export const Settings: Component = () => {
   };
 
   return (
-    <div class="relative h-full space-y-2">
-      <div class="flex-between px-5 pt-5">
+    <div class="h-full p-4 space-y-2">
+      <div class="flex-between">
         <span class="text-xl">Settings</span>
-        <Link path="/" class="p-3 border-thin border-zinc-700 rounded hover:bg-zinc-700/40">
+        <Link path="/" class="p-3 border-thin border-zinc-700 rounded hover:bg-zinc-700/30">
           <CrossIcon />
         </Link>
       </div>
-      <Link path="/settings/accounts" class="flex-between mx-3 p-2 rounded hover:bg-zinc-700/30">
-        <div>
-          <div>{currentAccount?.name}</div>
-          <span class="text-sm text-neutral-500">
-            {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
-            {truncateMiddleString(currentAccount!.address, 15)}
-          </span>
-        </div>
-        <ChevronRightIcon />
-      </Link>
-      <div class="h-[1px] bg-neutral-800 mx-5" />
       <Link
         path="/settings/change-password"
-        class="flex-between mx-3 p-2 rounded hover:bg-zinc-700/30"
-      >
-        <div class="flex items-center space-x-2">
-          <LockIcon />
-          <span>Change password</span>
-        </div>
-        <ChevronRightIcon />
-      </Link>
-      <Link
-        path="/settings/reveal-private-key"
-        state={{ from: 'settings' }}
-        class="flex-between mx-3 p-2 rounded hover:bg-zinc-700/30"
-      >
-        <div class="flex items-center space-x-2">
-          <KeyIcon />
-          <span>Export private key</span>
-        </div>
-        <ChevronRightIcon />
-      </Link>
-      <Link
-        path="/settings/reveal-mnemonic"
-        state={{ from: 'settings' }}
-        class="flex-between mx-3 p-2 rounded hover:bg-zinc-700/30"
+        class="flex-between -mx-2 p-2 rounded hover:bg-zinc-700/30"
       >
         <div class="flex items-center space-x-2">
           <ShieldIcon />
-          <span>Reveal recovery phrase</span>
+          <div>Change password</div>
         </div>
         <ChevronRightIcon />
       </Link>
       <button
         type="button"
         onClick={lockWallet}
-        class="absolute w-[90%] py-2 mx-auto bottom-4 left-0 right-0 border-thin border-zinc-700/80 rounded hover:bg-zinc-700/20"
+        class="flex items-center justify-start w-full p-2 -ml-2 space-x-2 rounded hover:bg-zinc-700/30"
       >
-        Lock wallet
+        <LockIcon />
+        <div>Lock wallet</div>
       </button>
+      <div class="h-[1px] bg-neutral-800" />
+      <div class="flex-between py-2">
+        <div class="uppercase">your accounts</div>
+        <Link
+          path="/settings/accounts/create"
+          class="uppercase p-1.5 rounded text-sm text-zinc-500 hover:text-white hover:bg-zinc-700/30"
+        >
+          + Add
+        </Link>
+      </div>
+      <ul class="space-y-4">
+        <For each={store.accounts}>
+          {(account) => (
+            <li class="group -mx-2 hover:bg-zinc-700/30 rounded-lg p-1">
+              <Link
+                path={`/settings/accounts/${account.address}`}
+                class="relative w-full py-1 text-left"
+              >
+                <div class="flex items-center space-x-2">
+                  <div class="w-10 h-10 rounded-full bg-zinc-700" />
+                  <div>
+                    <div>{account.name}</div>
+                    <div class="text-sm text-zinc-400">
+                      {truncateMiddleString(account.address, 13)}
+                    </div>
+                  </div>
+                </div>
+                <div class="absolute top-0 bottom-0 right-0 flex items-center space-x-4 z-10">
+                  <Show
+                    when={store.currentAccount?.address !== account.address}
+                    fallback={<div class="w-2 h-2 bg-green-700 rounded-full" />}
+                  >
+                    <button
+                      type="button"
+                      onClick={(event) => {
+                        event.preventDefault();
+                        switchAccount(account);
+                      }}
+                      class="hidden group-hover:flex group-hover:items-center p-2 space-x-1 rounded text-sm hover:bg-black"
+                    >
+                      <SyncIcon />
+                      <div>Switch</div>
+                    </button>
+                  </Show>
+                  <ChevronRightIcon />
+                </div>
+              </Link>
+            </li>
+          )}
+        </For>
+      </ul>
     </div>
   );
 };

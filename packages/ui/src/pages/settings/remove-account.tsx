@@ -7,7 +7,7 @@ import { Link } from '~/components/link';
 import { ChevronLeftIcon } from '~/components/icons/chevron-left';
 import { AuthStep } from './index';
 
-export const Remove: Component = () => {
+export const RemoveAccount: Component = () => {
   const [currentStep, setCurrentStep] = createSignal<'authenticate' | 'confirm'>('authenticate');
   const location = useLocation<{ from: string }>();
   const account = store.accounts?.find((account) => account.name === location.state?.from);
