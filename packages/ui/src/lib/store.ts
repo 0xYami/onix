@@ -12,6 +12,7 @@ type UserState = {
 type UserActions = {
   initialize: (state: UserState) => void;
   addAccount: (account: Account) => void;
+  editAccount: (address: string, newAccount: Account) => void;
   removeAccount: (account: Account) => void;
   switchAccount: (account: Account) => void;
   changePassword: (password: string) => void;
@@ -38,6 +39,18 @@ const [store, setStore] = createStore<UserStore>({
   },
   addAccount: (account: Account) => {
     setStore('accounts', (accounts) => [...(accounts ?? []), account]);
+  },
+  editAccount: (address: string, account: Account) => {
+    if (store.currentAccount?.address.toLowerCase() === address.toLowerCase()) {
+      setStore('currentAccount', account);
+    }
+    setStore('accounts', (accounts) => {
+      if (!accounts) return [];
+      return accounts.map((acc) => {
+        if (acc.address.toLowerCase() !== address.toLowerCase()) return acc;
+        return account;
+      });
+    });
   },
   removeAccount: (account: Account) => {
     if (!store.accounts || store.accounts.length === 0) {

@@ -46,6 +46,19 @@ function createStorage(config: { storageKey: string }) {
     setUserState(state);
   };
 
+  const editAccount = (address: string, account: Account) => {
+    const state = getUserState();
+    if (!state) throw new Error('[storage] user state not initialized');
+    if (state.currentAccount.address.toLowerCase() === address.toLowerCase()) {
+      state.currentAccount = account;
+    }
+    state.accounts.forEach((acc) => {
+      if (acc.address.toLowerCase() !== account.address.toLowerCase()) return;
+      acc.name = account.name;
+    });
+    setUserState(state);
+  };
+
   const removeUserAccount = (account: Account) => {
     const state = getUserState();
     if (!state) throw new Error('[storage] user state not initialized');
@@ -87,6 +100,7 @@ function createStorage(config: { storageKey: string }) {
     setUserState,
     setCurrentAccount,
     addUserAccount,
+    editAccount,
     removeUserAccount,
     changePassword,
     lockWallet,

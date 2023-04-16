@@ -30,7 +30,11 @@ export const ViewAccount: Component = () => {
         </span>
       </div>
       <div class="h-[1px] bg-neutral-800 mx-5" />
-      <Link path="/settings" class="flex-between mx-3 p-2 rounded hover:bg-zinc-700/30">
+      <Link
+        path="/settings/accounts/edit"
+        state={{ from: account?.name }}
+        class="flex-between mx-3 p-2 rounded hover:bg-zinc-700/30"
+      >
         <div class="flex items-center space-x-2">
           <PenIcon />
           <span>Edit name</span>

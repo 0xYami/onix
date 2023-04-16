@@ -13,6 +13,7 @@ import { Onboarding } from './pages/onboarding';
 import { Settings } from './pages/settings';
 import { ViewAccount } from './pages/settings/view-account';
 import { CreateAccount } from './pages/settings/create-account';
+import { EditAccount } from './pages/settings/edit-account';
 import { ChangePassword } from './pages/settings/change-password';
 import { RemoveAccount } from './pages/settings/remove-account';
 import { Reveal } from './pages/settings/reveal';
@@ -83,6 +84,7 @@ const App: Component = () => {
               <Route path="/" component={Settings} />
               <Route path="/change-password" component={ChangePassword} />
               <Route path="/accounts/create" component={CreateAccount} />
+              <Route path="/accounts/edit" component={EditAccount} />
               <Route path="/accounts/remove" component={RemoveAccount} />
               <Route path="/accounts/:address" component={ViewAccount} />
               <Route path="/reveal-private-key" element={<Reveal operation="private-key" />} />
