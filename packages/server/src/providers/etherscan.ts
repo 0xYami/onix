@@ -1,6 +1,8 @@
 import axios, { type Axios } from 'axios';
 import type {
   EtherscanNormalTransaction,
+  EtherscanEtherPrices,
+  EtherscanGasPrices,
   GetEtherscanNormalTransactions,
   Transfers,
 } from '@onix/schemas';
@@ -14,14 +16,11 @@ type BaseResponse<TResult> = {
 
 type GetBalanceResponse = BaseResponse<string>;
 
-type GetEtherPriceResponse = BaseResponse<{
-  ethbtc: string;
-  ethbtc_timestamp: string;
-  ethusd: string;
-  ethusd_timestamp: string;
-}>;
+type GetEtherPriceResponse = BaseResponse<EtherscanEtherPrices>;
 
 type GetERC20TransfersResponse = BaseResponse<Transfers>;
+
+type GetGasPricesResponse = BaseResponse<EtherscanGasPrices>;
 
 type EtherscanConfig = {
   apiKey: string;
@@ -41,6 +40,25 @@ export class Etherscan {
     });
   }
 
+  async getGasPrices(): Promise<GetGasPricesResponse['result']> {
+    // Etherscan returns the gas prices in Gwei
+    const response = await asyncFaillable<{ data: GetGasPricesResponse }>(
+      this.#httpClient.get('/', {
+        params: {
+          module: 'gastracker',
+          action: 'gasoracle',
+          apiKey: this.#apiKey,
+        },
+      }),
+    );
+
+    if (response.failed) {
+      throw new Error('Failed to get gas prices');
+    }
+
+    return response.result.data.result;
+  }
+
   async getEtherBalance(address: string): Promise<GetBalanceResponse['result']> {
     // Etherscan returns the balance in wei
     const response = await asyncFaillable<{ data: GetBalanceResponse }>(
@@ -56,13 +74,13 @@ export class Etherscan {
     );
 
     if (response.failed) {
-      throw new Error('Failed to   get et her balance');
+      throw new Error('Failed to get ether balance');
     }
 
     return response.result.data.result;
   }
 
-  async getEtherPrice(): Promise<GetEtherPriceResponse['result']['ethusd']> {
+  async getEtherPrices(): Promise<GetEtherPriceResponse['result']> {
     const response = await asyncFaillable<{ data: GetEtherPriceResponse }>(
       this.#httpClient.get('/', {
         params: {
@@ -77,7 +95,7 @@ export class Etherscan {
       throw new Error('Failed to get ether balance');
     }
 
-    return response.result.data.result.ethusd;
+    return response.result.data.result;
   }
 
   async getNormalTransactions(address: string): Promise<EtherscanNormalTransaction[]> {

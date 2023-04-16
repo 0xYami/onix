@@ -36,6 +36,9 @@ router
   .get('/_health', () => {
     return 'healthy';
   })
+  .get('/gas-prices', async () => {
+    return client.etherscan.getGasPrices();
+  })
   .get('/users/:address', async (req) => {
     const { address } = addressParamsSchema.parse(req.params);
     return client.getAddressDetails(address);

@@ -230,6 +230,26 @@ export const alchemyAssetTransfersSchema = z.object({
   }),
 });
 
+export const etherscanEtherPricesSchema = z.object({
+  ethbtc: z.string(),
+  ethbtc_timestamp: z.string(),
+  ethusd: z.string(),
+  ethusd_timestamp: z.string(),
+});
+
+export type EtherscanEtherPrices = z.infer<typeof etherscanEtherPricesSchema>;
+
+export const etherscanGasPricesSchema = z.object({
+  LastBlock: z.string(),
+  SafeGasPrice: z.string(),
+  ProposeGasPrice: z.string(),
+  FastGasPrice: z.string(),
+  suggestBaseFee: z.string(),
+  gasUsedRatio: z.string(),
+});
+
+export type EtherscanGasPrices = z.infer<typeof etherscanGasPricesSchema>;
+
 export const normalTransactionSchema = z.object({
   blockNumber: z.string(),
   timeStamp: z.string(),
