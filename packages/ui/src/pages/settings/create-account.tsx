@@ -36,24 +36,24 @@ export const CreateAccount: Component = () => {
     // switch account
     storage.setCurrentAccount(account);
     store.switchAccount(account);
-    navigate('/index.html');
+    navigate('/index.html/settings');
   };
 
   return (
     <div class="h-full flex flex-col p-4 space-y-2">
-      <Link path="/settings/accounts" class="flex items-center space-x-1 mb-4">
+      <Link path="/settings" class="flex items-center space-x-1 mb-4">
         <ChevronLeftIcon />
-        <span class="text-sm">Settings / Create account</span>
+        <span class="text-sm">Settings / New account</span>
       </Link>
       <form
         onSubmit={(event) => {
           event.preventDefault();
           createAccount();
         }}
-        class="relative h-full mb-4"
+        class="relative h-full space-y-4"
       >
-        <label for="name" class="mb-3">
-          Account name
+        <label for="name" class="uppercase">
+          name
         </label>
         <input
           id="name"
@@ -83,7 +83,7 @@ export const CreateAccount: Component = () => {
             'hover:bg-zinc-700/20 ': !!name(),
           }}
         >
-          + Add account
+          Save
         </button>
       </form>
     </div>
