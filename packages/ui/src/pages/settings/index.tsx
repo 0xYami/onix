@@ -68,7 +68,7 @@ export const Settings: Component = () => {
           {(account) => (
             <li class="group -mx-2 hover:bg-zinc-700/30 rounded-lg p-1">
               <Link
-                path={`/settings/accounts/view/${account.address}`}
+                path={`/settings/accounts/${account.address}`}
                 class="relative w-full py-1 text-left"
               >
                 <div class="flex items-center space-x-2">
