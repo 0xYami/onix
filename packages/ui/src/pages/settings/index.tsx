@@ -1,7 +1,6 @@
 import { createMemo, createSignal, For, Show, type Component } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
-import { store } from '~/lib/store';
-import { storage, type Account } from '~/lib/storage';
+import { store, storeActions, type Account } from '~/store';
 import { truncateMiddleString } from '~/lib/utils';
 import { Link } from '~/components/link';
 import { CrossIcon } from '~/components/icons/cross';
@@ -17,14 +16,12 @@ export const Settings: Component = () => {
 
   const switchAccount = (account: Account) => {
     if (store.currentAccount?.address === account.address) return;
-    storage.setCurrentAccount(account);
-    store.switchAccount(account);
+    storeActions.switchAccount(account);
     navigate('/index.html');
   };
 
   const lockWallet = () => {
-    storage.lockWallet();
-    store.lockWallet();
+    storeActions.lockWallet();
   };
 
   return (

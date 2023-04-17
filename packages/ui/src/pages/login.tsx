@@ -1,6 +1,5 @@
 import { createSignal, Show, type Component } from 'solid-js';
-import { store } from '~/lib/store';
-import { storage } from '~/lib/storage';
+import { store, storeActions } from '~/store';
 import { EyeIcon } from '~/components/icons/eye';
 import { EyeSlashIcon } from '~/components/icons/eye-slash';
 
@@ -21,8 +20,7 @@ export const Login: Component = () => {
             setIsWrong(true);
             return;
           }
-          storage.unlockWallet();
-          store.unlockWallet();
+          storeActions.unlockWallet();
         }}
         class="w-full space-y-3"
       >

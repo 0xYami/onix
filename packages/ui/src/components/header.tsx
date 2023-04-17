@@ -1,7 +1,7 @@
 import { Suspense, type Component } from 'solid-js';
 import { createQuery } from '@tanstack/solid-query';
 import { etherscanGasPricesSchema } from '@onix/schemas';
-import { store } from '~/lib/store';
+import { store } from '~/store';
 import { httpClient } from '~/lib/http';
 import { truncateMiddleString } from '~/lib/utils';
 import { Link } from './link';

@@ -3,8 +3,7 @@ import type { Component } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import { useNavigate } from '@solidjs/router';
 import { type Mnemonic, Wallet } from 'ethers';
-import { store } from '~/lib/store';
-import { storage, type Account } from '~/lib/storage';
+import { storeActions, type Account } from '~/store';
 import { Copy } from '~/components/copy';
 import { ChevronLeftIcon } from '~/components/icons/chevron-left';
 import { PuzzlePieceIcon } from '~/components/icons/puzzle-piece';
@@ -46,7 +45,7 @@ export const Onboarding: Component = () => {
       name: 'Account 1',
       address: onboardingStore.address,
     };
-    storage.setUserState({
+    storeActions.initialize({
       password: onboardingStore.password,
       mnemonic: onboardingStore.mnemonic.phrase,
       currentAccount: account,
@@ -78,9 +77,7 @@ export const Onboarding: Component = () => {
       <Match when={currentStep() === 'success'}>
         <SuccessStep
           onNext={() => {
-            const state = storage.getUserState();
-            if (!state) return;
-            store.initialize(state);
+            // storeActions.initialize(state);
           }}
         />
       </Match>

@@ -1,6 +1,6 @@
 import { type Component } from 'solid-js';
 import { useLocation } from '@solidjs/router';
-import { store } from '~/lib/store';
+import { store } from '~/store';
 import { truncateMiddleString } from '~/lib/utils';
 import { Link } from '~/components/link';
 import { ChevronLeftIcon } from '~/components/icons/chevron-left';

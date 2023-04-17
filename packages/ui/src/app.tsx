@@ -1,7 +1,6 @@
 import { ErrorBoundary, Show, type Component, type JSX } from 'solid-js';
 import { Routes, Route, Navigate, Outlet } from '@solidjs/router';
-import { store } from './lib/store';
-import { storage } from './lib/storage';
+import { store } from '~/store';
 import { Activity } from './pages/activity';
 import { Asset } from './pages/asset';
 import { Collection } from './pages/collection';
@@ -31,10 +30,6 @@ const ProtectedRoute: Component<ProtectedRouteProps> = (props) => (
 );
 
 const App: Component = () => {
-  const userState = storage.getUserState();
-  if (userState) {
-    store.initialize(userState);
-  }
   return (
     <ErrorBoundary fallback={<div>Something went wrong :(</div>}>
       <div class="w-[360px] h-[540px] max-h-[540px] relative text-white bg-black border-thin border-zinc-700">

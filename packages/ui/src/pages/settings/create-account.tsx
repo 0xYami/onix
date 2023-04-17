@@ -1,8 +1,7 @@
 import { createMemo, createSignal, Show, type Component } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
 import { Wallet } from 'ethers';
-import { store } from '~/lib/store';
-import { storage, type Account } from '~/lib/storage';
+import { store, storeActions, type Account } from '~/store';
 import { Link } from '~/components/link';
 import { ChevronLeftIcon } from '~/components/icons/chevron-left';
 
@@ -31,11 +30,8 @@ export const CreateAccount: Component = () => {
       name: name(),
       address: derivedAccount().address,
     };
-    storage.addUserAccount(account);
-    store.addAccount(account);
-    // switch account
-    storage.setCurrentAccount(account);
-    store.switchAccount(account);
+    storeActions.addAccount(account);
+    storeActions.switchAccount(account);
     navigate('/index.html/settings');
   };
 

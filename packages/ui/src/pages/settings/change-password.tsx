@@ -1,7 +1,6 @@
 import { createSignal, Match, Switch, type Component } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
-import { store } from '~/lib/store';
-import { storage } from '~/lib/storage';
+import { storeActions } from '~/store';
 import { ChevronLeftIcon } from '~/components/icons/chevron-left';
 import { EyeIcon } from '~/components/icons/eye';
 import { EyeSlashIcon } from '~/components/icons/eye-slash';
@@ -13,8 +12,7 @@ export const ChangePassword: Component = () => {
   const [currentStep, setCurrentStep] = createSignal<'authenticate' | 'change'>('authenticate');
 
   const changePassword = (password: string) => {
-    storage.changePassword(password);
-    store.changePassword(password);
+    storeActions.changePassword(password);
     navigate('/index.html');
   };
 
