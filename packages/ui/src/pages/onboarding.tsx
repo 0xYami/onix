@@ -1,4 +1,4 @@
-import { createEffect, createMemo, createSignal, Match, Switch } from 'solid-js';
+import { createEffect, createMemo, createSignal, Match, Show, Switch } from 'solid-js';
 import type { Component } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import { useNavigate } from '@solidjs/router';
@@ -98,6 +98,10 @@ const PasswordStep: Component<StepProps> = (props) => {
   const [showPassword, setShowPassword] = createSignal(false);
   const [showConfirmedPassword, setShowConfirmedPassword] = createSignal(false);
   const [policyAgreed, setPolicyAgreed] = createSignal(false);
+  const [errors, setErrors] = createStore<{ password: boolean; confirm: boolean }>({
+    password: false,
+    confirm: false,
+  });
 
   const stepIsValid = createMemo(() => {
     return (
@@ -127,7 +131,7 @@ const PasswordStep: Component<StepProps> = (props) => {
         }}
         class="mt-3"
       >
-        <div class="mb-4 space-y-2">
+        <div class="relative mb-8 space-y-2">
           <label for="password" class="uppercase">
             enter password
           </label>
@@ -142,7 +146,25 @@ const PasswordStep: Component<StepProps> = (props) => {
               pattern=".{8,}"
               title="Password must be at least 8 characters long"
               placeholder="Password"
-              class="w-full bg-black border-thin border-zinc-700 rounded"
+              onFocus={() => setErrors('password', false)}
+              onBlur={() => {
+                const isValid = onboardingStore.password.length >= 8;
+                setErrors('password', !isValid);
+                // edge case when confirmed password previously matched password while not actually being valid
+                // so we need to trigger the confirmed password error
+                if (
+                  isValid &&
+                  confirmedPassword().length &&
+                  onboardingStore.password !== confirmedPassword()
+                ) {
+                  setErrors('confirm', true);
+                }
+              }}
+              classList={{
+                'w-full bg-black border-thin rounded': true,
+                'border-zinc-700': !errors.password,
+                'border-red-500': errors.password,
+              }}
             />
             <button
               type="button"
@@ -152,9 +174,12 @@ const PasswordStep: Component<StepProps> = (props) => {
               {showPassword() ? <EyeSlashIcon /> : <EyeIcon />}
             </button>
           </div>
+          <Show when={errors.password}>
+            <span class="absolute mt-2 text-xs text-red-500">Should be at least 8 characters</span>
+          </Show>
         </div>
         <div class="space-y-2">
-          <label for="confirm-password" class="uppercase text-sm">
+          <label for="confirm-password" class="uppercase">
             Confirm password
           </label>
           <div class="relative flex items-center">
@@ -167,7 +192,13 @@ const PasswordStep: Component<StepProps> = (props) => {
               pattern={onboardingStore.password}
               title="Passwords do not match"
               placeholder="Password"
-              class="w-full bg-black border-thin border-zinc-700 rounded"
+              onFocus={() => setErrors('confirm', false)}
+              onBlur={() => setErrors('confirm', confirmedPassword() !== onboardingStore.password)}
+              classList={{
+                'w-full bg-black border-thin rounded': true,
+                'border-zinc-700': !errors.confirm,
+                'border-red-500': errors.confirm,
+              }}
             />
             <button
               type="button"
@@ -177,6 +208,9 @@ const PasswordStep: Component<StepProps> = (props) => {
               {showConfirmedPassword() ? <EyeSlashIcon /> : <EyeIcon />}
             </button>
           </div>
+          <Show when={errors.confirm}>
+            <span class="mt-2 text-xs text-red-500">Doesn't match password</span>
+          </Show>
         </div>
         <div class="absolute w-[90%] bottom-0 space-y-4">
           <div
