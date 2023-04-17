@@ -1,9 +1,10 @@
-import { createEffect, createMemo, createSignal, Match, Show, Switch } from 'solid-js';
+import { createMemo, createSignal, Match, Show, Switch } from 'solid-js';
 import type { Component } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import { useNavigate } from '@solidjs/router';
 import { type Mnemonic, Wallet } from 'ethers';
 import { storeActions, type Account } from '~/store';
+import { config } from '~/lib/config';
 import { Copy } from '~/components/copy';
 import { ChevronLeftIcon } from '~/components/icons/chevron-left';
 import { PuzzlePieceIcon } from '~/components/icons/puzzle-piece';
@@ -37,23 +38,6 @@ type StepName = 'password' | 'mnemonic' | 'success';
 export const Onboarding: Component = () => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = createSignal<StepName>('password');
-
-  createEffect(async () => {
-    if (currentStep() !== 'success') return;
-    if (!onboardingStore.mnemonic || !onboardingStore.address) return;
-    const account: Account = {
-      name: 'Account 1',
-      address: onboardingStore.address,
-    };
-    storeActions.initialize({
-      password: onboardingStore.password,
-      mnemonic: onboardingStore.mnemonic.phrase,
-      currentAccount: account,
-      accounts: [account],
-      status: 'logged-in',
-    });
-  });
-
   return (
     <Switch>
       <Match when={currentStep() === 'password'}>
@@ -67,7 +51,25 @@ export const Onboarding: Component = () => {
       </Match>
       <Match when={currentStep() === 'mnemonic'}>
         <MnemonicStep
-          onNext={() => setCurrentStep(() => 'success')}
+          onNext={() => {
+            if (!onboardingStore.mnemonic || !onboardingStore.address) return;
+            const account: Account = {
+              name: 'Account 1',
+              address: onboardingStore.address,
+            };
+            // save in localStorage, otherwise closing while at the success step will reset the onboarding
+            localStorage.setItem(
+              config.storageKey,
+              JSON.stringify({
+                password: onboardingStore.password,
+                mnemonic: onboardingStore.mnemonic.phrase,
+                currentAccount: account,
+                accounts: [account],
+                status: 'logged-in',
+              }),
+            );
+            setCurrentStep(() => 'success');
+          }}
           onPrevious={() => {
             onboardingStore.reset();
             setCurrentStep(() => 'password');
@@ -77,7 +79,18 @@ export const Onboarding: Component = () => {
       <Match when={currentStep() === 'success'}>
         <SuccessStep
           onNext={() => {
-            // storeActions.initialize(state);
+            if (!onboardingStore.mnemonic || !onboardingStore.address) return;
+            const account: Account = {
+              name: 'Account 1',
+              address: onboardingStore.address,
+            };
+            storeActions.initialize({
+              password: onboardingStore.password,
+              mnemonic: onboardingStore.mnemonic.phrase,
+              currentAccount: account,
+              accounts: [account],
+              status: 'logged-in',
+            });
           }}
         />
       </Match>
