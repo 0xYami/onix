@@ -1,7 +1,7 @@
 import { createSignal, Match, Switch, type Component } from 'solid-js';
 import { useLocation } from '@solidjs/router';
 import { Wallet } from 'ethers';
-import { store } from '~/lib/store';
+import { store } from '~/store';
 import { Link } from '~/components/link';
 import { Copy } from '~/components/copy';
 import { ChevronLeftIcon } from '~/components/icons/chevron-left';

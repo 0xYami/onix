@@ -1,7 +1,6 @@
 import { createSignal, Match, Switch, type Component } from 'solid-js';
 import { useLocation, useNavigate } from '@solidjs/router';
-import { store } from '~/lib/store';
-import { storage, type Account } from '~/lib/storage';
+import { store, storeActions, type Account } from '~/store';
 import { truncateMiddleString } from '~/lib/utils';
 import { Link } from '~/components/link';
 import { ChevronLeftIcon } from '~/components/icons/chevron-left';
@@ -35,14 +34,12 @@ const ConfirmStep: Component<{ account: Account }> = (props) => {
   const [confirmed, setConfirmed] = createSignal(false);
 
   const removeAccount = () => {
-    store.removeAccount(props.account);
-    storage.removeUserAccount(props.account);
+    storeActions.removeAccount(props.account);
 
     // FIX: switch to very first account, this assumes it gets never removed
     if (!store.accounts) return;
     const account = store.accounts[0];
-    storage.setCurrentAccount(account);
-    store.switchAccount(account);
+    storeActions.switchAccount(account);
 
     navigate('/index.html');
   };

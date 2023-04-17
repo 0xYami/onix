@@ -2,7 +2,7 @@ import { type Component, Suspense, For } from 'solid-js';
 import { useParams } from '@solidjs/router';
 import { createQuery } from '@tanstack/solid-query';
 import { nftCollectionSchema } from '@onix/schemas';
-import { store } from '~/lib/store';
+import { store } from '~/store';
 import { httpClient } from '~/lib/http';
 import { MainLayout } from '~/layouts/main';
 import { Link } from '~/components/link';

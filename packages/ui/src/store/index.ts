@@ -1,16 +1,43 @@
-import { createStore } from 'solid-js/store';
-import type { Account } from './storage';
+import { z } from '@onix/schemas';
+import { config } from '~/lib/config';
+import { createLocalStorage } from './createLocalStorage';
 
-type UserState = {
-  password: string | null;
-  mnemonic: string | null;
-  accounts: Account[] | null;
-  currentAccount: Account | null;
-  status: 'logged-in' | 'logged-out' | 'uninitialized';
+const account = z.object({
+  name: z.string(),
+  address: z.string(),
+});
+
+export type Account = z.infer<typeof account>;
+
+const storeState = z.object({
+  password: z.string().min(8),
+  mnemonic: z.string(),
+  currentAccount: account,
+  accounts: z.array(account),
+  status: z.union([z.literal('logged-in'), z.literal('logged-out'), z.literal('uninitialized')]),
+});
+
+type StoreState = z.infer<typeof storeState>;
+
+const initialState: StoreState = {
+  password: '',
+  mnemonic: '',
+  currentAccount: {
+    name: '',
+    address: '',
+  },
+  accounts: [],
+  status: 'uninitialized',
 };
 
-type UserActions = {
-  initialize: (state: UserState) => void;
+const [store, setStore] = createLocalStorage({
+  storageKey: config.storageKey,
+  schema: storeState,
+  initialState,
+});
+
+type StoreActions = {
+  initialize: (state: StoreState) => void;
   addAccount: (account: Account) => void;
   editAccount: (address: string, newAccount: Account) => void;
   removeAccount: (account: Account) => void;
@@ -20,23 +47,8 @@ type UserActions = {
   unlockWallet: () => void;
 };
 
-type UserStore = UserState & UserActions;
-
-const [store, setStore] = createStore<UserStore>({
-  password: null,
-  mnemonic: null,
-  accounts: null,
-  currentAccount: null,
-  status: 'uninitialized',
-  initialize: (state: UserState) => {
-    setStore({
-      password: state.password,
-      mnemonic: state.mnemonic,
-      accounts: state.accounts,
-      currentAccount: state.currentAccount,
-      status: state.status,
-    });
-  },
+const storeActions: StoreActions = {
+  initialize: (state) => setStore(state),
   addAccount: (account: Account) => {
     setStore('accounts', (accounts) => [...(accounts ?? []), account]);
   },
@@ -79,6 +91,6 @@ const [store, setStore] = createStore<UserStore>({
   },
   lockWallet: () => setStore('status', 'logged-out'),
   unlockWallet: () => setStore('status', 'logged-in'),
-});
+};
 
-export { store };
+export { store, storeActions };

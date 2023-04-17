@@ -1,7 +1,6 @@
 import { createSignal, Show, type Component } from 'solid-js';
 import { useLocation, useNavigate } from '@solidjs/router';
-import { store } from '~/lib/store';
-import { storage } from '~/lib/storage';
+import { store, storeActions } from '~/store';
 import { Link } from '~/components/link';
 import { ChevronLeftIcon } from '~/components/icons/chevron-left';
 
@@ -17,8 +16,7 @@ export const EditAccount: Component = () => {
 
   const editAccount = () => {
     if (!account) return;
-    store.editAccount(account.address, { ...account, name: name() });
-    storage.editAccount(account.address, { ...account, name: name() });
+    storeActions.editAccount(account.address, { ...account, name: name() });
     navigate(`/index.html/settings/accounts/${account.address}`);
   };
 

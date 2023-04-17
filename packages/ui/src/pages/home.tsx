@@ -1,7 +1,7 @@
 import { createMemo, For, Suspense, type Component } from 'solid-js';
 import { createQuery } from '@tanstack/solid-query';
 import { addressDetailsSchema, type AddressDetails } from '@onix/schemas';
-import { store } from '~/lib/store';
+import { store } from '~/store';
 import { assetSymbolToLogoURL } from '~/lib/utils';
 import { MainLayout } from '~/layouts/main';
 import { SendIcon } from '~/components/icons/send';

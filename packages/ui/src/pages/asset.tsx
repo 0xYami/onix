@@ -2,7 +2,7 @@ import { type Component, For, Suspense } from 'solid-js';
 import { useParams } from '@solidjs/router';
 import { createQuery } from '@tanstack/solid-query';
 import { getAssetResultSchema } from '@onix/schemas';
-import { store } from '~/lib/store';
+import { store } from '~/store';
 import { httpClient } from '~/lib/http';
 import { truncateMiddleString } from '~/lib/utils';
 import { MainLayout } from '~/layouts/main';
