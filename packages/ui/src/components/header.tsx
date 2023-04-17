@@ -1,7 +1,8 @@
-import { Suspense, type Component } from 'solid-js';
+import { createSignal, For, Show, Suspense, type Component } from 'solid-js';
+import { Portal } from 'solid-js/web';
 import { createQuery } from '@tanstack/solid-query';
 import { etherscanGasPricesSchema } from '@onix/schemas';
-import { store } from '~/store';
+import { store, networks, storeActions } from '~/store';
 import { httpClient } from '~/lib/http';
 import { truncateMiddleString } from '~/lib/utils';
 import { Link } from './link';
@@ -10,6 +11,7 @@ import { GasPumpIcon } from './icons/gas-pump';
 import { CopyIcon } from './icons/copy';
 
 export const Header: Component = () => {
+  const [networksOpen, setNetworksOpen] = createSignal(false);
   const { currentAccount } = store;
 
   // Gas prices are in Gwei
@@ -27,10 +29,45 @@ export const Header: Component = () => {
 
   return (
     <header class="relative h-12 flex items-center px-4 space-x-2 border-b-thin border-zinc-700 text-xs">
-      <div class="flex items-center space-x-1">
+      <button
+        type="button"
+        onClick={() => setNetworksOpen(true)}
+        class="flex items-center space-x-1 hover:text-zinc-400"
+      >
         <div class="w-2 h-2 rounded-full bg-green-600" />
-        <span class="font-bold uppercase">mainnet</span>
-      </div>
+        <span class="font-bold uppercase">{store.currentNetwork}</span>
+      </button>
+      <Show when={networksOpen()}>
+        <Portal>
+          <div
+            class="absolute w-[360px] h-[540px] inset-0 m-auto pt-10 pl-4"
+            onClick={() => setNetworksOpen(false)}
+          >
+            <ul class="w-40 h-28 flex flex-col justify-between bg-zinc-900 text-white py-3 px-2 border-thin border-zinc-700 rounded shadow-md z-10">
+              <For each={networks}>
+                {(network) => (
+                  <li>
+                    <button
+                      type="button"
+                      onClick={() => storeActions.switchNetwork(network)}
+                      class="w-full h-full flex items-center p-1 space-x-2 rounded hover:bg-black"
+                    >
+                      <div
+                        classList={{
+                          'w-2 h-2 rounded-full': true,
+                          'bg-green-600': network === store.currentNetwork,
+                          'bg-zinc-400': network !== store.currentNetwork,
+                        }}
+                      />
+                      <span class="text-sm capitalize">{network}</span>
+                    </button>
+                  </li>
+                )}
+              </For>
+            </ul>
+          </div>
+        </Portal>
+      </Show>
       <div class="flex items-center space-x-2">
         <GasPumpIcon class="w-3 h-3" />
         <Suspense fallback={<span>---</span>}>
