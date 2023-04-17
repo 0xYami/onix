@@ -119,7 +119,7 @@ export const AuthStep: Component<{ onNext: () => void }> = (props) => {
         event.preventDefault();
         props.onNext();
       }}
-      class="relative h-full space-y-4"
+      class="relative flex flex-col h-full space-y-4"
     >
       <label for="confirm-password" class="uppercase mb-3">
         confirm password
