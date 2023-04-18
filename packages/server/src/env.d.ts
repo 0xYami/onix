@@ -6,8 +6,8 @@ declare namespace NodeJS {
     PORT?: string | undefined;
     ALCHEMY_MAINNET_API_KEY?: string | undefined;
     ALCHEMY_GOERLI_API_KEY?: string | undefined;
-    ETHERSCAN_MAINNET_API_KEY?: string | undefined;
-    ETHERSCAN_GOERLI_API_KEY?: string | undefined;
+    ALCHEMY_SEPOLIA_API_KEY?: string | undefined;
+    ETHERSCAN_API_KEY?: string | undefined;
     COINMARKETCAP_API_KEY?: string | undefined;
   }
 }

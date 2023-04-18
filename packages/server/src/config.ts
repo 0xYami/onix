@@ -52,15 +52,15 @@ export function getConfig(): Config {
       },
       etherscan: {
         mainnet: {
-          apiKey: process.env.ETHERSCAN_MAINNET_API_KEY,
+          apiKey: process.env.ETHERSCAN_API_KEY,
           baseURL: 'https://api.etherscan.io/api',
         },
         goerli: {
-          apiKey: process.env.ETHERSCAN_GOERLI_API_KEY,
+          apiKey: process.env.ETHERSCAN_API_KEY,
           baseURL: 'https://api-goerli.etherscan.io/api',
         },
         sepolia: {
-          apiKey: process.env.ETHERSCAN_GOERLI_API_KEY,
+          apiKey: process.env.ETHERSCAN_API_KEY,
           baseURL: 'https://api-sepolia.etherscan.io/api',
         },
       },
