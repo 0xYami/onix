@@ -13,10 +13,19 @@ export const NFT: Component = () => {
   const params = useParams<{ contractAddress: string; tokenId: string }>();
 
   const nftQuery = createQuery({
-    queryKey: () => ['nft', currentAccount?.address, params.contractAddress, params.tokenId],
+    queryKey: () => [
+      'nft',
+      currentAccount?.address,
+      params.contractAddress,
+      params.tokenId,
+      store.currentNetwork,
+    ],
     queryFn: async () => {
       return httpClient.get({
         url: `/users/${currentAccount?.address}/collections/${params.contractAddress}/${params.tokenId}`,
+        options: {
+          params: { network: store.currentNetwork },
+        },
         validation: {
           response: alchemyNFTSchema,
         },

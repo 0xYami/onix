@@ -1,4 +1,8 @@
-import { z } from '@onix/schemas';
+import { z, networkName } from '@onix/schemas';
+
+export const baseQuerySchema = z.object({
+  network: networkName,
+});
 
 export const addressParamsSchema = z.object({
   address: z.string(),

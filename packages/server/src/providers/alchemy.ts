@@ -9,30 +9,35 @@ import {
   type GetNFTCollectionsResponse,
   type AlchemyNFT,
   type NFTCollection,
+  type NetworkName,
 } from '@onix/schemas';
+import type { NetworkConfig } from '../config';
 import { formatNFTImageUrl } from '../utils';
 
 type AlchemyConfig = {
-  apiKey: string;
+  networks: {
+    mainnet: NetworkConfig;
+    goerli: NetworkConfig;
+  };
 };
 
 export class Alchemy {
-  #apiKey: string;
+  #configs: AlchemyConfig['networks'];
   #httpClient: HttpClient;
 
   constructor(config: AlchemyConfig) {
-    this.#apiKey = config.apiKey;
-    this.#httpClient = new HttpClient({
-      baseURL: `https://eth-mainnet.g.alchemy.com`,
-    });
+    this.#configs = config.networks;
+    this.#httpClient = new HttpClient();
   }
 
   async getERC20Balances(
     owner: string,
     contractAddresses: string[],
+    network: NetworkName,
   ): Promise<AlchemyERC20Balances['result']> {
+    const config = this.#configs[network];
     return this.#httpClient.post({
-      url: `/v2/${this.#apiKey}`,
+      url: `${config.baseURL}/v2/${config.apiKey}`,
       data: {
         id: 1,
         jsonrpc: '2.0',
@@ -45,9 +50,15 @@ export class Alchemy {
     });
   }
 
-  async getNFT(owner: string, contractAddress: string, tokenId: string): Promise<AlchemyNFT> {
+  async getNFT(
+    owner: string,
+    contractAddress: string,
+    tokenId: string,
+    network: NetworkName,
+  ): Promise<AlchemyNFT> {
+    const config = this.#configs[network];
     const nft = await this.#httpClient.get({
-      url: `/nft/v2/${this.#apiKey}/getNFTMetadata`,
+      url: `${config.baseURL}/nft/v2/${config.apiKey}/getNFTMetadata`,
       options: {
         params: {
           owner,
@@ -67,17 +78,23 @@ export class Alchemy {
     return nft;
   }
 
-  async getNFTCollection(ownerAddress: string, contractAddress: string): Promise<NFTCollection> {
+  async getNFTCollection(
+    ownerAddress: string,
+    contractAddress: string,
+    network: NetworkName,
+  ): Promise<NFTCollection> {
+    const config = this.#configs[network];
     const collection = await this.#httpClient.get({
-      url: `/nft/v2/${this.#apiKey}/getNFTs`,
+      url: `${config.baseURL}/nft/v2/${config.apiKey}/getNFTs`,
       options: {
         params: {
           owner: ownerAddress,
           contractAddresses: [contractAddress],
           pageSize: 50,
           withMetadata: true,
-          excludeFilters: ['AIRDROPS', 'SPAM'],
-          spamConfidenceLevel: 'MEDIUM',
+          // only supported on Mainnet
+          excludeFilters: network === 'mainnet' ? ['AIRDROPS', 'SPAM'] : [],
+          spamConfidenceLevel: network === 'mainnet' ? 'MEDIUM' : null,
         },
       },
       validation: {
@@ -108,14 +125,19 @@ export class Alchemy {
     };
   }
 
-  async getNFTCollections(ownerAddress: string): Promise<GetNFTCollectionsResponse> {
+  async getNFTCollections(
+    ownerAddress: string,
+    network: NetworkName,
+  ): Promise<GetNFTCollectionsResponse> {
+    const config = this.#configs[network];
     return this.#httpClient.get({
-      url: `/nft/v2/${this.#apiKey}/getContractsForOwner`,
+      url: `${config.baseURL}/nft/v2/${config.apiKey}/getContractsForOwner`,
       options: {
         params: {
           owner: ownerAddress,
           pageSize: 50,
-          excludeFilters: ['AIRDROPS', 'SPAM'],
+          // only supported on Mainnet
+          excludeFilters: network === 'mainnet' ? ['AIRDROPS', 'SPAM'] : [],
           spamConfidenceLevel: 'MEDIUM',
         },
       },
@@ -125,7 +147,9 @@ export class Alchemy {
     });
   }
 
-  async getAssetsTransfers(ownerAddress: string) {
+  async getAssetsTransfers(ownerAddress: string, network: NetworkName) {
+    const config = this.#configs[network];
+
     const params = {
       fromBlock: '0x0',
       toBlock: 'latest',
@@ -134,8 +158,9 @@ export class Alchemy {
       maxCount: '0x32', // 50
       category: ['external', 'erc20', 'erc721'],
     };
+
     const sent = await this.#httpClient.post({
-      url: `/v2/${this.#apiKey}`,
+      url: `${config.baseURL}/v2/${config.apiKey}`,
       data: {
         id: 1,
         jsonrpc: '2.0',
@@ -146,8 +171,9 @@ export class Alchemy {
         response: alchemyAssetTransfersSchema,
       },
     });
+
     const received = await this.#httpClient.post({
-      url: `/v2/${this.#apiKey}`,
+      url: `${config.baseURL}/v2/${config.apiKey}`,
       data: {
         id: 1,
         jsonrpc: '2.0',

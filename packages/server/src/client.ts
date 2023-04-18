@@ -1,4 +1,4 @@
-import type { AddressDetails, GetAssetResult } from '@onix/schemas';
+import type { AddressDetails, GetAssetResult, NetworkName } from '@onix/schemas';
 import { assets } from '@onix/utils';
 import { BigNumber } from 'bignumber.js';
 import type { ERC20ActivityParams } from './schemas';
@@ -6,14 +6,9 @@ import { take, toBaseUnit } from './utils';
 import { Alchemy } from './providers/alchemy';
 import { Etherscan } from './providers/etherscan';
 import { CoinMarketCap } from './providers/coinmarketcap';
+import type { Config } from './config';
 
-type ClientConfig = {
-  apiKeys: {
-    alchemy: string;
-    etherscan: string;
-    coinmarketcap: string;
-  };
-};
+type ClientConfig = Config['providers'];
 
 export class Client {
   alchemy: Alchemy;
@@ -21,15 +16,18 @@ export class Client {
   coinmarketcap: CoinMarketCap;
 
   constructor(config: ClientConfig) {
-    this.alchemy = new Alchemy({ apiKey: config.apiKeys.alchemy });
-    this.etherscan = new Etherscan({ apiKey: config.apiKeys.etherscan });
-    this.coinmarketcap = new CoinMarketCap({ apiKey: config.apiKeys.coinmarketcap });
+    this.alchemy = new Alchemy({ networks: config.alchemy });
+    this.etherscan = new Etherscan({ networks: config.etherscan });
+    this.coinmarketcap = new CoinMarketCap(config.coinmarketcap);
   }
 
-  async getEtherBalance(address: string): Promise<AddressDetails['etherBalance']> {
+  async getEtherBalance(
+    address: string,
+    network: NetworkName,
+  ): Promise<AddressDetails['etherBalance']> {
     const [etherBalance, etherPrice] = await Promise.all([
-      this.etherscan.getEtherBalance(address),
-      this.etherscan.getEtherPrices(),
+      this.etherscan.getEtherBalance(address, network),
+      this.etherscan.getEtherPrices(network),
     ]);
     return {
       token: toBaseUnit(etherBalance, 18).toFixed(4),
@@ -37,9 +35,9 @@ export class Client {
     };
   }
 
-  async getEtherActivity(address: string): Promise<GetAssetResult> {
-    const balance = await this.getEtherBalance(address);
-    const txs = await this.etherscan.getNormalTransactions(address);
+  async getEtherActivity(address: string, network: NetworkName): Promise<GetAssetResult> {
+    const balance = await this.getEtherBalance(address, network);
+    const txs = await this.etherscan.getNormalTransactions(address, network);
     return {
       name: 'Ether',
       symbol: 'ETH',
@@ -68,9 +66,9 @@ export class Client {
     };
   }
 
-  async getAsset(params: ERC20ActivityParams): Promise<GetAssetResult> {
+  async getAsset(params: ERC20ActivityParams, network: NetworkName): Promise<GetAssetResult> {
     if (params.contractAddressOrSymbol.toLowerCase() === 'eth') {
-      return this.getEtherActivity(params.userAddress);
+      return this.getEtherActivity(params.userAddress, network);
     }
     const asset = assets.find((asset) => {
       return asset.address.toLowerCase() === params.contractAddressOrSymbol.toLowerCase();
@@ -81,13 +79,14 @@ export class Client {
     }
 
     const [balance, [price]] = await Promise.all([
-      this.etherscan.getERC20Balance(params.userAddress, params.contractAddressOrSymbol),
+      this.etherscan.getERC20Balance(params.userAddress, params.contractAddressOrSymbol, network),
       this.coinmarketcap.getTokenPrices([asset.symbol]),
     ]);
 
     const transfers = await this.etherscan.getERC20Transfers(
       params.userAddress,
       params.contractAddressOrSymbol,
+      network,
     );
 
     transfers.forEach((transfer) => {
@@ -106,16 +105,16 @@ export class Client {
     };
   }
 
-  async getAddressDetails(address: string): Promise<AddressDetails> {
+  async getAddressDetails(address: string, network: NetworkName): Promise<AddressDetails> {
     const [etherBalance, etherPrice] = await Promise.all([
-      this.etherscan.getEtherBalance(address),
-      this.etherscan.getEtherPrices(),
+      this.etherscan.getEtherBalance(address, network),
+      this.etherscan.getEtherPrices(network),
     ]);
 
     // Limit to 3 assets for now due to rate limits
     const tokens = take(assets, 3);
     const tokenAddresses = tokens.map((token) => token.address);
-    const balances = await this.alchemy.getERC20Balances(address, tokenAddresses);
+    const balances = await this.alchemy.getERC20Balances(address, tokenAddresses, network);
 
     const tokensWithBalances = tokens.map((token) => {
       const asset = balances.tokenBalances.find(
@@ -124,8 +123,11 @@ export class Client {
       return {
         ...token,
         balance: {
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          token: toBaseUnit(Number(asset!.tokenBalance).toString(), token.decimals).toFixed(4),
+          token:
+            asset?.tokenBalance === '0x'
+              ? '0'
+              : // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                toBaseUnit(Number(asset!.tokenBalance).toString(), token.decimals).toFixed(4),
           // To be set once token prices have been fetched
           usd: '0',
         },

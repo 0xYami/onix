@@ -16,10 +16,18 @@ export const Asset: Component = () => {
   const params = useParams<{ contractAddress: string }>();
 
   const assetQuery = createQuery({
-    queryKey: () => ['asset', currentAccount?.address, params.contractAddress],
+    queryKey: () => [
+      'asset',
+      currentAccount?.address,
+      params.contractAddress,
+      store.currentNetwork,
+    ],
     queryFn: async () => {
       return httpClient.get({
         url: `/users/${currentAccount?.address}/asset/erc20/${params.contractAddress}`,
+        options: {
+          params: { network: store.currentNetwork },
+        },
         validation: {
           response: getAssetResultSchema,
         },

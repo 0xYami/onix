@@ -13,10 +13,13 @@ export const Home: Component = () => {
   const { currentAccount } = store;
 
   const userQuery = createQuery({
-    queryKey: () => ['address', currentAccount?.address],
+    queryKey: () => ['address', currentAccount?.address, store.currentNetwork],
     queryFn: async () => {
       return httpClient.get({
         url: `/users/${currentAccount?.address}`,
+        options: {
+          params: { network: store.currentNetwork },
+        },
         validation: {
           response: addressDetailsSchema,
         },
