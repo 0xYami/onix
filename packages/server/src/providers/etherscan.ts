@@ -8,7 +8,7 @@ import type {
   Transfers,
 } from '@onix/schemas';
 import { asyncFaillable } from '@onix/utils';
-import type { NetworkConfig } from '../config';
+import type { Config } from '../config';
 
 type BaseResponse<TResult> = {
   status: '1' | '0';
@@ -22,10 +22,7 @@ type GetERC20TransfersResponse = BaseResponse<Transfers>;
 type GetGasPricesResponse = BaseResponse<EtherscanGasPrices>;
 
 type EtherscanConfig = {
-  networks: {
-    mainnet: NetworkConfig;
-    goerli: NetworkConfig;
-  };
+  networks: Config['providers']['etherscan'];
 };
 
 export class Etherscan {
@@ -43,7 +40,7 @@ export class Etherscan {
 
   async getGasPrices(network: NetworkName): Promise<GetGasPricesResponse['result']> {
     // not supported on Goerli
-    if (network === 'goerli') {
+    if (network !== 'mainnet') {
       return {
         FastGasPrice: '0',
         SafeGasPrice: '0',

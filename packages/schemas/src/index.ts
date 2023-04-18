@@ -1,6 +1,6 @@
 import { z, type ZodSchema } from 'zod';
 
-export const networkNames = ['mainnet', 'goerli'] as const;
+export const networkNames = ['mainnet', 'goerli', 'sepolia'] as const;
 export const networkName = z.enum(networkNames);
 
 export type NetworkName = z.infer<typeof networkName>;
@@ -95,8 +95,8 @@ const NFTMetadataSchema = z.object({
   attributes: z
     .array(
       z.object({
-        value: z.string(),
-        trait_type: z.string(),
+        value: z.string().or(z.number()).optional(),
+        trait_type: z.string().optional(),
       }),
     )
     .optional(),
