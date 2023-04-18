@@ -95,8 +95,8 @@ const NFTMetadataSchema = z.object({
   attributes: z
     .array(
       z.object({
-        value: z.string(),
-        trait_type: z.string(),
+        value: z.string().or(z.number()).optional(),
+        trait_type: z.string().optional(),
       }),
     )
     .optional(),
