@@ -92,8 +92,9 @@ export class Alchemy {
           contractAddresses: [contractAddress],
           pageSize: 50,
           withMetadata: true,
-          excludeFilters: ['AIRDROPS', 'SPAM'],
-          spamConfidenceLevel: 'MEDIUM',
+          // only supported on Mainnet
+          excludeFilters: network === 'mainnet' ? ['AIRDROPS', 'SPAM'] : [],
+          spamConfidenceLevel: network === 'mainnet' ? 'MEDIUM' : null,
         },
       },
       validation: {
@@ -135,7 +136,8 @@ export class Alchemy {
         params: {
           owner: ownerAddress,
           pageSize: 50,
-          excludeFilters: ['AIRDROPS', 'SPAM'],
+          // only supported on Mainnet
+          excludeFilters: network === 'mainnet' ? ['AIRDROPS', 'SPAM'] : [],
           spamConfidenceLevel: 'MEDIUM',
         },
       },

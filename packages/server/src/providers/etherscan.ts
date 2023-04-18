@@ -11,8 +11,8 @@ import { asyncFaillable } from '@onix/utils';
 import type { NetworkConfig } from '../config';
 
 type BaseResponse<TResult> = {
-  status: '1';
-  message: 'OK';
+  status: '1' | '0';
+  message: 'OK' | 'NOTOK';
   result: TResult;
 };
 
@@ -42,6 +42,17 @@ export class Etherscan {
   }
 
   async getGasPrices(network: NetworkName): Promise<GetGasPricesResponse['result']> {
+    // not supported on Goerli
+    if (network === 'goerli') {
+      return {
+        FastGasPrice: '0',
+        SafeGasPrice: '0',
+        ProposeGasPrice: '0',
+        LastBlock: '0',
+        gasUsedRatio: '0',
+        suggestBaseFee: '0',
+      };
+    }
     const config = this.#configs[network];
     // Etherscan returns the gas prices in Gwei
     const response = await asyncFaillable<{ data: GetGasPricesResponse }>(
