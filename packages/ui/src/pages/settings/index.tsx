@@ -15,13 +15,9 @@ export const Settings: Component = () => {
   const navigate = useNavigate();
 
   const switchAccount = (account: Account) => {
-    if (store.currentAccount?.address === account.address) return;
+    if (store.currentAccount.address === account.address) return;
     storeActions.switchAccount(account);
     navigate('/index.html');
-  };
-
-  const lockWallet = () => {
-    storeActions.lockWallet();
   };
 
   return (
@@ -44,7 +40,7 @@ export const Settings: Component = () => {
       </Link>
       <button
         type="button"
-        onClick={lockWallet}
+        onClick={storeActions.lockWallet}
         class="flex items-center justify-start w-full p-2 -ml-2 space-x-2 rounded hover:bg-zinc-700/30"
       >
         <LockIcon />
@@ -79,7 +75,7 @@ export const Settings: Component = () => {
                 </div>
                 <div class="absolute top-0 bottom-0 right-0 flex items-center space-x-4 z-10">
                   <Show
-                    when={store.currentAccount?.address !== account.address}
+                    when={store.currentAccount.address !== account.address}
                     fallback={<div class="w-2 h-2 bg-green-700 rounded-full" />}
                   >
                     <button

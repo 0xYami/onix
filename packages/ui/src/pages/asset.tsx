@@ -12,19 +12,18 @@ import { ReceiveIcon } from '~/components/icons/receive';
 import { SendIcon } from '~/components/icons/send';
 
 export const Asset: Component = () => {
-  const { currentAccount } = store;
   const params = useParams<{ contractAddress: string }>();
 
   const assetQuery = createQuery({
     queryKey: () => [
       'asset',
-      currentAccount?.address,
-      params.contractAddress,
+      store.currentAccount.address,
       store.currentNetwork,
+      params.contractAddress,
     ],
     queryFn: async () => {
       return httpClient.get({
-        url: `/users/${currentAccount?.address}/asset/erc20/${params.contractAddress}`,
+        url: `/users/${store.currentAccount.address}/asset/erc20/${params.contractAddress}`,
         options: {
           params: { network: store.currentNetwork },
         },
@@ -33,7 +32,7 @@ export const Asset: Component = () => {
         },
       });
     },
-    enabled: !!currentAccount?.address && !!params.contractAddress,
+    enabled: !!store.currentAccount.address && !!params.contractAddress,
   });
 
   return (
@@ -70,7 +69,7 @@ export const Asset: Component = () => {
           <For each={assetQuery.data?.transfers}>
             {(transfer) => {
               const isSender =
-                currentAccount?.address.toLowerCase() === transfer.from.toLowerCase();
+                store.currentAccount.address.toLowerCase() === transfer.from.toLowerCase();
               const formattedDate = new Date(Number(transfer.timeStamp) * 1000).toLocaleDateString(
                 'en-US',
                 {

@@ -7,13 +7,11 @@ import { MainLayout } from '~/layouts/main';
 import { Link } from '~/components/link';
 
 export const Collections: Component = () => {
-  const { currentAccount } = store;
-
   const collectionsQuery = createQuery({
-    queryKey: () => ['collections', currentAccount?.address, store.currentNetwork],
+    queryKey: () => ['collections', store.currentAccount.address, store.currentNetwork],
     queryFn: async () => {
       return httpClient.get({
-        url: `/users/${currentAccount?.address}/nfts/collections`,
+        url: `/users/${store.currentAccount.address}/nfts/collections`,
         options: {
           params: { network: store.currentNetwork },
         },
@@ -22,7 +20,7 @@ export const Collections: Component = () => {
         },
       });
     },
-    enabled: !!currentAccount?.address,
+    enabled: !!store.currentAccount.address,
   });
 
   return (

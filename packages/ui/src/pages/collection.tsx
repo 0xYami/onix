@@ -12,19 +12,18 @@ import { DiscordIcon } from '~/components/icons/discord';
 import { GlobeIcon } from '~/components/icons/globe';
 
 export const Collection: Component = () => {
-  const { currentAccount } = store;
   const params = useParams<{ contractAddress: string }>();
 
   const collectionQuery = createQuery({
     queryKey: () => [
       'collection',
-      currentAccount?.address,
-      params.contractAddress,
+      store.currentAccount.address,
       store.currentNetwork,
+      params.contractAddress,
     ],
     queryFn: async () => {
       return httpClient.get({
-        url: `/users/${currentAccount?.address}/collections/${params.contractAddress}`,
+        url: `/users/${store.currentAccount.address}/collections/${params.contractAddress}`,
         options: {
           params: { network: store.currentNetwork },
         },
@@ -33,7 +32,7 @@ export const Collection: Component = () => {
         },
       });
     },
-    enabled: !!currentAccount?.address,
+    enabled: !!store.currentAccount.address,
   });
 
   return (

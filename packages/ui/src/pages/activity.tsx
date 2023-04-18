@@ -9,13 +9,11 @@ import { SendIcon } from '~/components/icons/send';
 import { ReceiveIcon } from '~/components/icons/receive';
 
 export const Activity: Component = () => {
-  const { currentAccount } = store;
-
   const activityQuery = createQuery({
-    queryKey: () => ['activity', currentAccount?.address, store.currentNetwork],
+    queryKey: () => ['activity', store.currentAccount.address, store.currentNetwork],
     queryFn: async () => {
       return httpClient.get({
-        url: `/users/${currentAccount?.address}/activity`,
+        url: `/users/${store.currentAccount.address}/activity`,
         options: {
           params: { network: store.currentNetwork },
         },
@@ -34,7 +32,7 @@ export const Activity: Component = () => {
         },
       });
     },
-    enabled: !!currentAccount?.address,
+    enabled: !!store.currentAccount.address,
   });
 
   return (
@@ -56,7 +54,7 @@ export const Activity: Component = () => {
                   <For each={transfer}>
                     {(transfer) => {
                       const isSender =
-                        transfer.from.toLowerCase() === currentAccount?.address.toLowerCase();
+                        transfer.from.toLowerCase() === store.currentAccount.address.toLowerCase();
                       const linkToEtherscan = `https://etherscan.io/tx/${transfer.hash}`;
                       return (
                         <li class="flex-between">
