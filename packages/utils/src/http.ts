@@ -32,7 +32,7 @@ type PostRequest<TData extends object, TResponse extends ZodSchema> = {
 export class HttpClient {
   #http: Axios;
 
-  constructor(config: CreateAxiosDefaults) {
+  constructor(config?: CreateAxiosDefaults) {
     this.#http = axios.create(config);
   }
 

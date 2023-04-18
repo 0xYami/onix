@@ -1,5 +1,10 @@
 import { z, type ZodSchema } from 'zod';
 
+export const networkNames = ['mainnet', 'goerli'] as const;
+export const networkName = z.enum(networkNames);
+
+export type NetworkName = z.infer<typeof networkName>;
+
 const assetSymbolSchema = z.union([
   z.literal('ETH'),
   z.literal('USDT'),

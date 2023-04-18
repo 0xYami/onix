@@ -1,17 +1,14 @@
 import { asyncFaillable } from '@onix/utils';
 import axios, { type Axios } from 'axios';
+import type { NetworkConfig } from '../config';
 import type { TokenQuote, GetTokenQuoteResponse } from '../types';
-
-type CoinMarketCapConfig = {
-  apiKey: string;
-};
 
 export class CoinMarketCap {
   #httpClient: Axios;
 
-  constructor(config: CoinMarketCapConfig) {
+  constructor(config: NetworkConfig) {
     this.#httpClient = axios.create({
-      baseURL: 'https://pro-api.coinmarketcap.com',
+      baseURL: config.baseURL,
       headers: {
         Accept: 'application/json',
         'X-CMC_PRO_API_KEY': config.apiKey,
@@ -20,9 +17,8 @@ export class CoinMarketCap {
   }
 
   async getTokenPrices(symbols: string[]): Promise<TokenQuote[]> {
-    const url = '/v2/cryptocurrency/quotes/latest';
     const response = await asyncFaillable<{ data: GetTokenQuoteResponse }>(
-      this.#httpClient.get(url, {
+      this.#httpClient.get('/v2/cryptocurrency/quotes/latest', {
         params: {
           symbol: symbols.join(','),
           convert: 'USD',
