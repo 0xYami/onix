@@ -2,9 +2,9 @@ import { createSignal, Match, Switch, type Component } from 'solid-js';
 import { useLocation, useNavigate } from '@solidjs/router';
 import { store, storeActions, type Account } from '~/store';
 import { truncateMiddleString } from '~/lib/utils';
-import { AuthStep } from './index';
 import { Link } from '~/components/link';
 import { ChevronLeftIcon } from '~/components/icons/chevron-left';
+import { AuthStep } from './index';
 
 export const RemoveAccount: Component = () => {
   const [currentStep, setCurrentStep] = createSignal<'authenticate' | 'confirm'>('authenticate');
