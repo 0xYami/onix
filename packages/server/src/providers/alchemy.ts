@@ -11,14 +11,11 @@ import {
   type NFTCollection,
   type NetworkName,
 } from '@onix/schemas';
-import type { NetworkConfig } from '../config';
+import type { Config } from '../config';
 import { formatNFTImageUrl } from '../utils';
 
 type AlchemyConfig = {
-  networks: {
-    mainnet: NetworkConfig;
-    goerli: NetworkConfig;
-  };
+  networks: Config['providers']['alchemy'];
 };
 
 export class Alchemy {

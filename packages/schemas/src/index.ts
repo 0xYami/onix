@@ -1,6 +1,6 @@
 import { z, type ZodSchema } from 'zod';
 
-export const networkNames = ['mainnet', 'goerli'] as const;
+export const networkNames = ['mainnet', 'goerli', 'sepolia'] as const;
 export const networkName = z.enum(networkNames);
 
 export type NetworkName = z.infer<typeof networkName>;

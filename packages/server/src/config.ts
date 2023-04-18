@@ -16,10 +16,12 @@ const configSchema = z
       alchemy: z.object({
         mainnet: networkConfig,
         goerli: networkConfig,
+        sepolia: networkConfig,
       }),
       etherscan: z.object({
         mainnet: networkConfig,
         goerli: networkConfig,
+        sepolia: networkConfig,
       }),
       coinmarketcap: networkConfig,
     }),
@@ -43,6 +45,10 @@ export function getConfig(): Config {
           apiKey: process.env.ALCHEMY_GOERLI_API_KEY,
           baseURL: 'https://eth-goerli.g.alchemy.com',
         },
+        sepolia: {
+          apiKey: process.env.ALCHEMY_SEPOLIA_API_KEY,
+          baseURL: 'https://eth-sepolia.g.alchemy.com',
+        },
       },
       etherscan: {
         mainnet: {
@@ -52,6 +58,10 @@ export function getConfig(): Config {
         goerli: {
           apiKey: process.env.ETHERSCAN_GOERLI_API_KEY,
           baseURL: 'https://api-goerli.etherscan.io/api',
+        },
+        sepolia: {
+          apiKey: process.env.ETHERSCAN_GOERLI_API_KEY,
+          baseURL: 'https://api-sepolia.etherscan.io/api',
         },
       },
       coinmarketcap: {
