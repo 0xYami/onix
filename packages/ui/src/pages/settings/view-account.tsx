@@ -64,7 +64,7 @@ export const ViewAccount: Component = () => {
         <ChevronRightIcon />
       </Link>
       <Link
-        path="/settings/remove"
+        path="/settings/accounts/remove"
         state={{ from: account?.name }}
         class="flex-between  mx-3 p-2 rounded hover:bg-zinc-700/30"
       >
