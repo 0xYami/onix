@@ -10,13 +10,11 @@ import { Link } from '~/components/link';
 import { httpClient } from '~/lib/http';
 
 export const Home: Component = () => {
-  const { currentAccount } = store;
-
   const userQuery = createQuery({
-    queryKey: () => ['address', currentAccount?.address, store.currentNetwork],
+    queryKey: () => ['address', store.currentAccount.address, store.currentNetwork],
     queryFn: async () => {
       return httpClient.get({
-        url: `/users/${currentAccount?.address}`,
+        url: `/users/${store.currentAccount.address}`,
         options: {
           params: { network: store.currentNetwork },
         },
@@ -25,7 +23,7 @@ export const Home: Component = () => {
         },
       });
     },
-    enabled: !!currentAccount?.address,
+    enabled: !!store.currentAccount.address,
   });
 
   const assets = createMemo(() => {

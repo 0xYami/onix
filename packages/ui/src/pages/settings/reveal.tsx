@@ -31,11 +31,9 @@ export const Reveal: Component<RevealProps> = (props) => {
         </Match>
         <Match when={currentStep() === 'reveal'}>
           {props.operation === 'private-key' ? (
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            <RevealPrivateKey mnemonic={store.mnemonic!} />
+            <RevealPrivateKey mnemonic={store.mnemonic} />
           ) : (
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            <RevealMnemonic mnemonic={store.mnemonic!} />
+            <RevealMnemonic mnemonic={store.mnemonic} />
           )}
         </Match>
       </Switch>

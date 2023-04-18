@@ -88,6 +88,7 @@ export const Onboarding: Component = () => {
               password: onboardingStore.password,
               mnemonic: onboardingStore.mnemonic.phrase,
               currentAccount: account,
+              currentNetwork: 'mainnet',
               accounts: [account],
               status: 'logged-in',
             });

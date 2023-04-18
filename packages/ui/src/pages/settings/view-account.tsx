@@ -13,7 +13,7 @@ import { BinIcon } from '~/components/icons/bin';
 export const ViewAccount: Component = () => {
   const location = useLocation();
   const address = location.pathname.split('/').pop();
-  const account = store.accounts?.find(
+  const account = store.accounts.find(
     (account) => account.address.toLowerCase() === address?.toLowerCase(),
   );
   return (

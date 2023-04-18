@@ -9,7 +9,7 @@ import { AuthStep } from './index';
 export const RemoveAccount: Component = () => {
   const [currentStep, setCurrentStep] = createSignal<'authenticate' | 'confirm'>('authenticate');
   const location = useLocation<{ from: string }>();
-  const account = store.accounts?.find((account) => account.name === location.state?.from);
+  const account = store.accounts.find((account) => account.name === location.state?.from);
   return (
     <div class="h-full flex flex-col p-4 space-y-2">
       <Link path="/settings" class="flex items-center space-x-1 mb-4">
@@ -37,7 +37,6 @@ const ConfirmStep: Component<{ account: Account }> = (props) => {
     storeActions.removeAccount(props.account);
 
     // FIX: switch to very first account, this assumes it gets never removed
-    if (!store.accounts) return;
     const account = store.accounts[0];
     storeActions.switchAccount(account);
 

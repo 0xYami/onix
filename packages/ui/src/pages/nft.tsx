@@ -9,20 +9,19 @@ import { Link } from '~/components/link';
 import { ChevronLeftIcon } from '~/components/icons/chevron-left';
 
 export const NFT: Component = () => {
-  const { currentAccount } = store;
   const params = useParams<{ contractAddress: string; tokenId: string }>();
 
   const nftQuery = createQuery({
     queryKey: () => [
       'nft',
-      currentAccount?.address,
+      store.currentAccount.address,
+      store.currentNetwork,
       params.contractAddress,
       params.tokenId,
-      store.currentNetwork,
     ],
     queryFn: async () => {
       return httpClient.get({
-        url: `/users/${currentAccount?.address}/collections/${params.contractAddress}/${params.tokenId}`,
+        url: `/users/${store.currentAccount.address}/collections/${params.contractAddress}/${params.tokenId}`,
         options: {
           params: { network: store.currentNetwork },
         },
@@ -31,7 +30,7 @@ export const NFT: Component = () => {
         },
       });
     },
-    enabled: !!currentAccount?.address,
+    enabled: !!store.currentAccount.address && !!params.contractAddress && !!params.tokenId,
   });
 
   return (

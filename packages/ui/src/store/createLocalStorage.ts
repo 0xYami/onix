@@ -11,13 +11,15 @@ type CreateLocalStorageConfig<S extends ZodSchema> = {
 export function createLocalStorage<S extends ZodSchema>(
   config: CreateLocalStorageConfig<S>,
 ): [Store<z.infer<S>>, SetStoreFunction<z.infer<S>>] {
-  const [state, setState] = createStore(config.initialState);
+  let initialState: z.infer<S> = config.initialState;
 
-  const storedState = localStorage.getItem(config.storageKey);
-  if (storedState) {
-    const result = config.schema.safeParse(JSON.parse(storedState));
-    if (result.success) setState(result.data);
+  const rawState = localStorage.getItem(config.storageKey);
+  if (rawState) {
+    const result = config.schema.safeParse(JSON.parse(rawState));
+    if (result.success) initialState = result.data;
   }
+
+  const [state, setState] = createStore(initialState);
 
   createEffect(() => {
     localStorage.setItem(config.storageKey, JSON.stringify(state));

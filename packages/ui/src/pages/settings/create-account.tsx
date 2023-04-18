@@ -10,7 +10,7 @@ export const CreateAccount: Component = () => {
     if (!store.mnemonic) {
       throw new Error("Can't create account without mnemonic");
     }
-    const currentIndex = store.accounts?.length;
+    const currentIndex = store.accounts.length;
     if (!currentIndex) {
       throw new Error("Can't get account index");
     }
@@ -22,7 +22,7 @@ export const CreateAccount: Component = () => {
   });
 
   const [name, setName] = createSignal(derivedAccount().name);
-  const [hasError, setHasError] = createSignal(false);
+  const [isWrong, setIsWrong] = createSignal(false);
   const navigate = useNavigate();
 
   const createAccount = () => {
@@ -58,14 +58,14 @@ export const CreateAccount: Component = () => {
           onInput={(event) => setName(event.currentTarget.value)}
           required
           autofocus
-          onFocus={() => setHasError(false)}
+          onFocus={() => setIsWrong(false)}
           onBlur={() => {
             if (!/^\s*$/.test(name())) return;
-            setHasError(true);
+            setIsWrong(true);
           }}
           class="w-full bg-black border-thin border-zinc-700 rounded"
         />
-        <Show when={hasError()}>
+        <Show when={isWrong()}>
           <span class="mt-2 text-xs text-red-500">
             Should be at least 1 non-whitespace character
           </span>

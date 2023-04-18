@@ -10,7 +10,7 @@ export const EditAccount: Component = () => {
   const navigate = useNavigate();
   const location = useLocation<{ from: string }>();
 
-  const account = store.accounts?.find(
+  const account = store.accounts.find(
     (account) => account.name.toLowerCase() === location.state?.from?.toLowerCase(),
   );
 
