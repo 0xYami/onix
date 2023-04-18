@@ -31,11 +31,7 @@ const router = Fastify({
 
 router.register(cors, { origin: true });
 
-const client = new Client({
-  alchemy: config.providers.alchemy,
-  etherscan: config.providers.etherscan,
-  coinmarketcap: config.providers.coinmarketcap,
-});
+const client = new Client(config.providers);
 
 router
   .get('/_health', () => {
