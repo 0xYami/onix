@@ -134,8 +134,7 @@ export const AuthStep: Component<{ onNext: () => void }> = (props) => {
             if (isValid()) return;
             setHasError(true);
           }}
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          pattern={store.password!}
+          pattern={store.password}
           title="Doesn't match current password"
           placeholder="Password"
           class="w-full bg-black border-thin border-zinc-700 rounded"

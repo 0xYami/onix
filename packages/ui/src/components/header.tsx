@@ -78,12 +78,10 @@ export const Header: Component = () => {
         </Suspense>
       </div>
       <div class="absolute right-4 flex items-center space-x-2">
-        {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
-        <Copy value={currentAccount!.address}>
+        <Copy value={currentAccount.address}>
           <>
             <CopyIcon class="w-3 h-3" />
-            {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
-            <span>{truncateMiddleString(currentAccount!.address, 11)}</span>
+            <span>{truncateMiddleString(currentAccount.address, 11)}</span>
           </>
         </Copy>
         <Link path="/settings" class="w-6 h-6 rounded-full bg-zinc-700" />
