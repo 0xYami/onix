@@ -22,12 +22,19 @@ export const ViewAccount: Component = () => {
         <ChevronLeftIcon />
         <span class="text-sm">Settings</span>
       </Link>
-      <div class="mx-3 p-2">
-        <div>{account?.name}</div>
-        <span class="text-sm text-neutral-500">
-          {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
-          {truncateMiddleString(account!.address, 15)}
-        </span>
+      <div class="flex items-center space-x-3 mx-3 p-2">
+        <img
+          src={`https://avatar.vercel.sh/${account?.address}.svg`}
+          alt={`Avatar ${account?.name}`}
+          class="w-10 h-10 rounded-full"
+        />
+        <div>
+          <div>{account?.name}</div>
+          <span class="text-sm text-neutral-500">
+            {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
+            {truncateMiddleString(account!.address, 15)}
+          </span>
+        </div>
       </div>
       <div class="h-[1px] bg-neutral-800 mx-5" />
       <Link

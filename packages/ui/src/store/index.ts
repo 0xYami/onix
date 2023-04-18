@@ -53,7 +53,7 @@ type StoreActions = {
 const storeActions: StoreActions = {
   initialize: (state) => setStore(state),
   addAccount: (account: Account) => {
-    setStore('accounts', (accounts) => [...(accounts ?? []), account]);
+    setStore('accounts', (accounts) => [...accounts, account]);
   },
   editAccount: (address: string, account: Account) => {
     if (store.currentAccount?.address.toLowerCase() === address.toLowerCase()) {

@@ -16,12 +16,18 @@ type RevealProps = {
 export const Reveal: Component<RevealProps> = (props) => {
   const location = useLocation<{ from: string }>();
   const [currentStep, setCurrentStep] = createSignal<'authenticate' | 'reveal'>('authenticate');
+  const account = store.accounts.find((account) => account.name === location.state?.from);
   return (
     <div class="h-full flex flex-col p-4 space-y-2">
-      <Link path="/settings" class="flex items-center space-x-1 mb-4">
+      <Link path="/settings" class="flex items-center space-x-2 mb-4">
         <ChevronLeftIcon />
+        <img
+          src={`https://avatar.vercel.sh/${account?.address}.svg`}
+          alt={`Avatar ${account?.name}`}
+          class="w-6 h-6 rounded-full"
+        />
         <span class="text-sm capitalize">
-          {location.state?.from || 'Settings'} /{' '}
+          {account?.name} /{' '}
           {props.operation === 'private-key' ? 'Reveal private key' : 'Reveal recovery phrase'}
         </span>
       </Link>

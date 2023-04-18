@@ -24,10 +24,15 @@ export const EditAccount: Component = () => {
     <div class="h-full flex flex-col p-4 space-y-2">
       <Link
         path={`/settings/accounts/${account?.address}`}
-        class="flex items-center space-x-1 mb-4"
+        class="flex items-center space-x-2 mb-4"
       >
         <ChevronLeftIcon />
-        <span class="text-sm">Settings / Edit account</span>
+        <img
+          src={`https://avatar.vercel.sh/${account?.address}.svg`}
+          alt={`Avatar ${account?.name}`}
+          class="w-6 h-6 rounded-full"
+        />
+        <div class="text-sm">{account?.name} / Edit name</div>
       </Link>
       <form
         onSubmit={(event) => {
