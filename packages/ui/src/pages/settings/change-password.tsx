@@ -75,7 +75,7 @@ const ChangePasswordStep: Component<{ onNext: (password: string) => void }> = (p
         </div>
       </div>
       <div class="space-y-2">
-        <label for="confirm-password" class="uppercase text-sm">
+        <label for="confirm-password" class="uppercase">
           Confirm new password
         </label>
         <div class="relative flex items-center">
