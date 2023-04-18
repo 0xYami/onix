@@ -65,7 +65,11 @@ export const Settings: Component = () => {
                 class="relative w-full py-1 text-left"
               >
                 <div class="flex items-center space-x-2">
-                  <div class="w-10 h-10 rounded-full bg-zinc-700" />
+                  <img
+                    src={`https://avatar.vercel.sh/${account.address}.svg`}
+                    alt={`Avatar ${account.name}`}
+                    class="w-10 h-10 rounded-full"
+                  />
                   <div>
                     <div>{account.name}</div>
                     <div class="text-sm text-zinc-400">

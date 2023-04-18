@@ -12,8 +12,13 @@ export const RemoveAccount: Component = () => {
   const account = store.accounts.find((account) => account.name === location.state?.from);
   return (
     <div class="h-full flex flex-col p-4 space-y-2">
-      <Link path="/settings" class="flex items-center space-x-1 mb-4">
+      <Link path="/settings" class="flex items-center space-x-2 mb-4">
         <ChevronLeftIcon />
+        <img
+          src={`https://avatar.vercel.sh/${account?.address}.svg`}
+          alt={`Avatar ${account?.name}`}
+          class="w-6 h-6 rounded-full"
+        />
         <span class="text-sm">{location.state?.from} / Remove account</span>
       </Link>
       <Switch>
@@ -47,7 +52,11 @@ const ConfirmStep: Component<{ account: Account }> = (props) => {
     <div class="relative h-full space-y-5">
       <div>Are you sure you want to remove this account?</div>
       <div class="flex items-center -mx-1 p-1 space-x-2 bg-zinc-700/40 rounded">
-        <div class="w-10 h-10 rounded-full bg-zinc-700" />
+        <img
+          src={`https://avatar.vercel.sh/${props.account.address}.svg`}
+          alt={`Avatar ${props.account.name}`}
+          class="w-6 h-6 rounded-full"
+        />
         <div>
           <div>{props.account.name}</div>
           <div class="text-sm text-zinc-400">{truncateMiddleString(props.account.address, 13)}</div>

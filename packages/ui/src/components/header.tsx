@@ -83,7 +83,13 @@ export const Header: Component = () => {
             <span>{truncateMiddleString(store.currentAccount.address, 11)}</span>
           </>
         </Copy>
-        <Link path="/settings" class="w-6 h-6 rounded-full bg-zinc-700" />
+        <Link path="/settings">
+          <img
+            src={`https://avatar.vercel.sh/${store.currentAccount.address}.svg`}
+            alt="avatar"
+            class="w-6 h-6 rounded-full"
+          />
+        </Link>
       </div>
     </header>
   );
