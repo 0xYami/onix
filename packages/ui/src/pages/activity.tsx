@@ -12,10 +12,13 @@ export const Activity: Component = () => {
   const { currentAccount } = store;
 
   const activityQuery = createQuery({
-    queryKey: () => ['activity', currentAccount?.address],
+    queryKey: () => ['activity', currentAccount?.address, store.currentNetwork],
     queryFn: async () => {
       return httpClient.get({
         url: `/users/${currentAccount?.address}/activity`,
+        options: {
+          params: { network: store.currentNetwork },
+        },
         validation: {
           response: alchemyAssetTransfersSchema.transform(({ result }) => {
             return result.transfers.reduce((acc, curr) => {

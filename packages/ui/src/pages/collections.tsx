@@ -10,10 +10,13 @@ export const Collections: Component = () => {
   const { currentAccount } = store;
 
   const collectionsQuery = createQuery({
-    queryKey: () => ['collections', currentAccount?.address],
+    queryKey: () => ['collections', currentAccount?.address, store.currentNetwork],
     queryFn: async () => {
       return httpClient.get({
         url: `/users/${currentAccount?.address}/nfts/collections`,
+        options: {
+          params: { network: store.currentNetwork },
+        },
         validation: {
           response: getNFTCollectionsResponseSchema,
         },

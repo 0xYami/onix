@@ -1,8 +1,8 @@
 import { createSignal, For, Show, Suspense, type Component } from 'solid-js';
 import { Portal } from 'solid-js/web';
 import { createQuery } from '@tanstack/solid-query';
-import { etherscanGasPricesSchema } from '@onix/schemas';
-import { store, networks, storeActions } from '~/store';
+import { etherscanGasPricesSchema, networkNames } from '@onix/schemas';
+import { store, storeActions } from '~/store';
 import { httpClient } from '~/lib/http';
 import { truncateMiddleString } from '~/lib/utils';
 import { Link } from './link';
@@ -16,10 +16,13 @@ export const Header: Component = () => {
 
   // Gas prices are in Gwei
   const gasPricesQuery = createQuery({
-    queryKey: () => ['gasPrices'],
+    queryKey: () => ['gasPrices', store.currentNetwork],
     queryFn: async () => {
       return httpClient.get({
         url: '/gas-prices',
+        options: {
+          params: { network: store.currentNetwork },
+        },
         validation: {
           response: etherscanGasPricesSchema,
         },
@@ -44,7 +47,7 @@ export const Header: Component = () => {
             onClick={() => setNetworksOpen(false)}
           >
             <ul class="w-40 h-28 flex flex-col justify-between bg-zinc-900 text-white py-3 px-2 border-thin border-zinc-700 rounded shadow-md z-10">
-              <For each={networks}>
+              <For each={networkNames}>
                 {(network) => (
                   <li>
                     <button

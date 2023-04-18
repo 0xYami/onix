@@ -16,10 +16,18 @@ export const Collection: Component = () => {
   const params = useParams<{ contractAddress: string }>();
 
   const collectionQuery = createQuery({
-    queryKey: () => ['collection', currentAccount?.address, params.contractAddress],
+    queryKey: () => [
+      'collection',
+      currentAccount?.address,
+      params.contractAddress,
+      store.currentNetwork,
+    ],
     queryFn: async () => {
       return httpClient.get({
         url: `/users/${currentAccount?.address}/collections/${params.contractAddress}`,
+        options: {
+          params: { network: store.currentNetwork },
+        },
         validation: {
           response: nftCollectionSchema,
         },

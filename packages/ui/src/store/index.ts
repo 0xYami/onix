@@ -1,12 +1,6 @@
-import { z } from '@onix/schemas';
+import { z, networkName, type NetworkName } from '@onix/schemas';
 import { config } from '~/lib/config';
 import { createLocalStorage } from './createLocalStorage';
-
-export const networks = ['mainnet', 'goerli', 'sepolia'] as const;
-
-const network = z.enum(networks);
-
-export type Network = z.infer<typeof network>;
 
 const account = z.object({
   name: z.string(),
@@ -18,7 +12,7 @@ export type Account = z.infer<typeof account>;
 const storeState = z.object({
   password: z.string().min(8),
   mnemonic: z.string(),
-  currentNetwork: network,
+  currentNetwork: networkName,
   currentAccount: account,
   accounts: z.array(account),
   status: z.union([z.literal('logged-in'), z.literal('logged-out'), z.literal('uninitialized')]),
@@ -50,7 +44,7 @@ type StoreActions = {
   editAccount: (address: string, newAccount: Account) => void;
   removeAccount: (account: Account) => void;
   switchAccount: (account: Account) => void;
-  switchNetwork: (network: Network) => void;
+  switchNetwork: (network: NetworkName) => void;
   changePassword: (password: string) => void;
   lockWallet: () => void;
   unlockWallet: () => void;
