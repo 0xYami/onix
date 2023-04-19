@@ -76,11 +76,7 @@ const Skeleton: Component = () => (
   <div class="p-4 space-y-3 animate-pulse">
     <div class="h-8 rounded bg-zinc-700/20" />
     <div class="h-96 grid grid-cols-2 gap-4 overflow-y-hidden">
-      {Array(6)
-        .fill(0)
-        .map(() => (
-          <div class="w-36 h-36 rounded bg-zinc-700/20" />
-        ))}
+      <For each={Array(6).fill(0)}>{() => <div class="w-36 h-36 rounded bg-zinc-700/20" />}</For>
     </div>
   </div>
 );

@@ -80,11 +80,7 @@ const Skeleton: Component = () => (
     <div class="h-80 w-80 mx-auto rounded bg-zinc-700/20" />
     <div class="h-8 w-2/5 rounded bg-zinc-700/20" />
     <div class="h-10 grid grid-cols-2 gap-4 overflow-y-hidden">
-      {Array(6)
-        .fill(0)
-        .map(() => (
-          <div class="h-12 rounded bg-zinc-700/20" />
-        ))}
+      <For each={Array(6).fill(0)}>{() => <div class="h-12 rounded bg-zinc-700/20" />}</For>
     </div>
   </div>
 );
