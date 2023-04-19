@@ -1,6 +1,7 @@
 # Onix Wallet
 
-This wallet is at its early stage so things might not work as expected and might break between a release and another.
+> **Warning**
+> This wallet is at its early stage so things might not work as expected and might break between a release and another.
 
 ## Documentation
 
