@@ -15,7 +15,7 @@ const storeState = z.object({
   currentNetwork: networkName,
   currentAccount: account,
   accounts: z.array(account),
-  status: z.union([z.literal('logged-in'), z.literal('logged-out'), z.literal('uninitialized')]),
+  status: z.enum(['logged-in', 'logged-out', 'uninitialized']),
 });
 
 type StoreState = z.infer<typeof storeState>;
@@ -56,7 +56,7 @@ const storeActions: StoreActions = {
     setStore('accounts', (accounts) => [...accounts, account]);
   },
   editAccount: (address: string, account: Account) => {
-    if (store.currentAccount?.address.toLowerCase() === address.toLowerCase()) {
+    if (store.currentAccount.address.toLowerCase() === address.toLowerCase()) {
       setStore('currentAccount', account);
     }
     setStore('accounts', (accounts) => {
@@ -68,7 +68,7 @@ const storeActions: StoreActions = {
     });
   },
   removeAccount: (account: Account) => {
-    if (!store.accounts || store.accounts.length === 0) {
+    if (store.accounts.length === 0) {
       throw new Error('[store] tried to remove account while no account exists');
     }
     const accounts = store.accounts.filter((acc) => acc.address !== account.address);
@@ -78,15 +78,10 @@ const storeActions: StoreActions = {
     setStore('accounts', accounts);
   },
   switchAccount: (account: Account) => {
-    if (!store.accounts) {
-      throw new Error("Can't switch account when there are no accounts");
-    }
-
     const newAccount = store.accounts.find((a) => a.address === account.address);
     if (!newAccount) {
-      throw new Error('Account not found');
+      throw new Error('[store] tried to switch to unknown account');
     }
-
     setStore('currentAccount', newAccount);
   },
   switchNetwork: (network) => setStore('currentNetwork', network),
