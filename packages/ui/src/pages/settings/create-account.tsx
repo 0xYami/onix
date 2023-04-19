@@ -1,4 +1,4 @@
-import { createMemo, createSignal, Show, type Component } from 'solid-js';
+import { createSignal, Show, type Component } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
 import { Wallet } from 'ethers';
 import { store, storeActions, type Account } from '~/store';
@@ -6,32 +6,25 @@ import { Link } from '~/components/link';
 import { ChevronLeftIcon } from '~/components/icons/chevron-left';
 
 export const CreateAccount: Component = () => {
-  const derivedAccount = createMemo<Account>(() => {
-    if (!store.mnemonic) {
-      throw new Error("Can't create account without mnemonic");
-    }
-    const currentIndex = store.accounts.length;
-    if (!currentIndex) {
-      throw new Error("Can't get account index");
-    }
-    const wallet = Wallet.fromPhrase(store.mnemonic).deriveChild(currentIndex);
-    return {
-      name: `Account ${currentIndex + 1}`,
-      address: wallet.address,
-    };
-  });
-
-  const [name, setName] = createSignal(derivedAccount().name);
+  const currentIndex = store.accounts.length;
+  const [name, setName] = createSignal(`Account ${currentIndex + 1}`);
   const [isWrong, setIsWrong] = createSignal(false);
   const navigate = useNavigate();
 
   const createAccount = () => {
+    if (!store.mnemonic) {
+      throw new Error("Can't create account without mnemonic");
+    }
+
+    const wallet = Wallet.fromPhrase(store.mnemonic).deriveChild(currentIndex);
     const account: Account = {
       name: name(),
-      address: derivedAccount().address,
+      address: wallet.address,
     };
+
     storeActions.addAccount(account);
     storeActions.switchAccount(account);
+
     navigate('/index.html/settings');
   };
 

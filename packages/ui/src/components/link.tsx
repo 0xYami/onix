@@ -6,11 +6,10 @@ type LinkProps = Omit<AnchorProps, 'href'> & {
 };
 
 export const Link: ParentComponent<LinkProps> = (props) => {
-  let href = '/index.html';
-  // To correctly match active class
-  if (props.path !== '/') href += props.path;
+  const href = '/index.html';
   return (
-    <A href={href} {...props}>
+    // To correctly match active class
+    <A href={props.path === '/' ? href : href + props.path} {...props}>
       {props.children}
     </A>
   );

@@ -125,7 +125,11 @@ const PasswordStep: Component<StepProps> = (props) => {
   return (
     <div class="relative h-[520px] p-3">
       <div class="flex-between">
-        <button type="button" class="flex items-center py-4 space-x-2" onClick={props.onPrevious}>
+        <button
+          type="button"
+          class="flex items-center py-4 space-x-2"
+          onClick={() => props.onPrevious()}
+        >
           <ChevronLeftIcon />
           <span>back</span>
         </button>
@@ -279,7 +283,11 @@ const MnemonicStep: Component<StepProps> = (props) => {
   return (
     <div class="relative h-[520px] p-3">
       <div class="flex-between">
-        <button type="button" class="flex items-center py-4 space-x-2" onClick={props.onPrevious}>
+        <button
+          type="button"
+          class="flex items-center py-4 space-x-2"
+          onClick={() => props.onPrevious()}
+        >
           <ChevronLeftIcon />
           <span>back</span>
         </button>
@@ -306,7 +314,7 @@ const MnemonicStep: Component<StepProps> = (props) => {
       <button
         type="button"
         class="absolute w-[90%] py-2 text-center bottom-0 border-thin border-zinc-700/80 rounded"
-        onClick={props.onNext}
+        onClick={() => props.onNext()}
       >
         I saved it
       </button>
@@ -331,7 +339,7 @@ const SuccessStep: Component<Pick<StepProps, 'onNext'>> = (props) => (
     </div>
     <button
       type="button"
-      onClick={props.onNext}
+      onClick={() => props.onNext()}
       class="absolute w-[90%] py-2 text-center bottom-0 border-thin border-zinc-700/80 rounded"
     >
       Finish

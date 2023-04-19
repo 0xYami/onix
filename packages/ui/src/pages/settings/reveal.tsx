@@ -1,4 +1,4 @@
-import { createSignal, Match, Switch, type Component } from 'solid-js';
+import { createMemo, createSignal, Match, Switch, type Component } from 'solid-js';
 import { useLocation } from '@solidjs/router';
 import { Wallet } from 'ethers';
 import { store } from '~/store';
@@ -49,12 +49,12 @@ export const Reveal: Component<RevealProps> = (props) => {
 
 const RevealPrivateKey: Component<{ mnemonic: string }> = (props) => {
   const [blurredOut, setBlurredOut] = createSignal(true);
-  const wallet = Wallet.fromPhrase(props.mnemonic);
+  const wallet = createMemo(() => Wallet.fromPhrase(props.mnemonic));
   return (
     <div class="relative h-full space-y-4">
       <div class="flex-between">
         <div class="uppercase">private key</div>
-        <Copy value={wallet.privateKey} />
+        <Copy value={wallet().privateKey} />
       </div>
       <div class="flex items-center justify-around p-2 border-thin border-zinc-700/80 rounded">
         <p
@@ -63,7 +63,7 @@ const RevealPrivateKey: Component<{ mnemonic: string }> = (props) => {
             blur: blurredOut(),
           }}
         >
-          {wallet.privateKey}
+          {wallet().privateKey}
         </p>
         <button type="button" onClick={() => setBlurredOut((prev) => !prev)}>
           {blurredOut() ? <EyeIcon /> : <EyeSlashIcon />}
